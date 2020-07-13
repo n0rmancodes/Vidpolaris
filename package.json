@@ -1,0 +1,31 @@
+{
+  "name": "vidpolaris",
+  "version": "1.0.0",
+  "description": "alternative youtube client, written in primarily javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n0rmancodes/vidpolaris-rw.git"
+  },
+  "keywords": [
+    "youtube"
+  ],
+  "author": "n0rmancodes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n0rmancodes/vidpolaris-rw/issues"
+  },
+  "homepage": "https://github.com/n0rmancodes/vidpolaris-rw#readme",
+  "dependencies": {
+    "@ipmanlk/reddit-simple": "^2.2.1",
+    "@vitalets/google-translate-api": "^3.0.0",
+    "needle": "^2.5.0",
+    "youtube-suggest": "^1.1.0",
+    "ytdl-core": "^3.1.2",
+    "ytpl": "^0.1.22",
+    "ytsr": "^0.1.15"
+  }
+}

@@ -1,0 +1,182 @@
+console.log("====================================================");
+console.log("vidpolarisRW - rewrite of vidpolaris");
+console.log("defining packages...");
+// installable pkgs
+const ytdl = require("ytdl-core");
+const ytsr = require("ytsr");
+const ytpl = require("ytpl");
+const trans = require("@vitalets/google-translate-api");
+const ytsg = require("youtube-suggest");
+const { RedditSimple } = require("@ipmanlk/reddit-simple");
+const need = require("needle")
+let filter;
+// built-in pkgs
+const http = require("http");
+const url = require("url");
+const fs = require("fs")
+// boot up
+console.log("starting server...");
+const version = "0.1 [ALPHA]";
+const port = process.env.PORT || 3000;
+need.defaults({
+	user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0"
+});
+http.createServer(runServer).listen(port);
+console.log("listening on port " + port + " | version " + version);
+console.log("====================================================");
+function runServer(request, response) {
+	const req = url.parse(request.url, true);
+	const path = req.pathname;
+	const param = req.query;
+	if (path.includes("/api")) {
+		// api endpoints
+		if (path == "/api/trending" | path == "/api/trending/") {
+			var inst = param.inst;
+			var locale = param.locale;
+			var type = param.type;
+			if (inst) {
+				if (inst == "official") {
+					var r = "https://invidio.us/api/v1/trending";
+				} else if (inst == "snopyta"){
+					var r = "https://invidious.snopyta.org/api/v1/trending";
+				} else if (inst == "13ad") {
+					var r = "https://invidious.13ad.de/api/v1/trending";
+				} else if (inst == "ggc") {
+					var r = "https://invidious.ggc-project.de/api/v1/trending";
+				} else {
+					var r = "https://invidio.us/api/v1/trending";
+				}
+			} else {
+				var r = "https://invidio.us/api/v1/trending";
+			}
+			if (locale) {
+				var r = r + "?region=" + locale
+			}
+			if (type) {
+				if (locale) {
+					var r = r + "&type=" + type
+				} else {
+					var r = r + "?type=" + type
+				}
+			}
+			need("get", r, function(error, body) {
+				if (error | !body.body) {
+					var d = JSON.stringify({
+						"err": "noTrending"
+					})
+					response.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					response.end(d);
+				} else {
+					response.writeHead(200, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					response.end(JSON.stringify(body.body));
+				}
+			})
+		} else if (path == "/api/reddit" | path == "/api/reddit/") {
+			var sub = param.sub || "videos";
+			RedditSimple.TopPost(sub).then(function(res,err) {
+				if (!err) {
+					let dat = [];
+					var json = res;
+					for (var c in json.data.children) {
+						if (!json.data.children[c].data.url | !json.data.children[c].data.url.includes("youtu")) {
+							return;
+						} else {
+							if (json.data.children[c].data.media) {
+								let data = {
+									"title": json.data.children[c].data.media.oembed.title,
+									"author": json.data.children[c].data.media.oembed.author_name,
+									"id": getVidId(json.data.children[c].data.url),
+									"originalUrl": json.data.children[c].data.url,
+									"score": json.data.children[c].data.score
+								}
+								dat.push(data)
+							}
+						}
+					}
+					response.writeHead(200, {
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": "*"
+					});
+					response.end(JSON.stringify(dat));
+				} else {
+					var d = JSON.stringify({
+						"err": "failedToScrape"
+					})
+					response.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					response.end(d)
+				}
+			})
+		} else {
+			var d = JSON.stringify({
+				"version": version,
+				"port": port
+			})
+			response.writeHead(404, {
+				"Access-Control-Allow-Origin": "*",
+				"Content-Type": "application/json"
+			})
+			response.end(d);
+		}
+	} else {
+		// web content
+		if (path == "/" | path == "/index.html") {
+			fs.readFile("./web-content/index.html", function(err,res) {
+				if (err) {
+					
+				} else {
+					response.end(res)
+				}
+			})
+		} else {
+			fs.readFile("./web-content" + path, function(err,res) {
+				if (err) {
+					if (err.code == "ENOENT") {
+						response.end("404");
+					} else {
+						console.log(err.code);
+						
+					}
+				} else {
+					response.writeHead(200, {
+						"Access-Control-Allow-Origin": "*"
+					})
+					response.end(res)
+				}
+			})
+		}
+	}
+}
+function getVidId(rUrl) {
+	if (rUrl.includes("youtube.com/watch?v=") & rUrl.includes("https://")) {
+		if (rUrl.includes("www.")) {
+			return rUrl.substring(32,43)
+		} else {
+			if (rUrl.includes("m.youtube.com")) {
+				return rUrl.substring(30,41)
+			} else {
+				return rUrl.substring(23,39)
+			}
+		}
+	} else if (rUrl.includes("youtube.com/watch?v=") & rUrl.includes("http://")) {
+		if (rUrl.includes("www.")) {
+			return rUrl.substring(31,41)
+		} else {
+			if (rUrl.includes("m.youtube.com")) {
+				return rUrl.substring(29,40)
+			} else {
+				return rUrl.substring(27,43)
+			}
+		}
+	} else if (rUrl.includes("youtu.be")) {
+		return rUrl.substring(17,28)
+	}
+}

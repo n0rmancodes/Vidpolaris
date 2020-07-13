@@ -1,0 +1,149 @@
+body {
+	background:black;
+	color:#999;
+}
+
+#trending, #redditTrending {
+	max-width:1800px;
+	margin-left:2.5%;
+}
+
+.video {
+	width:280px;
+	height:305px;
+	background-color:#111;
+}
+
+.video:hover {
+	background-color:#3c3c3c;
+}
+
+.details {
+	width:60%;
+	margin-left:20%;
+}
+
+.smallVideo {
+	width:31%;
+	height:255px;
+	background-color:#111;
+}
+
+.smallVideo:hover {
+	background-color:#3c3c3c;
+}
+
+.relatedChannel {
+	background-color:#111;
+}
+
+.relatedChannel:hover {
+	background-color:#3c3c3c;
+}
+
+.altSmallVideo {
+	width:23%;
+	height:285px;
+	background-color:#111;
+}
+
+.altSmallVideo:hover {
+	background-color:#3c3c3c;
+}
+
+.resultVideo {
+	width:65%;
+	min-height:153px;
+	background-color:#111;
+}
+
+.resultVideo:hover {
+	background-color:#3c3c3c;
+}
+
+.verticalShelf {
+	width:65%;
+	min-height:153px;
+	background-color:#111;
+}
+
+.sResultVideo {
+	width:98%;
+	min-height:153px;
+	background-color:#3c3c3c;
+}
+
+.smallThumb {
+	width:45%;
+	height:312px;
+}
+
+.relatedThumb {
+	width:100%;
+	height:60%;
+}
+
+.largeThumb {
+	width:100%;
+	height:150px;
+}
+
+a {
+	color:#999;
+}
+
+input {
+	background-color:#131313;
+	color:#999;
+}
+
+button {
+	color:#999;
+	background-color:#131313;
+}
+
+button:hover {
+	background-color:#2d2d2d;
+}
+
+.loader div::after {
+	background-color:#999;
+}
+
+video {
+	width:60%;
+	height:10%;
+	max-height:645px;
+}
+
+.invisibleLink {
+	color:#999;
+}
+
+.comment {
+	background-color:#111;
+}
+
+select {
+	background-color: #111;
+	color:#999;
+	border-color:#282828;
+}
+
+.alert {
+	background:#2d2d2d;
+	color:#999;
+}
+
+#filters {
+	background:#2d2d2d;
+	width:65.7%;
+	margin-left:17%;
+	height:250px;
+	padding:10px;
+}
+
+#sharDiv {
+	min-height:105px;
+	max-height:225px;
+}

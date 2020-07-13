@@ -1,0 +1,163 @@
+body {
+	background:#0d0d0d;
+	color:white;
+}
+
+#trending, #redditTrending {
+	margin-left:12.5%;
+	margin-right:12.5%;
+}
+
+.video {
+	width:94%;
+	height:415px;
+	background-color:#1c0000;
+}
+
+.video:hover {
+	background-color:#800000;
+}
+
+.details {
+	width:90%;
+	margin-left:7%;
+}
+
+#autoPlayBlock {
+	margin-right:4%;
+}
+
+#theat_native, #theat_embed {
+	display:none;
+}
+
+.resultD {
+	max-width:53%;
+}
+
+.smallVideo {
+	width:95%;
+	height:525px;
+	background-color:#1c0000;
+	float:none;
+}
+
+.smallVideo:hover {
+	background-color:#800000;
+}
+
+.relatedChannel {
+	background-color:#730000;
+}
+
+.relatedChannel:hover {
+	background-color:#800000;
+}
+
+.resultVideo {
+	width:90%;
+	min-height:153px;
+	background-color:#1c0000;
+}
+
+.resultVideo:hover {
+	background-color:#800000;
+}
+
+.altSmallVideo {
+	width:94%;
+	height:525px;
+	background-color:#111;
+}
+
+.altSmallVideo:hover {
+	background-color:#3c3c3c;
+}
+
+.verticalShelf {
+	width:90%;
+	min-height:160px;
+	background-color:#1c0000;
+	text-align:left;
+}
+
+.sResultVideo {
+	width:97%;
+	min-height:153px;
+	background-color:#800000;
+}
+
+.smallThumb {
+	width:45%;
+	height:220px;
+}
+
+.largeThumb {
+	width:99%;
+	height:72%;
+}
+
+.relatedThumb {
+	width:100%;
+	height:75%;
+}
+
+a {
+	color:white;
+}
+
+input {
+	background-color:black;
+	color:white;
+}
+
+button {
+	color:white;
+	background-color:#a00000;
+}
+
+button:hover {
+	background-color:#3c0000;
+}
+
+.loader div::after {
+	background-color:white;
+}
+
+video {
+	width:100%;
+	height:10%;
+	max-height:840px;
+}
+
+.invisibleLink {
+	color:white;
+}
+
+.comment {
+	background-color:#3a0000;
+	width:93%;
+}
+
+#sharDiv {
+	height:300px;
+}
+
+.alert {
+	background-color:#3c0000;
+	color:white;
+}
+
+#filters {
+	background:#3c0000;
+	width:90%;
+	margin-left:4%;
+	height:250px;
+	padding:10px;
+}
+
+#settingsPage {
+	margin-top:10px;
+	margin-left:50px;
+	margin-right:50px;
+}
