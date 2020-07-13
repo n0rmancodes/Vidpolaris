@@ -172,6 +172,48 @@ async function runServer(request, response) {
 					response.end(json);
 				})
 			}
+		} else if (path == "/api/playlist" | path == "/api/playlist/"){
+			var id = param.id;
+			var pUrl = param.url;
+			if (!id && !pUrl) {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				response.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				response.end(d);
+			} else {
+				if (id) {
+					var i = param.id;
+				} else {
+					var i = param.url;
+				}
+				var opt = {
+					limit: 0
+				}
+				ytpl(i, opt, function(err,result) {
+					if (err) {
+						var errTxt = err.stack.split("Error: ")[1].split("\n")[0];
+						var d = JSON.stringify({
+							"err": errTxt
+						})
+						response.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						});
+						response.end(d);
+					} else {
+						var d = JSON.stringify(result);
+						response.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						});
+						response.end(d);
+					}
+				})
+			}
 		} else {
 			var d = JSON.stringify({
 				"version": version,
