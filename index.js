@@ -24,7 +24,7 @@ need.defaults({
 http.createServer(runServer).listen(port);
 console.log("listening on port " + port + " | version " + version);
 console.log("====================================================");
-function runServer(request, response) {
+async function runServer(request, response) {
 	const req = url.parse(request.url, true);
 	const path = req.pathname;
 	const param = req.query;
@@ -115,6 +115,63 @@ function runServer(request, response) {
 					response.end(d)
 				}
 			})
+		} else if (path == "/api/info" | path == "/api/info/") {
+			var id = param.id;
+			var dUrl = param.url;
+			if (!id && !dUrl) {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				response.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				})
+				response.end(d)
+			} else {
+				if (param.id) {
+					var i = param.id;
+				} else {
+					if (ytdl.validateURL(param.url)) {
+						var i = ytdl.getURLVideoId(param.url);
+					} else {
+						var d = JSON.stringify({
+							"err": "invalidData"
+						})
+						response.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+					}
+				}
+				let info = await ytdl("JWeJHN5P-E8");
+				info.on('info', function(info) {
+					let v = ytdl.filterFormats(info.formats, 'videoonly');
+					let a = ytdl.filterFormats(info.formats, 'audioonly');
+					let j = ytdl.filterFormats(info.formats, 'audioandvideo');
+					var i = info.info;
+					var d = JSON.stringify({
+						"video": v,
+						"audio": a,
+						"joined": j,
+						info
+					})
+					response.writeHead(200, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					response.end(d);
+				})
+				info.on("err", function(err) {
+					var json = JSON.stringify ({
+						"err":err.stack.split("Error: ")[1].split("\n")[0]
+					})
+					response.writeHead(200, {
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": "*"
+					});
+					response.end(json);
+				})
+			}
 		} else {
 			var d = JSON.stringify({
 				"version": version,
