@@ -214,6 +214,30 @@ async function runServer(request, response) {
 					}
 				})
 			}
+		} else if (path == "/api/search" | path == "/api/search/") {
+			var q = param.q;
+			if (!q) {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				response.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				response.end(d);
+			} else {
+				var options = {
+					limit:100
+				}
+				ytsr(q, options,function(err, searchResults) {
+					var d = JSON.stringify(searchResults)
+					response.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					response.end(d);
+				})
+			}
 		} else {
 			var d = JSON.stringify({
 				"version": version,
