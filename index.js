@@ -238,6 +238,32 @@ async function runServer(request, response) {
 					response.end(d);
 				})
 			}
+		} else if (path == "/api/translate" | path == "/api/translate/") {
+			if (!param.data) {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				response.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				response.end(d);
+			} else {
+				var data = param.data;
+				if (param.to) {
+					var lang = param.to;
+				} else {
+					var lang = "en";
+				}
+				trans(data, {to: lang}, function(err,res) {
+					var d = JSON.stringify(res);
+					response.writeHead(200, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					response.end(d);
+				})
+			} 
 		} else {
 			var d = JSON.stringify({
 				"version": version,
@@ -254,8 +280,12 @@ async function runServer(request, response) {
 		if (path == "/" | path == "/index.html") {
 			fs.readFile("./web-content/index.html", function(err,res) {
 				if (err) {
-					
+					console.log(err.code);
+					response.end(err.code);
 				} else {
+					response.writeHead(200, {
+						"Access-Control-Allow-Origin": "*"
+					})
 					response.end(res)
 				}
 			})
@@ -266,7 +296,7 @@ async function runServer(request, response) {
 						response.end("404");
 					} else {
 						console.log(err.code);
-						
+						response.end(err.code);
 					}
 				} else {
 					response.writeHead(200, {
