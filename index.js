@@ -7,7 +7,7 @@ const ytsr = require("ytsr");
 const ytpl = require("ytpl");
 const trans = require("@vitalets/google-translate-api");
 const ytsg = require("youtube-suggest");
-const { RedditSimple } = require("@ipmanlk/reddit-simple");
+const redddit = require("redddit");
 const need = require("needle")
 let filter;
 // built-in pkgs
@@ -79,21 +79,22 @@ async function runServer(request, response) {
 			})
 		} else if (path == "/api/reddit" | path == "/api/reddit/") {
 			var sub = param.sub || "videos";
-			RedditSimple.TopPost(sub).then(function(res,err) {
+			redddit.topPosts(sub, function(err,res) {
 				if (!err) {
 					let dat = [];
 					var json = res;
-					for (var c in json.data.children) {
-						if (!json.data.children[c].data.url | !json.data.children[c].data.url.includes("youtu")) {
-							return;
+					console.log(json)
+					for (var c in json) {
+						if (!json[c].data.url | !json[c].data.url.includes("youtu")) {
+							
 						} else {
-							if (json.data.children[c].data.media) {
+							if (json[c].data.media) {
 								let data = {
-									"title": json.data.children[c].data.media.oembed.title,
-									"author": json.data.children[c].data.media.oembed.author_name,
-									"id": getVidId(json.data.children[c].data.url),
-									"originalUrl": json.data.children[c].data.url,
-									"score": json.data.children[c].data.score
+									"title": json[c].data.media.oembed.title,
+									"author": json[c].data.media.oembed.author_name,
+									"id": getVidId(json[c].data.url),
+									"originalUrl": json[c].data.url,
+									"score": json[c].data.score
 								}
 								dat.push(data)
 							}

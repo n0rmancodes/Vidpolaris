@@ -20,9 +20,9 @@
   },
   "homepage": "https://github.com/n0rmancodes/vidpolaris-rw#readme",
   "dependencies": {
-    "@ipmanlk/reddit-simple": "^2.2.1",
     "@vitalets/google-translate-api": "^3.0.0",
     "needle": "^2.5.0",
+    "redddit": "^1.0.2",
     "youtube-suggest": "^1.1.0",
     "ytdl-core": "^3.1.2",
     "ytpl": "^0.1.22",
