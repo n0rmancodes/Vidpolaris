@@ -16,7 +16,7 @@ const url = require("url");
 const fs = require("fs")
 // boot up
 console.log("starting server...");
-const version = "0.1 [ALPHA]";
+const version = "0.2 [ALPHA]";
 const port = process.env.PORT || 3000;
 need.defaults({
 	user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0"
@@ -83,20 +83,21 @@ async function runServer(request, response) {
 				if (!err) {
 					let dat = [];
 					var json = res;
-					console.log(json)
 					for (var c in json) {
 						if (!json[c].data.url | !json[c].data.url.includes("youtu")) {
 							
 						} else {
 							if (json[c].data.media) {
-								let data = {
-									"title": json[c].data.media.oembed.title,
-									"author": json[c].data.media.oembed.author_name,
-									"id": getVidId(json[c].data.url),
-									"originalUrl": json[c].data.url,
-									"score": json[c].data.score
+								if (ytdl.validateURL(json[c].data.url)) {
+									let data = {
+										"title": json[c].data.media.oembed.title,
+										"author": json[c].data.media.oembed.author_name,
+										"id": ytdl.getURLVideoID(json[c].data.url),
+										"originalUrl": json[c].data.url,
+										"score": json[c].data.score
+									}
+									dat.push(data);
 								}
-								dat.push(data)
 							}
 						}
 					}
@@ -133,7 +134,7 @@ async function runServer(request, response) {
 					var i = param.id;
 				} else {
 					if (ytdl.validateURL(param.url)) {
-						var i = ytdl.getURLVideoId(param.url);
+						var i = ytdl.getURLVideoID(param.url);
 					} else {
 						var d = JSON.stringify({
 							"err": "invalidData"
@@ -142,9 +143,10 @@ async function runServer(request, response) {
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type": "application/json"
 						})
+						response.end(d);
 					}
 				}
-				let info = await ytdl("JWeJHN5P-E8");
+				let info = await ytdl(i);
 				info.on('info', function(info) {
 					let v = ytdl.filterFormats(info.formats, 'videoonly');
 					let a = ytdl.filterFormats(info.formats, 'audioonly');
@@ -251,20 +253,69 @@ async function runServer(request, response) {
 				response.end(d);
 			} else {
 				var data = param.data;
-				if (param.to) {
-					var lang = param.to;
+				if (!param.to) {
+					var lang = "en"
 				} else {
-					var lang = "en";
+					var lang = oUrl.query.to;
 				}
-				trans(data, {to: lang}, function(err,res) {
-					var d = JSON.stringify(res);
-					response.writeHead(200, {
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "application/json"
-					});
-					response.end(d);
+				trans(data,{to:lang}).then(res => {
+					if (!res) {
+						response.writeHead(404, {
+							"Content-Type": "application/json",
+							"Access-Control-Allow-Origin": "*"
+						})
+						response.end(JSON.stringify({"err":"couldNotResolve"}));
+						return;
+					} else {
+						var json = JSON.stringify({res})
+						response.writeHead(200, {
+							"Content-Type": "application/json",
+							"Access-Control-Allow-Origin": "*"
+						});
+						response.end(json);
+						return;
+					}
 				})
 			} 
+		} else if (path == "/api/itag" | path == "/api/itag/") {
+			if (param.id) {
+				var i = param.id;
+			} else {
+				if (ytdl.validateURL(param.url)) {
+					var i = ytdl.getURLVideoId(param.url);
+				} else {
+					var d = JSON.stringify({
+						"err": "invalidData"
+					});
+					response.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					response.end(d);
+				}
+			}
+			var itag = param.itag;
+			let info = ytdl(i);
+			info.on('info', function(info) {
+				if (info.formats) {
+					let d = JSON.stringify(ytdl.chooseFormat(info.formats, { quality: itag }));
+					response.writeHead(200,{
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					response.end(d);
+				} else {
+					var d = JSON.stringify({
+						"err":"noFormats"
+					});
+					response.writeHead(404,{
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					response.end(d);
+				}
+			})
+			info.on('err',)
 		} else {
 			var d = JSON.stringify({
 				"version": version,
@@ -307,30 +358,5 @@ async function runServer(request, response) {
 				}
 			})
 		}
-	}
-}
-function getVidId(rUrl) {
-	if (rUrl.includes("youtube.com/watch?v=") & rUrl.includes("https://")) {
-		if (rUrl.includes("www.")) {
-			return rUrl.substring(32,43)
-		} else {
-			if (rUrl.includes("m.youtube.com")) {
-				return rUrl.substring(30,41)
-			} else {
-				return rUrl.substring(23,39)
-			}
-		}
-	} else if (rUrl.includes("youtube.com/watch?v=") & rUrl.includes("http://")) {
-		if (rUrl.includes("www.")) {
-			return rUrl.substring(31,41)
-		} else {
-			if (rUrl.includes("m.youtube.com")) {
-				return rUrl.substring(29,40)
-			} else {
-				return rUrl.substring(27,43)
-			}
-		}
-	} else if (rUrl.includes("youtu.be")) {
-		return rUrl.substring(17,28)
 	}
 }
