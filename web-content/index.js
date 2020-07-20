@@ -61,8 +61,3 @@ function getTrending(type, country) {
 		document.getElementById("home").style.display = "";
 	}
 }
-
-function search() {
-	var q = document.getElementById("q").value;
-	window.open("/s?"+q, "_self");
-}

@@ -13,7 +13,7 @@ function load() {
 			document.getElementById("player").src = json.joined[0].url;
 			document.getElementById("player").poster = "/api/proxy/?url=" + btoa(json.info.videoDetails.thumbnail.thumbnails[json.info.videoDetails.thumbnail.thumbnails.length-1].url);
 			document.getElementById("title").innerHTML = json.info.videoDetails.title;
-			document.getElementById("authIco").src = json.info.videoDetails.author.avatar;
+			document.getElementById("authIco").src = json.info.videoDetails.author.avatar.split("=s")[0];
 			document.getElementById("viewCount").innerHTML = parseInt(json.info.videoDetails.viewCount).toLocaleString() + " views";
 			document.getElementById("pText").innerHTML = json.info.videoDetails.publishDate;
 			var shortDesc = varLinks(json.info.videoDetails.shortDescription.replace(/\n/g, "<br>"));

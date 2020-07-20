@@ -3,14 +3,14 @@
 	<head>
 		<title>VidPolaris</title>
 		<meta charset="UTF-8">
-		<script src="/js/head.js"></script>
+		<script src="/js/globalHead.js" type="text/javascript"></script>
 		<link href="/css/style.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="hdr">
 			<a href="/"><h1>VidPolaris</h1></a>
 			<div class="kt">
-				<input autocomplete="off" placeholder="Search.">
+				<input id="q" autocomplete="off" placeholder="Search.">
 				<button class="material-icons">search</button>
 				<a href="/settings"><button class="material-icons">settings</button></a>
 			</div>
@@ -43,7 +43,7 @@
 							<h3 id="viewCount"></h3>
 							<div class="ratioBar"><div class="rbInner" id="rBar"></div></div>
 							<div style="width:100%">
-								<h4 style="text-align:right;"><span class="material-icons">thumb_up</span> <span id="l"></span> likes | <span class="material-icons">thumb_down</span> <span id="dl"></span> dislikes</h4>
+								<h4 style="text-align:right;"><span class="material-icons">thumb_up</span> <span id="l"></span> likes • <span class="material-icons">thumb_down</span> <span id="dl"></span> dislikes</h4>
 							</div>
 						</div>
 						<div class="moreDetails">
@@ -62,6 +62,7 @@
 				</div>
 			</div>
 		</div>
-		<script src="/w/index.js"></script>
+		<script src="/w/index.js" type="text/javascript"></script>
+		<script src="/js/globalBody.js" type="text/javascript"></script>
 	</body>
 </html>

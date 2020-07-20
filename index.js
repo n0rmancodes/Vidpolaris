@@ -405,16 +405,37 @@ async function runServer(request, response) {
 		fs.readFile("./web-content" + path, function(err,res) {
 			if (err) {
 				if (err.code == "ENOENT") {
-					response.end("404");
+					fs.readFile("./errors/404.html", function(err,res){
+						if (err) {
+							response.end(err.code)
+						} else {
+							response.writeHead(200, {
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "text/html"
+							})
+							response.end(res)
+						}
+					})
 				} else if (err.code == "EISDIR") {
 					fs.readFile("./web-content" + path + "/index.html", function(err,res) {
 						if (err) {
 							if (err.code == "ENOENT") {
-								response.end("404");
+								fs.readFile("./errors/404.html", function(err,res){
+									if (err) {
+										response.end(err.code)
+									} else {
+										response.writeHead(200, {
+											"Access-Control-Allow-Origin": "*",
+											"Content-Type": "text/html"
+										})
+										response.end(res)
+									}
+								})
 							}
 						} else {
 							response.writeHead(200, {
-								"Access-Control-Allow-Origin": "*"
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "text/html"
 							})
 							response.end(res)
 						}

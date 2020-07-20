@@ -55,7 +55,7 @@ body {
 	}
 }
 
-#authorIco {
+#authIco {
 	width:48px;
 	height:48px;
 }
@@ -84,6 +84,11 @@ body {
 
 .i {
 	font-weight:bold;
+}
+
+#viewCount {
+	text-align:right;
+	width:100%;
 }
 
 @media (max-width:1000px) {
@@ -423,5 +428,33 @@ body {
 		width:100%;
 		min-height:300px;
 		margin:5px;
+	}
+	
+	.largeHoriChip img {
+		width:525px;
+		height:260px;
+		object-fit:cover;
+		float:left;
+		margin:1%;
+	}
+	
+	.largeHoriChip .square {
+		width:260px;
+		height:260px;
+		float:left;
+	}
+	
+	.largeHoriChip div {
+		float:left;
+		color:black;
+		text-decoration:none;
+		padding-top:1%;
+		padding-bottom:1%;
+		padding-right:1%;
+	}
+	
+	.largeHoriChip div * {
+		margin-bottom:2px;
+		margin-top:0;
 	}
 }
