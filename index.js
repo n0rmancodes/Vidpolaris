@@ -346,7 +346,7 @@ async function runServer(request, response) {
 				}
 				redddit.search("url:youtu.be/"+q, function(err,res) {
 					if (res) {
-						if (!res == "[]") {
+						if (res[0]) {
 							var d = JSON.stringify(res);
 							response.writeHead(200,{
 								"Access-Control-Allow-Origin": "*",
