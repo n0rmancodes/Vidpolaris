@@ -9,7 +9,6 @@ const trans = require("@vitalets/google-translate-api");
 const ytsg = require("youtube-suggest");
 const redddit = require("redddit");
 const need = require("needle");
-const jimp = require("jimp");
 let filter;
 // built-in pkgs
 const http = require("http");
