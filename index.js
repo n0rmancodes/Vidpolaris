@@ -315,7 +315,75 @@ async function runServer(request, response) {
 					response.end(d);
 				}
 			})
-			info.on('err',)
+			info.on('err',function(err) {
+				let d = JSON.stringify({
+					"err":err.stack.split("Error: ")[1].split("\n")[0]
+				})
+				response.writeHead(404,{
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				})
+				response.end(d);
+			})
+		} else if (path == "/api/reddit/search" | path == "/api/reddit/search/") {
+			if (param.id) {
+				if (param.id) {
+					var q = param.id;
+				} else {
+					if (!ytdl.validateURL(param.url)) {
+						var d = JSON.stringify({
+							"err":"invalidData"
+						});
+						response.writeHead(404,{
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						response.end(d);
+						return;
+					} else {
+						var q = ytdl.getURLVideoId(param.url);
+					}
+				}
+				redddit.search("url:youtu.be/"+q, function(err,res) {
+					if (res) {
+						if (!res == "[]") {
+							var d = JSON.stringify(res);
+							response.writeHead(200,{
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "application/json"
+							})
+							response.end(d);
+						} else {
+							var d = JSON.stringify({
+								"err":"noResults"
+							});
+							response.writeHead(404,{
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "application/json"
+							})
+							response.end(d);
+						}
+					} else {
+						var d = JSON.stringify({
+							"err":err.stack.split("Error: ")[1].split("\n")[0]
+						});
+						response.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						response.end(d);
+					}
+				})
+			} else {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				response.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				response.end(d);
+			}
 		} else {
 			var d = JSON.stringify({
 				"version": version,
