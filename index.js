@@ -8,7 +8,8 @@ const ytpl = require("ytpl");
 const trans = require("@vitalets/google-translate-api");
 const ytsg = require("youtube-suggest");
 const redddit = require("redddit");
-const need = require("needle")
+const need = require("needle");
+const jimp = require("jimp");
 let filter;
 // built-in pkgs
 const http = require("http");
@@ -60,7 +61,7 @@ async function runServer(request, response) {
 				}
 			}
 			need("get", r, function(error, body) {
-				if (error | !body.body) {
+				if (error | !body) {
 					var d = JSON.stringify({
 						"err": "noTrending"
 					})
@@ -232,9 +233,9 @@ async function runServer(request, response) {
 				var options = {
 					limit:100
 				}
-				ytsr(q, options,function(err, searchResults) {
-					var d = JSON.stringify(searchResults)
-					response.writeHead(404, {
+				ytsr(q, options, function(err, searchResults) {
+					var d = JSON.stringify(searchResults);
+					response.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					});
@@ -384,6 +385,11 @@ async function runServer(request, response) {
 				});
 				response.end(d);
 			}
+		} else if (path == "/api/proxy" | path == "/api/proxy/") {
+			if (param.url) {
+				var d = Buffer.from(param.url,"base64").toString();
+				need.get(d).pipe(response);
+			}
 		} else {
 			var d = JSON.stringify({
 				"version": version,
@@ -397,34 +403,56 @@ async function runServer(request, response) {
 		}
 	} else {
 		// web content
-		if (path == "/" | path == "/index.html") {
-			fs.readFile("./web-content/index.html", function(err,res) {
-				if (err) {
+		fs.readFile("./web-content" + path, function(err,res) {
+			if (err) {
+				if (err.code == "ENOENT") {
+					response.end("404");
+				} else if (err.code == "EISDIR") {
+					fs.readFile("./web-content" + path + "/index.html", function(err,res) {
+						if (err) {
+							if (err.code == "ENOENT") {
+								response.end("404");
+							}
+						} else {
+							response.writeHead(200, {
+								"Access-Control-Allow-Origin": "*"
+							})
+							response.end(res)
+						}
+					})
+				} else {
 					console.log(err.code);
 					response.end(err.code);
-				} else {
-					response.writeHead(200, {
-						"Access-Control-Allow-Origin": "*"
-					})
-					response.end(res)
 				}
-			})
-		} else {
-			fs.readFile("./web-content" + path, function(err,res) {
-				if (err) {
-					if (err.code == "ENOENT") {
-						response.end("404");
+			} else {
+				if (path.includes(".")) {
+					var fileType = path.split(".")[path.split.length-1];
+					if (fileType == "js") {
+						response.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type":"application/javascript"
+						})
+						response.end(res);
+					} else if (fileType == "css") {
+						response.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type":"text/css"
+						})
+						response.end(res);
 					} else {
-						console.log(err.code);
-						response.end(err.code);
+						response.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+						})
+						response.end(res)
 					}
 				} else {
 					response.writeHead(200, {
-						"Access-Control-Allow-Origin": "*"
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type":"text/html"
 					})
-					response.end(res)
+					response.end(res);
 				}
-			})
-		}
+			}
+		})
 	}
 }

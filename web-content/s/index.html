@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Home | VidPolaris</title>
+		<title>Search | VidPolaris</title>
 		<link href="/css/style.css" rel="stylesheet">
+		<meta charset="UTF-8">
+		<script src="/js/head.js"></script>
 	</head>
 	<body>
 		<div class="hdr">
@@ -22,11 +24,11 @@
 				</div>
 				<h2 id="deet" class="ldrD">please wait...</h2>
 			</div>
-			<div id="home" style="display:none;">
-				<h2 class="title"><span class="material-icons">trending_up</span> trending</h2>
-				<div id="trending"></div>
+			<div id="main" style="display:none;">
+				<h2><span class="material-icons">search</span> search results for <span id="query"></span></h2>
+				<div id="searchResults"></div>
 			</div>
 		</div>
-		<script src="js/app.js" type="text/javascript"></script>
+		<script src="/s/index.js"></script>
 	</body>
 </html>

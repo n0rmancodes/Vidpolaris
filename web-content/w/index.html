@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>VidPolaris</title>
+		<meta charset="UTF-8">
+		<script src="/js/head.js"></script>
+		<link href="/css/style.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="hdr">
+			<a href="/"><h1>VidPolaris</h1></a>
+			<div class="kt">
+				<input autocomplete="off" placeholder="Search.">
+				<button class="material-icons">search</button>
+				<a href="/settings"><button class="material-icons">settings</button></a>
+			</div>
+		</div>
+		<div class="body">
+			<div id="loader">
+				<div class="lodr">
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+				<h2 id="deet" class="ldrD">please wait...</h2>
+			</div>
+			<div id="main" style="display:none;">
+				<div class="vidInfo">
+					<div id="playerContainer">
+						<video id="player" controls></video>
+						<audio id="aPlayer"></audio>
+					</div>
+					<div class="details">
+						<h2 id="title"></h2>
+						<div class="authorInfo">
+							<img id="authIco">
+							<div style="float:left;">
+								<h3 id="auth"></h3>
+								<h3 id="authSub"></h3>
+							</div>
+						</div>
+						<div class="ratioInfo">
+							<h3 id="viewCount"></h3>
+							<div class="ratioBar"><div class="rbInner" id="rBar"></div></div>
+							<div style="width:100%">
+								<h4 style="text-align:right;"><span class="material-icons">thumb_up</span> <span id="l"></span> likes | <span class="material-icons">thumb_down</span> <span id="dl"></span> dislikes</h4>
+							</div>
+						</div>
+						<div class="moreDetails">
+							<p class="i">Published on <span id="pText"></span></p>
+							<p id="shortDesc"></p>
+							<div id="isLonger">
+								<button onclick="toggleDesc()">Show more</button>
+								<p id="fullDesc"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="related">
+					<h2>Related Videos</h2>
+					<div id="relatedFeed"></div>
+				</div>
+			</div>
+		</div>
+		<script src="/w/index.js"></script>
+	</body>
+</html>
