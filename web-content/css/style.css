@@ -5,6 +5,15 @@ body {
 	margin:0;
 }
 
+a {
+	color:#515151;
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
 .body .material-icons {
 	vertical-align:bottom
 }
@@ -91,6 +100,14 @@ body {
 	width:100%;
 }
 
+.allFloat *, .snackBar {
+	float:left;
+}
+
+.allFloat select {
+	margin-right:5px;
+}
+
 @media (max-width:1000px) {
 	body {
 		text-align:center;
@@ -142,7 +159,8 @@ body {
 		text-decoration:none;
 		width:99%;
 		height:500px;
-		background:black;
+		background:#eaeaea;
+		color:black;
 		margin:5px;
 	}
 	
@@ -163,11 +181,9 @@ body {
 		margin-bottom:0;
 		text-decoration:none;
 		margin-left:4%;
-		color:white;
 	}
 	
 	.vidChip h4 {
-		color:white;
 		margin-left:4%;
 		margin-right:4%;
 		margin-top:0;
@@ -197,6 +213,7 @@ body {
 	
 	.ratioInfo {
 		float:right;
+		padding-right:1%;
 	}
 	
 	.authorInfo * {
@@ -249,6 +266,15 @@ body {
 	
 	.horiVidChip * {
 		margin:0;
+	}
+	
+	.horiVidChip span {
+		margin-left:-15%;
+	}
+	
+	.bigSquare {
+		width:110px;
+		height:110px;
 	}
 }
 @media (min-width:1001px) {
@@ -456,5 +482,10 @@ body {
 	.largeHoriChip div * {
 		margin-bottom:2px;
 		margin-top:0;
+	}
+	
+	.bigSquare {
+		width:10%;
+		height:90%;
 	}
 }

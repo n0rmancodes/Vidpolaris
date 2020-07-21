@@ -31,15 +31,19 @@
 						<audio id="aPlayer"></audio>
 					</div>
 					<div class="details">
+						<div class="snackBar" style="margin:0;">
+							<select id="v" onInput="getItag(this.value, 'v');"></select>
+							<select id="a" onInput="getItag(this.value, 'a');"></select>
+						</div><br>
 						<h2 id="title"></h2>
 						<div class="authorInfo">
 							<img id="authIco">
 							<div style="float:left;">
-								<h3 id="auth"></h3>
+								<a id="authLink"><h3 id="auth"></h3></a>
 								<h3 id="authSub"></h3>
 							</div>
 						</div>
-						<div class="ratioInfo">
+						<div class="ratioInfo" id="ri">
 							<h3 id="viewCount"></h3>
 							<div class="ratioBar"><div class="rbInner" id="rBar"></div></div>
 							<div style="width:100%">
@@ -48,11 +52,7 @@
 						</div>
 						<div class="moreDetails">
 							<p class="i">Published on <span id="pText"></span></p>
-							<p id="shortDesc"></p>
-							<div id="isLonger">
-								<button onclick="toggleDesc()">Show more</button>
-								<p id="fullDesc"></p>
-							</div>
+							<p id="fullDesc"></p>
 						</div>
 					</div>
 				</div>
