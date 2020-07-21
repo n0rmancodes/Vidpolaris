@@ -1,21 +1,21 @@
 load();
 
-document.getElementById("player").addEventListener("play", function() {
-	document.getElementById("aPlayer").play();
-})
+//document.getElementById("player").addEventListener("play", function() {
+//	document.getElementById("aPlayer").play();
+//})
 
-document.getElementById("player").addEventListener("pause", function() {
-	document.getElementById("aPlayer").pause();
-	document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
-})
+//document.getElementById("player").addEventListener("pause", function() {
+//	document.getElementById("aPlayer").pause();
+//	document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+//})
 
-document.getElementById("player").addEventListener("seeked", function() {
-	document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
-})
+//document.getElementById("player").addEventListener("seeked", function() {
+//	document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+//})
 
-document.getElementById("player").addEventListener("waiting",function() {
-	document.getElementById("aPlayer").pause();
-})
+//document.getElementById("player").addEventListener("waiting",function() {
+//	document.getElementById("aPlayer").pause();
+//})
 
 function load() {
 	var id = window.location.search.substring(1,12) 
@@ -28,20 +28,21 @@ function load() {
 			var json = JSON.parse(xhr.responseText);
 			sessionStorage.setItem("info", xhr.responseText.toString());
 			document.getElementById("loader").style.display = "none";
-			for (var c in json.audio) {
-				var opt = document.createElement("OPTION");
-				opt.innerHTML = json.audio[c].audioBitrate + "kbps";
-				opt.value = json.audio[c].itag
-				document.getElementById("a").appendChild(opt);
-			}
-			for (var c in json.video) {
-				var opt = document.createElement("OPTION");
-				opt.innerHTML = json.video[c].qualityLabel + " [" + json.video[c].codecs + "]";
-				opt.value = json.video[c].itag;
-				document.getElementById("v").appendChild(opt);
-			}
-			document.getElementById("player").src = getItag(document.getElementById("v").options[0].value);
-			document.getElementById("aPlayer").src = getItag(document.getElementById("a").options[0].value);
+			//for (var c in json.audio) {
+			//	var opt = document.createElement("OPTION");
+			//	opt.innerHTML = json.audio[c].audioBitrate + "kbps";
+			//	opt.value = json.audio[c].itag
+			//	document.getElementById("a").appendChild(opt);
+			//}
+			//for (var c in json.video) {
+			//	var opt = document.createElement("OPTION");
+			//	opt.innerHTML = json.video[c].qualityLabel + " [" + json.video[c].codecs + "]";
+			//	opt.value = json.video[c].itag;
+			//	document.getElementById("v").appendChild(opt);
+			//}
+			//document.getElementById("player").src = getItag(document.getElementById("v").options[0].value);
+			//document.getElementById("aPlayer").src = getItag(document.getElementById("a").options[0].value);
+			document.getElementById("player").src = json.joined[0].url;
 			document.getElementById("player").load();
 			document.getElementById("player").poster = "/api/proxy/?url=" + btoa(json.info.videoDetails.thumbnail.thumbnails[json.info.videoDetails.thumbnail.thumbnails.length-1].url);
 			document.getElementById("title").innerHTML = json.info.videoDetails.title;
