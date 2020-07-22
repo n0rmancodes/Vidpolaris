@@ -23,8 +23,15 @@
 			<div class="option">
 				<label>Theme:</label>
 				<select id="n_theme" onInput="save('n_theme', this.value)">
-					<option value="light">light</option>
-					<option value="dark">dark</option>
+					<option value="light">Light</option>
+					<option value="dark">Dark</option>
+				</select>
+			</div>
+			<div class="option">
+				<label>SmartQuality (BETA):</label>
+				<select id="sq" onInput="save('sq', this.value)">
+					<option value="disabled">Disabled</option>
+					<option value="enabled">Enabled</option>
 				</select>
 			</div>
 			<button onClick="apply()">Apply</button>

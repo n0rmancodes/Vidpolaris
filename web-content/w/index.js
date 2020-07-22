@@ -1,21 +1,22 @@
 load();
+if (localStorage.getItem("sq") == "enabled") {
+	document.getElementById("player").addEventListener("play", function() {
+		document.getElementById("aPlayer").play();
+	})
 
-//document.getElementById("player").addEventListener("play", function() {
-//	document.getElementById("aPlayer").play();
-//})
+	document.getElementById("player").addEventListener("pause", function() {
+		document.getElementById("aPlayer").pause();
+		document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+	})
 
-//document.getElementById("player").addEventListener("pause", function() {
-//	document.getElementById("aPlayer").pause();
-//	document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
-//})
+	document.getElementById("player").addEventListener("seeked", function() {
+		document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+	})
 
-//document.getElementById("player").addEventListener("seeked", function() {
-//	document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
-//})
-
-//document.getElementById("player").addEventListener("waiting",function() {
-//	document.getElementById("aPlayer").pause();
-//})
+	document.getElementById("player").addEventListener("waiting",function() {
+		document.getElementById("aPlayer").pause();
+	})
+}
 
 function load() {
 	var id = window.location.search.substring(1,12) 
@@ -28,26 +29,40 @@ function load() {
 			var json = JSON.parse(xhr.responseText);
 			sessionStorage.setItem("info", xhr.responseText.toString());
 			document.getElementById("loader").style.display = "none";
-			//for (var c in json.audio) {
-			//	var opt = document.createElement("OPTION");
-			//	opt.innerHTML = json.audio[c].audioBitrate + "kbps";
-			//	opt.value = json.audio[c].itag
-			//	document.getElementById("a").appendChild(opt);
-			//}
-			//for (var c in json.video) {
-			//	var opt = document.createElement("OPTION");
-			//	opt.innerHTML = json.video[c].qualityLabel + " [" + json.video[c].codecs + "]";
-			//	opt.value = json.video[c].itag;
-			//	document.getElementById("v").appendChild(opt);
-			//}
-			//document.getElementById("player").src = getItag(document.getElementById("v").options[0].value);
-			//document.getElementById("aPlayer").src = getItag(document.getElementById("a").options[0].value);
-			document.getElementById("player").src = json.joined[0].url;
+			if (localStorage.getItem("sq") == "enabled") {
+				document.getElementById("player").onclick = function () {toggle()}
+				document.getElementById("sqSB").style.display = "";
+				document.getElementById("qSB").style.display = "none";
+				for (var c in json.audio) {
+					var opt = document.createElement("OPTION");
+					opt.innerHTML = json.audio[c].audioBitrate + "kbps [" + json.audio[c].codecs + "]";
+					opt.value = json.audio[c].itag
+					document.getElementById("a").appendChild(opt);
+				}
+				for (var c in json.video) {
+					var opt = document.createElement("OPTION");
+					opt.innerHTML = json.video[c].qualityLabel + " [" + json.video[c].codecs + "]";
+					opt.value = json.video[c].itag;
+					document.getElementById("v").appendChild(opt);
+				}
+				document.getElementById("player").src = getItag(document.getElementById("v").options[0].value);
+				document.getElementById("aPlayer").src = getItag(document.getElementById("a").options[0].value);
+			} else {
+				document.getElementById("sqSB").style.display = "none";
+				document.getElementById("qSB").style.display = "";
+				for (var c in json.joined) {
+					var opt = document.createElement("OPTION");
+					opt.innerHTML = json.joined[c].qualityLabel + " (" + json.joined[c].audioBitrate + " audio kbps) [" + json.joined[c].codecs + "]";
+					opt.value = json.joined[c].itag;
+					document.getElementById("va").appendChild(opt);
+				}
+				document.getElementById("player").src = getItag(document.getElementById("va").options[0].value);
+			}
 			document.getElementById("player").load();
 			document.getElementById("player").poster = "/api/proxy/?url=" + btoa(json.info.videoDetails.thumbnail.thumbnails[json.info.videoDetails.thumbnail.thumbnails.length-1].url);
 			document.getElementById("title").innerHTML = json.info.videoDetails.title;
 			if (json.info.videoDetails.author.avatar) {
-				document.getElementById("authIco").src = json.info.videoDetails.author.avatar.split("=s")[0];
+				document.getElementById("authIco").src = json.info.videoDetails.author.avatar;
 			} else {
 				document.getElementById("authIco").src = "/img/default.jpg";
 			}
@@ -117,13 +132,13 @@ function varLinks(t) {
 	return t.replace(replacePattern, '<a href="$1" class="channelLink">$1</a>');
 }
 
-function toggleDesc() {
-	if (document.getElementById("shortDesc").style.display == "") {
-		document.getElementById("shortDesc").style.display = "none";
-		document.getElementById("fullDesc").style.display = "";
+function toggle() {
+	if (document.getElementById("player").playing) {
+		document.getElementById("player").pause();
+		document.getElementById("aPlayer").pause();
 	} else {
-		document.getElementById("shortDesc").style.display = "";
-		document.getElementById("fullDesc").style.display = "none";
+		document.getElementById("player").play();
+		document.getElementById("aPlayer").pause();
 	}
 }
 

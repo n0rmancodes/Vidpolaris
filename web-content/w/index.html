@@ -31,9 +31,12 @@
 						<audio id="aPlayer"></audio>
 					</div>
 					<div class="details">
-						<div class="snackBar" style="margin:0;display:none;">
+						<div id="sqSB" class="snackBar" style="margin:0;display:none;">
 							<select id="v" onInput="getItag(this.value, 'v');"></select>
 							<select id="a" onInput="getItag(this.value, 'a');"></select>
+						</div><br>
+						<div id="qSB">
+							<select id="va" onInput="getItag(this.value, 'v');"></select>
 						</div><br>
 						<h2 id="title"></h2>
 						<div class="authorInfo">
