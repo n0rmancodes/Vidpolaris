@@ -68,8 +68,16 @@ function load() {
 			}
 			document.getElementById("viewCount").innerHTML = parseInt(json.info.videoDetails.viewCount).toLocaleString() + " views";
 			document.getElementById("pText").innerHTML = json.info.videoDetails.publishDate;
-			var desc = varLinks(json.info.videoDetails.description.simpleText.replace(/\n/g, "<br>"));
-			document.getElementById("fullDesc").innerHTML = desc;
+			if (json.info.videoDetails.description) {
+				var desc = varLinks(json.info.videoDetails.description.simpleText.replace(/\n/g, "<br>"));
+				document.getElementById("fullDesc").innerHTML = desc;
+			} else if (json.info.videoDetails.shortDescription) {
+				var desc = varLinks(json.info.videoDetails.shortDescription.replace(/\n/g, "<br>"));
+				document.getElementById("fullDesc").innerHTML = desc;
+			} else {
+				var desc = "[No description]"
+				document.getElementById("fullDesc").innerHTML = desc;
+			}
 			document.getElementById("auth").innerHTML = json.info.videoDetails.author.name;
 			document.getElementById("authLink").href = "c?" + json.info.videoDetails.author.external_channel_url.substring(32,56)
 			if (json.info.videoDetails.author.subscriber_count) {
