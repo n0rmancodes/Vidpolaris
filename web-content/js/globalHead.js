@@ -8,5 +8,8 @@ if (localStorage.getItem("n_theme")) {
 		console.log("no 'h' element");
 	}
 } else {
-	console.log("no 'n_theme' value");
+	var css = document.createElement("LINK");
+		css.href = "/css/light/style.css";
+		css.rel = "stylesheet";
+		document.getElementById("h").appendChild(css);
 }
