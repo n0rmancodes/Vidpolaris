@@ -9,3 +9,11 @@ if (localStorage.getItem("n_theme")) {
 function save(setting, val) {
 	localStorage.setItem(setting, val);
 }
+
+function apply() {
+	if (window.history.back()) {
+		window.history.back()
+	} else {
+		window.location.reload(); 
+	}
+}
