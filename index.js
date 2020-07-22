@@ -193,8 +193,14 @@ async function runServer(request, response) {
 				} else {
 					var i = param.url;
 				}
-				var opt = {
-					limit: 0
+				if (param.limit) {
+					var opt = {
+						limit: 0;
+					}
+				} else {
+					var opt = {
+						limit: param.limit;
+					}
 				}
 				ytpl(i, opt, function(err,result) {
 					if (err) {

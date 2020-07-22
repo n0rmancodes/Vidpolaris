@@ -4,7 +4,7 @@ function load() {
 	document.getElementById("deet").innerHTML = "requesting server...";
 	var id = window.location.search.substring(1,25);
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "/api/playlist?url=https://www.youtube.com/channel/" + id);
+	xhr.open("GET", "/api/playlist?url=https://www.youtube.com/channel/" + id + "&limit=200");
 	xhr.send();
 	xhr.onload = function () {
 		var json = JSON.parse(xhr.responseText);
