@@ -195,11 +195,11 @@ async function runServer(request, response) {
 				}
 				if (param.limit) {
 					var opt = {
-						limit: 0;
+						limit: 0
 					}
 				} else {
 					var opt = {
-						limit: param.limit;
+						limit: param.limit
 					}
 				}
 				ytpl(i, opt, function(err,result) {
