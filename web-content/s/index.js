@@ -18,14 +18,16 @@ function load() {
 				for (var c in json.items) {
 					var link = document.createElement("A");
 					var chip = document.createElement("DIV");
-					chip.classList.add("largeHoriChip");
 					document.getElementById("searchResults").appendChild(chip);
 					if (json.items[c].type == "video") {
 						link.href = "w?" + json.items[c].link.substring(32);
+						chip.classList.add("largeHoriChip");
 						var img = document.createElement("IMG");
+						img.classList.add("bImg");
 						img.src = "/api/proxy?url=" + btoa(json.items[c].thumbnail.split("?")[0]);
 						chip.appendChild(img);
 						var d = document.createElement("DIV");
+						d.classList.add("inner");
 						var tit = document.createElement("H2");
 						tit.innerHTML = json.items[c].title;
 						d.appendChild(tit);
@@ -53,11 +55,14 @@ function load() {
 						document.getElementById("searchResults").appendChild(link);
 					} else if (json.items[c].type == "channel") {
 						link.href = "c?" + json.items[c].channel_id;
+						chip.classList.add("largeHoriChip");
 						var img = document.createElement("IMG");
+						img.classList.add("bImg");
 						img.src = "/api/proxy?url=" + btoa(json.items[c].avatar.split("=s")[0]);
 						img.classList.add("square");
 						chip.appendChild(img);
 						var d = document.createElement("DIV");
+						d.classList.add("inner");
 						var nam = document.createElement("H2");
 						nam.innerHTML = json.items[c].name;
 						d.appendChild(nam);
@@ -76,10 +81,13 @@ function load() {
 						document.getElementById("searchResults").appendChild(link);
 					} else if (json.items[c].type == "playlist") {
 						link.href = "p?" + json.items[c].link.substring(38);
+						chip.classList.add("largeHoriChip");
 						var img = document.createElement("IMG");
+						img.classList.add("bImg");
 						img.src = "/api/proxy?url=" + btoa(json.items[c].thumbnail.split("?")[0]);
 						chip.appendChild(img);
 						var d = document.createElement("DIV");
+						d.classList.add("inner");
 						var tit = document.createElement("H2");
 						tit.innerHTML = json.items[c].title;
 						d.appendChild(tit);
@@ -100,9 +108,6 @@ function load() {
 						chip.appendChild(d);
 						link.appendChild(chip);
 						document.getElementById("searchResults").appendChild(link);
-					} else if (json.items[c].type == "shelf-vertical") {
-						
-						document.getElementById("searchResults").appendChild(chip);
 					}
 				}
 				document.getElementById("main").style.display = "";

@@ -3,6 +3,10 @@ if (localStorage.getItem("sq") == "enabled") {
 	document.getElementById("player").addEventListener("play", function() {
 		document.getElementById("aPlayer").play();
 	})
+	
+	document.getElementById("player").addEventListener("playing", function() {
+		document.getElementById("aPlayer").play();
+	})
 
 	document.getElementById("player").addEventListener("pause", function() {
 		document.getElementById("aPlayer").pause();
@@ -30,7 +34,6 @@ function load() {
 			sessionStorage.setItem("info", xhr.responseText.toString());
 			document.getElementById("loader").style.display = "none";
 			if (localStorage.getItem("sq") == "enabled") {
-				document.getElementById("player").onclick = function () {toggle()}
 				document.getElementById("sqSB").style.display = "";
 				document.getElementById("qSB").style.display = "none";
 				for (var c in json.audio) {
@@ -49,6 +52,7 @@ function load() {
 				document.getElementById("aPlayer").src = getItag(document.getElementById("a").options[0].value);
 				document.getElementById("player").load();
 				document.getElementById("aPlayer").load();
+				document.getElementById("volume").value = (document.getElementById("aPlayer").volume) * 100;
 			} else {
 				document.getElementById("sqSB").style.display = "none";
 				document.getElementById("qSB").style.display = "";
@@ -170,50 +174,7 @@ function getItag(itag, type) {
 	}
 }
 
-function isDash(itag) {
-	if (sessionStorage.getItem("info")) {
-		var json = JSON.parse(sessionStorage.getItem("info"));
-		var formats = json.info.formats;
-		for (var c in formats) {
-			if (formats[c].itag == parseInt(itag)) {
-				return formats[c].isDashMPD;
-			}
-		}
-	}
-}
-
-function isHLS(itag) {
-	if (sessionStorage.getItem("info")) {
-		var json = JSON.parse(sessionStorage.getItem("info"));
-		var formats = json.info.formats;
-		for (var c in formats) {
-			if (formats[c].itag == parseInt(itag)) {
-				return formats[c].isHLS;
-			}
-		}
-	}
-}
-
-function hlsify(ele) {
-	var h = document.createElement("SCRIPT");
-	h.src = "https://cdn.jsdelivr.net/npm/hls.js@latest";
-	document.getElementById("main").appendChild(h);
-	h.onload = function () {
-		if (Hls.isSupported()) {
-			var hls = new Hls();
-			hls.loadSource("/api/proxy?url=" + btoa(document.getElementById(ele).src));
-			hls.attachMedia(document.getElementById(ele));
-		}
-	}
-}
-
-function dashify(ele) {
-	var h = document.createElement("SCRIPT");
-	h.src = "http://cdn.dashjs.org/v3.1.0/dash.all.min.js";
-	document.getElementById("main").appendChild(h);
-	h.onload = function () {
-		var url = "/api/proxy?url=" + btoa(document.getElementById(ele).src);
-		var p = dashjs.MediaPlayer().create();
-		p.initialize(document.getElementById("player"), url, true);
-	}
+function changeVolume(val) {
+	val = (val / 100);
+	document.getElementById("aPlayer").volume = val;
 }

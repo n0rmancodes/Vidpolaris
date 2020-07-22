@@ -265,6 +265,8 @@ a:hover {
 		margin-left:-15%;
 	}
 	
+	
+	
 	.bigSquare {
 		width:110px;
 		height:110px;
@@ -409,7 +411,7 @@ a:hover {
 		margin:5px;
 	}
 	
-	.horiVidChip div {
+	.horiVidChip .inner{
 		float:left;
 		width:60%;
 		height:91%;
@@ -442,7 +444,7 @@ a:hover {
 		margin:5px;
 	}
 	
-	.largeHoriChip img {
+	.largeHoriChip .bImg {
 		width:525px;
 		height:260px;
 		object-fit:cover;
@@ -472,5 +474,20 @@ a:hover {
 	.bigSquare {
 		width:10%;
 		height:90%;
+	}
+	
+	.horiInnerChip {
+		width:97%;
+		margin:1%;
+		height:200px;
+		text-align:left;
+	}
+	
+	.horiInnerChip img {
+		width:525px;
+		height:180px;
+		object-fit:cover;
+		float:left;
+		margin:.5%;
 	}
 }
