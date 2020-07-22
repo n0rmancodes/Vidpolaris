@@ -36,13 +36,15 @@ function load() {
 						aut.appendChild(aut_ico);
 						aut.innerHTML = aut.innerHTML + " " + json.items[c].author.name;
 						d.appendChild(aut);
-						var viw = document.createElement("H3");
-						var viw_ico = document.createElement("SPAN");
-						viw_ico.classList.add("material-icons");
-						viw_ico.innerHTML = "visibility";
-						viw.appendChild(viw_ico);
-						viw.innerHTML = viw.innerHTML + " " + json.items[c].views.toLocaleString() + " views";
-						d.appendChild(viw);
+						if (json.items[c].views) {
+							var viw = document.createElement("H3");
+							var viw_ico = document.createElement("SPAN");
+							viw_ico.classList.add("material-icons");
+							viw_ico.innerHTML = "visibility";
+							viw.appendChild(viw_ico);
+							viw.innerHTML = viw.innerHTML + " " + json.items[c].views.toLocaleString() + " views";
+							d.appendChild(viw);
+						}
 						var dsc = document.createElement("P");
 						dsc.innerHTML = json.items[c].description;
 						d.appendChild(dsc);

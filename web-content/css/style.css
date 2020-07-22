@@ -5,11 +5,6 @@ body {
 	margin:0;
 }
 
-a {
-	color:#515151;
-	text-decoration:none;
-}
-
 a:hover {
 	text-decoration:underline;
 }
@@ -34,7 +29,6 @@ a:hover {
 	position: absolute;
 	left: 8px;
 	width: 16px;
-	background: black;
 	animation: ldr 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 
@@ -124,7 +118,6 @@ a:hover {
 	
 	.hdr h1 {
 		margin-bottom:0;
-		color:black;
 	}
 	
 	.hdr div {
@@ -159,8 +152,6 @@ a:hover {
 		text-decoration:none;
 		width:99%;
 		height:500px;
-		background:#eaeaea;
-		color:black;
 		margin:5px;
 	}
 	
@@ -237,7 +228,6 @@ a:hover {
 	}
 	
 	.horiVidChip {
-		background:#eaeaea;
 		width:99%;
 		height:225px;
 		margin:5px;
@@ -250,7 +240,6 @@ a:hover {
 		height:91%;
 		padding-top:1%;
 		padding-bottom:1%;
-		color:black;
 	}
 	
 	.horiVidChip img {
@@ -291,7 +280,6 @@ a:hover {
 
 	.hdr h1 {
 		margin-right:7px;
-		color:black;
 	}
 
 	.hdr button {
@@ -332,7 +320,6 @@ a:hover {
 	.vidChip {
 		width:300px;
 		height:300px;
-		background:#eaeaea;
 		float:left;
 		margin:5px;
 	}
@@ -345,7 +332,6 @@ a:hover {
 	}
 	
 	.vidChip h3 {
-		color:black;
 		margin-top:-2%;
 		margin-left:4%;
 		margin-right:4%;
@@ -353,7 +339,6 @@ a:hover {
 	}
 	
 	.vidChip h4 {
-		color:black;
 		margin-top:0;
 		margin-left:4%;
 		margin-right:4%;
@@ -415,7 +400,6 @@ a:hover {
 	}
 	
 	.horiVidChip {
-		background:#eaeaea;
 		width:100%;
 		height:150px;
 		margin:5px;
@@ -450,7 +434,6 @@ a:hover {
 	}
 	
 	.largeHoriChip {
-		background:#eaeaea;
 		width:100%;
 		min-height:300px;
 		margin:5px;

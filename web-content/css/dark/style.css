@@ -1,0 +1,29 @@
+body {
+	background:#282828;
+	color:white;
+}
+
+* {
+	color:white;
+}
+
+input, button {
+	background:#6a6a6a;
+}
+
+.lodr div {
+	background:white;
+}
+
+.hdr h1 {
+	color:white;
+}
+
+select {
+	background:#282828;
+}
+
+.vidChip, .horiVidChip, .largeHoriChip {
+	background:#464646;
+	color:white;
+}

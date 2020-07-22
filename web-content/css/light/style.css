@@ -1,0 +1,21 @@
+* {
+	color:black;
+}
+
+a {
+	color:#515151;
+	text-decoration:none;
+}
+
+.lodr div {
+	background:black;
+}
+
+.hdr h1 {
+	color:black;
+}
+
+.vidChip, .horiVidChip, .largeHoriChip {
+	background:#eaeaea;
+	color:black;
+}

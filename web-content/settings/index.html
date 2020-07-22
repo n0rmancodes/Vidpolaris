@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<head>
+	<head id="h">
 		<title>Settings | VidPolaris</title>
 		<link href="/css/style.css" rel="stylesheet">
 		<meta charset="UTF-8">
@@ -12,15 +12,24 @@
 		</div>
 		<div class="body">
 			<div class="option">
-				<label>invidious data source:</label>
-				<select id="invSrc">
+				<label>Invidious Data Source:</label>
+				<select id="invSrc" onInput="save('invSrc', this.value)">
 					<option value="official">invidio.us</option>
 					<option value="snopyta">snopyta.org</option>
 					<option value="13ad">13ad.de</option>
 					<option value="gcc">gcc-project.de</option>
 				</select>
 			</div>
+			<div class="option">
+				<label>Theme:</label>
+				<select id="n_theme" onInput="save('n_theme', this.value)">
+					<option value="light">light</option>
+					<option value="dark">dark</option>
+				</select>
+			</div>
+			<p>Settings are automatically saved!</p>
 		</div>
 		<script src="/js/globalBody.js" type="text/javascript"></script>
+		<script src="/settings/index.js" type="text/javascript"></script>
 	</body>
 </html>
