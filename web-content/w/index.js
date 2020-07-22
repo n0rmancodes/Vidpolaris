@@ -146,16 +146,6 @@ function varLinks(t) {
 	return t.replace(replacePattern, '<a href="$1" class="channelLink">$1</a>');
 }
 
-function toggle() {
-	if (document.getElementById("player").playing) {
-		document.getElementById("player").pause();
-		document.getElementById("aPlayer").pause();
-	} else {
-		document.getElementById("player").play();
-		document.getElementById("aPlayer").pause();
-	}
-}
-
 function getItag(itag, type) {
 	if (sessionStorage.getItem("info")) {
 		var json = JSON.parse(sessionStorage.getItem("info"));

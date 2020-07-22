@@ -265,7 +265,36 @@ a:hover {
 		margin-left:-15%;
 	}
 	
+	.largeHoriChip {
+		width:100%;
+		min-height:330px;
+		margin:5px;
+		text-align:left;
+	}
 	
+	.largeHoriChip .bImg, .largeHoriChip .inner {
+		float:left;
+		width:45%;
+	}
+	
+	.largeHoriChip .inner {
+		padding-top:3%;
+		padding-bottom:3%;
+		padding-right:1%;
+	}
+	
+	.largeHoriChip .inner * {
+		margin:1px;
+	}
+	
+	.largeHoriChip .bImg {
+		object-fit:cover;
+		height:270px;
+		padding-top:3%;
+		padding-bottom:3%;
+		padding-left:1%;
+		padding-right:1%;
+	}
 	
 	.bigSquare {
 		width:110px;
@@ -445,7 +474,7 @@ a:hover {
 	}
 	
 	.largeHoriChip .bImg {
-		width:525px;
+		width:25%;
 		height:260px;
 		object-fit:cover;
 		float:left;
@@ -464,6 +493,7 @@ a:hover {
 		padding-top:1%;
 		padding-bottom:1%;
 		padding-right:1%;
+		max-width:55%;
 	}
 	
 	.largeHoriChip div * {
