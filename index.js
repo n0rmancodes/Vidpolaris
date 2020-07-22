@@ -17,7 +17,7 @@ const fs = require("fs")
 // boot up
 console.log("starting server...");
 const version = "0.2 [ALPHA]";
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000 || 3001;
 need.defaults({
 	user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0"
 });
