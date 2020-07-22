@@ -5,6 +5,10 @@ body {
 	margin:0;
 }
 
+a {
+	text-decoration:none;
+}
+
 a:hover {
 	text-decoration:underline;
 }
@@ -411,7 +415,6 @@ a:hover {
 		height:91%;
 		padding-top:1%;
 		padding-bottom:1%;
-		color:black;
 	}
 	
 	.horiVidChip img {
@@ -455,7 +458,6 @@ a:hover {
 	
 	.largeHoriChip div {
 		float:left;
-		color:black;
 		text-decoration:none;
 		padding-top:1%;
 		padding-bottom:1%;

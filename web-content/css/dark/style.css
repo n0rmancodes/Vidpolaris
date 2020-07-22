@@ -1,10 +1,10 @@
-body {
+body, button {
 	background:#282828;
 	color:white;
 }
 
-* {
-	color:white;
+a, #authLink {
+	color:#9b9b9b;
 }
 
 input, button {

@@ -2,9 +2,8 @@
 	color:black;
 }
 
-a {
+a, #authLink {
 	color:#515151;
-	text-decoration:none;
 }
 
 .lodr div {
