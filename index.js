@@ -9,6 +9,7 @@ const trans = require("@vitalets/google-translate-api");
 const ytsg = require("youtube-suggest");
 const redddit = require("redddit");
 const need = require("needle");
+const ytch = require('yt-channel-info');
 let filter;
 // built-in pkgs
 const http = require("http");
@@ -18,13 +19,14 @@ const fs = require("fs")
 console.log("starting server...");
 const version = "0.2 [ALPHA]";
 const port = process.env.PORT || 3001;
+const hostUrl = "https://beta.vidpolaris.ml/";
 need.defaults({
 	user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0"
 });
 http.createServer(runServer).listen(port);
 console.log("listening on port " + port + " | version " + version);
 console.log("====================================================");
-async function runServer(request, response) {
+async function runServer(request, res) {
 	const req = url.parse(request.url, true);
 	const path = req.pathname;
 	const param = req.query;
@@ -64,17 +66,17 @@ async function runServer(request, response) {
 					var d = JSON.stringify({
 						"err": "noTrending"
 					})
-					response.writeHead(404, {
+					res.writeHead(404, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					})
-					response.end(d);
+					res.end(d);
 				} else {
-					response.writeHead(200, {
+					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					})
-					response.end(JSON.stringify(body.body));
+					res.end(JSON.stringify(body.body));
 				}
 			})
 		} else if (path == "/api/reddit" | path == "/api/reddit/") {
@@ -101,20 +103,20 @@ async function runServer(request, response) {
 							}
 						}
 					}
-					response.writeHead(200, {
+					res.writeHead(200, {
 						"Content-Type": "application/json",
 						"Access-Control-Allow-Origin": "*"
 					});
-					response.end(JSON.stringify(dat));
+					res.end(JSON.stringify(dat));
 				} else {
 					var d = JSON.stringify({
 						"err": "failedToScrape"
 					})
-					response.writeHead(404, {
+					res.writeHead(404, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					})
-					response.end(d)
+					res.end(d)
 				}
 			})
 		} else if (path == "/api/info" | path == "/api/info/") {
@@ -124,11 +126,11 @@ async function runServer(request, response) {
 				var d = JSON.stringify({
 					"err": "requiresMoreData"
 				})
-				response.writeHead(404, {
+				res.writeHead(404, {
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "application/json"
 				})
-				response.end(d)
+				res.end(d)
 			} else {
 				if (param.id) {
 					var i = param.id;
@@ -139,11 +141,11 @@ async function runServer(request, response) {
 						var d = JSON.stringify({
 							"err": "invalidData"
 						})
-						response.writeHead(404, {
+						res.writeHead(404, {
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type": "application/json"
 						})
-						response.end(d);
+						res.end(d);
 					}
 				}
 				let info = await ytdl(i);
@@ -158,21 +160,21 @@ async function runServer(request, response) {
 						"joined": j,
 						info
 					})
-					response.writeHead(200, {
+					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					});
-					response.end(d);
+					res.end(d);
 				})
 				info.on("err", function(err) {
 					var json = JSON.stringify ({
 						"err":err.stack.split("Error: ")[1].split("\n")[0]
 					})
-					response.writeHead(200, {
+					res.writeHead(200, {
 						"Content-Type": "application/json",
 						"Access-Control-Allow-Origin": "*"
 					});
-					response.end(json);
+					res.end(json);
 				})
 			}
 		} else if (path == "/api/playlist" | path == "/api/playlist/"){
@@ -182,11 +184,11 @@ async function runServer(request, response) {
 				var d = JSON.stringify({
 					"err": "requiresMoreData"
 				})
-				response.writeHead(404, {
+				res.writeHead(404, {
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "application/json"
 				});
-				response.end(d);
+				res.end(d);
 			} else {
 				if (id) {
 					var i = param.id;
@@ -208,18 +210,18 @@ async function runServer(request, response) {
 						var d = JSON.stringify({
 							"err": errTxt
 						})
-						response.writeHead(404, {
+						res.writeHead(404, {
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type": "application/json"
 						});
-						response.end(d);
+						res.end(d);
 					} else {
 						var d = JSON.stringify(result);
-						response.writeHead(200, {
+						res.writeHead(200, {
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type": "application/json"
 						});
-						response.end(d);
+						res.end(d);
 					}
 				})
 			}
@@ -229,22 +231,22 @@ async function runServer(request, response) {
 				var d = JSON.stringify({
 					"err": "requiresMoreData"
 				})
-				response.writeHead(404, {
+				res.writeHead(404, {
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "application/json"
 				});
-				response.end(d);
+				res.end(d);
 			} else {
 				var options = {
 					limit:100
 				}
 				ytsr(q, options, function(err, searchResults) {
 					var d = JSON.stringify(searchResults);
-					response.writeHead(200, {
+					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					});
-					response.end(d);
+					res.end(d);
 				})
 			}
 		} else if (path == "/api/translate" | path == "/api/translate/") {
@@ -252,11 +254,11 @@ async function runServer(request, response) {
 				var d = JSON.stringify({
 					"err": "requiresMoreData"
 				})
-				response.writeHead(404, {
+				res.writeHead(404, {
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "application/json"
 				});
-				response.end(d);
+				res.end(d);
 			} else {
 				var data = param.data;
 				if (!param.to) {
@@ -266,19 +268,19 @@ async function runServer(request, response) {
 				}
 				trans(data,{to:lang}).then(res => {
 					if (!res) {
-						response.writeHead(404, {
+						res.writeHead(404, {
 							"Content-Type": "application/json",
 							"Access-Control-Allow-Origin": "*"
 						})
-						response.end(JSON.stringify({"err":"couldNotResolve"}));
+						res.end(JSON.stringify({"err":"couldNotResolve"}));
 						return;
 					} else {
 						var json = JSON.stringify({res})
-						response.writeHead(200, {
+						res.writeHead(200, {
 							"Content-Type": "application/json",
 							"Access-Control-Allow-Origin": "*"
 						});
-						response.end(json);
+						res.end(json);
 						return;
 					}
 				})
@@ -293,11 +295,11 @@ async function runServer(request, response) {
 					var d = JSON.stringify({
 						"err": "invalidData"
 					});
-					response.writeHead(404, {
+					res.writeHead(404, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					})
-					response.end(d);
+					res.end(d);
 				}
 			}
 			var itag = param.itag;
@@ -305,31 +307,31 @@ async function runServer(request, response) {
 			info.on('info', function(info) {
 				if (info.formats) {
 					let d = JSON.stringify(ytdl.chooseFormat(info.formats, { quality: itag }));
-					response.writeHead(200,{
+					res.writeHead(200,{
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					})
-					response.end(d);
+					res.end(d);
 				} else {
 					var d = JSON.stringify({
 						"err":"noFormats"
 					});
-					response.writeHead(404,{
+					res.writeHead(404,{
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					})
-					response.end(d);
+					res.end(d);
 				}
 			})
 			info.on('err',function(err) {
 				let d = JSON.stringify({
 					"err":err.stack.split("Error: ")[1].split("\n")[0]
 				})
-				response.writeHead(404,{
+				res.writeHead(404,{
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "application/json"
 				})
-				response.end(d);
+				res.end(d);
 			})
 		} else if (path == "/api/reddit/search" | path == "/api/reddit/search/") {
 			if (param.id) {
@@ -340,11 +342,11 @@ async function runServer(request, response) {
 						var d = JSON.stringify({
 							"err":"invalidData"
 						});
-						response.writeHead(404,{
+						res.writeHead(404,{
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type": "application/json"
 						})
-						response.end(d);
+						res.end(d);
 						return;
 					} else {
 						var q = ytdl.getURLVideoId(param.url);
@@ -354,131 +356,216 @@ async function runServer(request, response) {
 					if (res) {
 						if (res[0]) {
 							var d = JSON.stringify(res);
-							response.writeHead(200,{
+							res.writeHead(200,{
 								"Access-Control-Allow-Origin": "*",
 								"Content-Type": "application/json"
 							})
-							response.end(d);
+							res.end(d);
 						} else {
 							var d = JSON.stringify({
 								"err":"noResults"
 							});
-							response.writeHead(404,{
+							res.writeHead(404,{
 								"Access-Control-Allow-Origin": "*",
 								"Content-Type": "application/json"
 							})
-							response.end(d);
+							res.end(d);
 						}
 					} else {
 						var d = JSON.stringify({
 							"err":err.stack.split("Error: ")[1].split("\n")[0]
 						});
-						response.writeHead(200, {
+						res.writeHead(200, {
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type": "application/json"
 						})
-						response.end(d);
+						res.end(d);
 					}
 				})
 			} else {
 				var d = JSON.stringify({
 					"err": "requiresMoreData"
 				})
-				response.writeHead(404, {
+				res.writeHead(404, {
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "application/json"
 				});
-				response.end(d);
+				res.end(d);
 			}
 		} else if (path == "/api/proxy" | path == "/api/proxy/") {
 			if (param.url) {
 				var d = Buffer.from(param.url,"base64").toString();
-				need.get(d).pipe(response);
+				need.get(d).pipe(res);
 			}
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
-			console.log(request)
+			if (param.url) {
+				if (param.url.includes("w?")) {
+					var id = param.url.split("w?")[1];
+					var u = "https://www.youtube.com/oembed?url=https://youtube.com/watch?v=" + id;
+					need(u, function(err, resp, body) {
+						if (body) {
+							var authorUrl = body.author_url.replace("https://www.youtube.com/channel/", hostUrl + "c?")
+							var d = JSON.stringify({
+								"author_name":body.author_name,
+								"author_url":authorUrl,
+								"title":body.title,
+								"thumbnail_url":body.thumbnail_url,
+								"provider_url":hostUrl,
+								"provider_name":"VidPolaris",
+								"version":version
+							})
+							res.writeHead(200, {
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "application/json"
+							});
+							res.end(d)
+						}
+					})
+				}
+			}
+		} else if (path == "/api/channel" | path == "/api/channel/") {
+			if (param.id) {
+				ytch.getChannelInfo(param.id).then((response) => {
+					var d = JSON.stringify(response);
+					res.writeHead(200, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(d);
+				})
+			} else {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(d);
+			}
+		} else if (path == "/api/channel/videos" | path == "/api/channel/videos/") {
+			if (param.id) {
+				if (param.sortBy == "newest" | param.sortBy == "oldest" | param.sortBy == "popular") {
+					ytch.getChannelVideos(param.id, param.sortBy).then((response) => {
+						var d = JSON.stringify(response);
+						res.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						});
+						res.end(d);
+					});
+				} else {
+					ytch.getChannelVideos(param.id).then((response) => {
+						var d = JSON.stringify(response);
+						res.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						});
+						res.end(d);
+					});
+				}
+			} else if (param.token) {
+				ytch.getChannelVideosMore(param.token).then((response) => {
+					var d = JSON.stringify(response);
+					res.writeHead(200, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(d);
+				});
+			} else {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(d);
+			}
 		} else {
 			var d = JSON.stringify({
+				"err": "invalidEndpoint",
 				"version": version,
 				"port": port
 			})
-			response.writeHead(404, {
+			res.writeHead(404, {
 				"Access-Control-Allow-Origin": "*",
 				"Content-Type": "application/json"
 			})
-			response.end(d);
+			res.end(d);
 		}
 	} else {
 		// web content
-		fs.readFile("./web-content" + path, function(err,res) {
+		fs.readFile("./web-content" + path, function(err,resp) {
 			if (err) {
 				if (err.code == "ENOENT") {
-					fs.readFile("./errors/404.html", function(err,res){
+					fs.readFile("./errors/404.html", function(err,resp){
 						if (err) {
-							response.end(err.code)
+							res.end(err.code)
 						} else {
-							response.writeHead(200, {
+							res.writeHead(200, {
 								"Access-Control-Allow-Origin": "*",
 								"Content-Type": "text/html"
 							})
-							response.end(res)
+							res.end(resp)
 						}
 					})
 				} else if (err.code == "EISDIR") {
-					fs.readFile("./web-content" + path + "/index.html", function(err,res) {
+					fs.readFile("./web-content" + path + "/index.html", function(err,resp) {
 						if (err) {
 							if (err.code == "ENOENT") {
-								fs.readFile("./errors/404.html", function(err,res){
+								fs.readFile("./errors/404.html", function(err,resp){
 									if (err) {
-										response.end(err.code)
+										res.end(err.code)
 									} else {
-										response.writeHead(200, {
+										res.writeHead(200, {
 											"Access-Control-Allow-Origin": "*",
 											"Content-Type": "text/html"
 										})
-										response.end(res)
+										res.end(resp)
 									}
 								})
 							}
 						} else {
-							response.writeHead(200, {
+							res.writeHead(200, {
 								"Access-Control-Allow-Origin": "*",
 								"Content-Type": "text/html"
 							})
-							response.end(res)
+							res.end(resp)
 						}
 					})
 				} else {
 					console.log(err.code);
-					response.end(err.code);
+					res.end(err.code);
 				}
 			} else {
 				if (path.includes(".")) {
 					var fileType = path.split(".")[path.split.length-1];
 					if (fileType == "js") {
-						response.writeHead(200, {
+						res.writeHead(200, {
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type":"application/javascript"
 						})
-						response.end(res);
+						res.end(resp);
 					} else if (fileType == "css") {
-						response.writeHead(200, {
+						res.writeHead(200, {
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type":"text/css"
 						})
-						response.end(res);
+						res.end(resp);
 					} else {
-						response.writeHead(200, {
+						res.writeHead(200, {
 							"Access-Control-Allow-Origin": "*",
 						})
-						response.end(res)
+						res.end(resp)
 					}
 				} else {
-					response.writeHead(200, {
+					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type":"text/html"
 					})
-					response.end(res);
+					res.end(resp);
 				}
 			}
 		})
