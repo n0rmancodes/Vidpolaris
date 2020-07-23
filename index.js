@@ -395,6 +395,8 @@ async function runServer(request, response) {
 				var d = Buffer.from(param.url,"base64").toString();
 				need.get(d).pipe(response);
 			}
+		} else if (path == "/api/oembed" | path == "/api/oembed/") {
+			console.log(request)
 		} else {
 			var d = JSON.stringify({
 				"version": version,
