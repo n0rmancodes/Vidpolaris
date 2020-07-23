@@ -113,9 +113,28 @@ a:hover {
 }
 
 .channelDiv img {
-	width:10%;
-	height:50%;
+	margin:1%;
 }
+
+.channelInf {
+	text-align:left;
+}
+
+.channelInf h2 {
+	margin:0;
+}
+
+.channelInf h3 {
+	margin-top:.5%;
+	margin-bottom:.5%;
+}
+
+.channelInf p {
+	margin-top:0;
+	margin-bottom:1%;
+}
+
+
 
 @media (max-width:1000px) {
 	body {
@@ -310,6 +329,16 @@ a:hover {
 	
 	.channelDiv {
 		height:200px;
+	}
+	
+	.channelDiv img {
+		width:10%;
+		height:50%;
+	}
+	
+	.channelInf {
+		padding-left:1%;
+		padding-right:1%;
 	}
 }
 @media (min-width:1001px) {
@@ -530,5 +559,14 @@ a:hover {
 		object-fit:cover;
 		float:left;
 		margin:.5%;
+	}
+	
+	.channelDiv {
+		height:360px;
+	}
+	
+	.channelDiv img {
+		height:53%;
+		width:10%;
 	}
 }
