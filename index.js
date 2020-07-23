@@ -237,10 +237,7 @@ async function runServer(request, res) {
 				});
 				res.end(d);
 			} else {
-				var options = {
-					limit:100
-				}
-				ytsr(q, options, function(err, searchResults) {
+				let data = await ytsr(q).then(function(searchResults) {
 					var d = JSON.stringify(searchResults);
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
@@ -397,32 +394,6 @@ async function runServer(request, res) {
 				var d = Buffer.from(param.url,"base64").toString();
 				need.get(d).pipe(res);
 			}
-		} else if (path == "/api/oembed" | path == "/api/oembed/") {
-			if (param.url) {
-				if (param.url.includes("w?")) {
-					var id = param.url.split("w?")[1];
-					var u = "https://www.youtube.com/oembed?url=https://youtube.com/watch?v=" + id;
-					need(u, function(err, resp, body) {
-						if (body) {
-							var authorUrl = body.author_url.replace("https://www.youtube.com/channel/", hostUrl + "c?")
-							var d = JSON.stringify({
-								"author_name":body.author_name,
-								"author_url":authorUrl,
-								"title":body.title,
-								"thumbnail_url":body.thumbnail_url,
-								"provider_url":hostUrl,
-								"provider_name":"VidPolaris",
-								"version":version
-							})
-							res.writeHead(200, {
-								"Access-Control-Allow-Origin": "*",
-								"Content-Type": "application/json"
-							});
-							res.end(d)
-						}
-					})
-				}
-			}
 		} else if (path == "/api/channel" | path == "/api/channel/") {
 			if (param.id) {
 				ytch.getChannelInfo(param.id).then((response) => {
@@ -432,7 +403,16 @@ async function runServer(request, res) {
 						"Content-Type": "application/json"
 					});
 					res.end(d);
-				})
+				}).catch((err) => {
+					var d = JSON.stringify({
+						"err":err.stack.split("Error: ")[1].split("\n")[0]
+					});
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					res.end(d);
+				});
 			} else {
 				var d = JSON.stringify({
 					"err": "requiresMoreData"
@@ -453,6 +433,15 @@ async function runServer(request, res) {
 							"Content-Type": "application/json"
 						});
 						res.end(d);
+					}).catch((err) => {
+						var d = JSON.stringify({
+							"err":err.stack.split("Error: ")[1].split("\n")[0]
+						});
+						res.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						res.end(d);
 					});
 				} else {
 					ytch.getChannelVideos(param.id).then((response) => {
@@ -461,6 +450,15 @@ async function runServer(request, res) {
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type": "application/json"
 						});
+						res.end(d);
+					}).catch((err) => {
+						var d = JSON.stringify({
+							"err":err.stack.split("Error: ")[1].split("\n")[0]
+						});
+						res.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
 						res.end(d);
 					});
 				}
@@ -471,6 +469,15 @@ async function runServer(request, res) {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					});
+					res.end(d);
+				}).catch((err) => {
+					var d = JSON.stringify({
+						"err":err.stack.split("Error: ")[1].split("\n")[0]
+					});
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
 					res.end(d);
 				});
 			} else {
