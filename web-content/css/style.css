@@ -134,7 +134,9 @@ a:hover {
 	margin-bottom:1%;
 }
 
-
+.horiVidChip {
+	text-decoration:none;
+}
 
 @media (max-width:1000px) {
 	body {
