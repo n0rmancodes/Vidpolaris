@@ -6,6 +6,10 @@ a, #authLink {
 	color:#515151;
 }
 
+a:hover, #authLink:hover {
+	color:#757575;
+}
+
 .lodr div {
 	background:black;
 }

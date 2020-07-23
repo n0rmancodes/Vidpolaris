@@ -7,6 +7,10 @@ a, #authLink {
 	color:#9b9b9b;
 }
 
+a:hover, #authLink:hover {
+	color:#93f5ff;
+}
+
 input, button{
 	background:#6a6a6a;
 	color:white;

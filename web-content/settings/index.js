@@ -16,7 +16,8 @@ function save(setting, val) {
 
 function apply() {
 	if (window.history.back()) {
-		window.history.back()
+		window.history.back();
+		window.location.reload(); 
 	} else {
 		window.location.reload(); 
 	}
