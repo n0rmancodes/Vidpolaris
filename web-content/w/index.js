@@ -1,24 +1,34 @@
 load();
 if (localStorage.getItem("sq") == "enabled") {
 	document.getElementById("player").addEventListener("play", function() {
-		document.getElementById("aPlayer").play();
+		if (!document.getElementById("aPlayer").src == "") {
+			document.getElementById("aPlayer").play();
+		}
 	})
 	
 	document.getElementById("player").addEventListener("playing", function() {
-		document.getElementById("aPlayer").play();
+		if (!document.getElementById("aPlayer").src == "") {
+			document.getElementById("aPlayer").play();
+		}
 	})
 
 	document.getElementById("player").addEventListener("pause", function() {
-		document.getElementById("aPlayer").pause();
-		document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+		if (!document.getElementById("aPlayer").src == "") {
+			document.getElementById("aPlayer").pause();
+			document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+		}
 	})
 
 	document.getElementById("player").addEventListener("seeked", function() {
-		document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+		if (!document.getElementById("aPlayer").src == "") {
+			document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+		}
 	})
 
 	document.getElementById("player").addEventListener("waiting",function() {
-		document.getElementById("aPlayer").pause();
+		if (!document.getElementById("aPlayer").src == "") {
+			document.getElementById("aPlayer").pause();
+		}
 	})
 }
 
@@ -37,19 +47,36 @@ function load() {
 				document.getElementById("sqSB").style.display = "";
 				document.getElementById("qSB").style.display = "none";
 				for (var c in json.audio) {
-					var opt = document.createElement("OPTION");
-					opt.innerHTML = json.audio[c].audioBitrate + "kbps [" + json.audio[c].codecs + "]";
-					opt.value = json.audio[c].itag
-					document.getElementById("a").appendChild(opt);
+					if (!json.audio[c].isDashMPD && !json.audio.isHLS) {
+						var opt = document.createElement("OPTION");
+						opt.innerHTML = json.audio[c].audioBitrate + "kbps [" + json.audio[c].codecs + "]";
+						opt.value = json.audio[c].itag;
+						document.getElementById("a").appendChild(opt);
+					}
 				}
 				for (var c in json.video) {
-					var opt = document.createElement("OPTION");
-					opt.innerHTML = json.video[c].qualityLabel + " [" + json.video[c].codecs + "]";
-					opt.value = json.video[c].itag;
-					document.getElementById("v").appendChild(opt);
+					if (!json.video.isDashMPD && !json.video.isHLS) {
+						var opt = document.createElement("OPTION");
+						opt.innerHTML = json.video[c].qualityLabel + " [" + json.video[c].codecs + "]";
+						opt.value = json.video[c].itag;
+						document.getElementById("v").appendChild(opt);
+					}
 				}
-				document.getElementById("player").src = getItag(document.getElementById("v").options[0].value);
-				document.getElementById("aPlayer").src = getItag(document.getElementById("a").options[0].value);
+				if (document.getElementById("v").options[0] && document.getElementById("a").options[0]) {
+					document.getElementById("player").src = getItag(document.getElementById("v").options[0].value);
+					document.getElementById("aPlayer").src = getItag(document.getElementById("a").options[0].value);
+				} else {
+					document.getElementById("sqSB").style.display = "none";
+					document.getElementById("qSB").style.display = "";
+					for (var c in json.joined) {
+						var opt = document.createElement("OPTION");
+						opt.innerHTML = json.joined[c].qualityLabel + " (" + json.joined[c].audioBitrate + " audio kbps) [" + json.joined[c].codecs + "]";
+						opt.value = json.joined[c].itag;
+						document.getElementById("va").appendChild(opt);
+					}
+					document.getElementById("player").src = getItag(document.getElementById("va").options[0].value);
+					document.getElementById("player").load();
+				}
 				document.getElementById("player").load();
 				document.getElementById("aPlayer").load();
 				document.getElementById("volume").value = (document.getElementById("aPlayer").volume) * 100;
