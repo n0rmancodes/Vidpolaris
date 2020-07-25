@@ -166,9 +166,9 @@ async function runServer(request, res) {
 					});
 					res.end(d);
 				})
-				info.on("err", function(err) {
+				info.on("error", function(e) {
 					var json = JSON.stringify ({
-						"err":err.stack.split("Error: ")[1].split("\n")[0]
+						"err":e.stack.split("Error: ")[1].split("\n")[0]
 					})
 					res.writeHead(200, {
 						"Content-Type": "application/json",

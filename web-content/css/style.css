@@ -134,7 +134,7 @@ a:hover {
 	margin-bottom:1%;
 }
 
-.horiVidChip {
+.horiVidChip * {
 	text-decoration:none;
 }
 
