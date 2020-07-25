@@ -515,7 +515,7 @@ async function runServer(request, res) {
 							"provider_name": "VidPolaris Beta",
 							"provider_url": hostUrl,
 							"version": version,
-							"type": "photo",
+							"type": "video",
 							"html": '<iframe width=\"480\" height=\"270\" src=\"' + hostUrl + 'old/embed/#w#' + param.url.split("?")[1] +  '\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>',
 							"url": hostUrl + param.url.substring(1),
 							"author_name": body.author_name,
