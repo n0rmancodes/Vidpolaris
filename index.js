@@ -514,7 +514,7 @@ async function runServer(request, res) {
 							"html": '<iframe width=\"480\" height=\"270\" src=\"' + hostUrl + 'old/embed/#w#' + param.url.split("?")[1] +  '\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>',
 							"url": hostUrl + param.url.substring(1),
 							"author_name": body.author_name,
-							"thumbnail_url": body.thumbnail_url,
+							"thumbnail_url": hostUrl + "api/thumb/" + param.url.split("?")[1],
 							"title": body.title,
 							"width": 480,
 							"height": 270,
@@ -528,6 +528,13 @@ async function runServer(request, res) {
 						res.end(body)
 					})
 				}
+			}
+		} else if (path.includes("/api/thumb")) {
+			if (path.split("/api/thumb/")[1].split("/")[0]) {
+				var id = path.split("/api/thumb/")[1].split("/")[0];
+				need.get("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg").pipe(res);
+			} else {
+				need.get("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
 			}
 		} else {
 			var d = JSON.stringify({
