@@ -510,7 +510,7 @@ async function runServer(request, res) {
 							"provider_name": "VidPolaris Beta",
 							"provider_url": hostUrl,
 							"version": version,
-							"type": "video",
+							"type": "photo",
 							"html": '<iframe width=\"480\" height=\"270\" src=\"' + hostUrl + 'old/embed/#w#' + param.url.split("?")[1] +  '\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>',
 							"url": hostUrl + param.url.substring(1),
 							"author_name": body.author_name,
@@ -532,7 +532,13 @@ async function runServer(request, res) {
 		} else if (path.includes("/api/thumb")) {
 			if (path.split("/api/thumb/")[1].split("/")[0]) {
 				var id = path.split("/api/thumb/")[1].split("/")[0];
-				need.get("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg").pipe(res);
+				need.get("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg", function(err,resp,body) {
+					res.writeHead(200, {
+						"Content-Type":"image/jpeg",
+						"Access-Control-Allow-Origin":"*"
+					})
+					res.end(body);
+				});
 			} else {
 				need.get("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
 			}
