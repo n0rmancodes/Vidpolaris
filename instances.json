@@ -1,0 +1,18 @@
+[
+	{
+		"url":"https://beta.vidpolaris.ml",
+		"location":"US West",
+		"official":true,
+		"https":true,
+		"port":80,
+		"type":"all"
+	},
+	{
+		"url":"http://dl4.electrohaxz.tk:8002",
+		"location":"Midwest Russia",
+		"official":true,
+		"https":true,
+		"port":8002,
+		"type":"apiOnly"
+	}
+]
