@@ -504,6 +504,11 @@ async function runServer(request, res) {
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
 			if (param.url && param.url.includes("?")) {
 				if (param.url.split("?")[0] == "/w" | param.url.split("?")[0] == "w") {
+					if (hostUrl == "https://beta.vidpolaris.ml/") [
+						var hUrl = "https://vidpolaris.ml:9027/";
+					} else {
+						var hUrl = hostUrl;
+					}
 					need("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?")[1], function(err, resp, body) {
 						var body = JSON.stringify({
 							"author_url": body.author_url,
@@ -514,7 +519,7 @@ async function runServer(request, res) {
 							"html": '<iframe width=\"480\" height=\"270\" src=\"' + hostUrl + 'old/embed/#w#' + param.url.split("?")[1] +  '\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>',
 							"url": hostUrl + param.url.substring(1),
 							"author_name": body.author_name,
-							"thumbnail_url": hostUrl + "api/thumb/" + param.url.split("?")[1],
+							"thumbnail_url": hUrl + "api/thumb/" + param.url.split("?")[1],
 							"title": body.title,
 							"width": 480,
 							"height": 270,
