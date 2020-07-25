@@ -509,13 +509,18 @@ async function runServer(request, res) {
 							var body = JSON.stringify({
 								"author_url": body.author_url,
 								"provider_name": "VidPolaris Beta",
+								"provider_url": hostUrl,
 								"version": version,
 								"type": "video",
 								"html": "<iframe src='https://beta.vidpolaris.ml/old/embed#w#" + param.url.split("?")[1] + "'></iframe>",
 								"url": hostUrl + param.url,
 								"author_name": body.author_name,
 								"thumbnail_url": hostUrl + "api/proxy?url=" + Buffer.from(body.thumbnail_url).toString("base64"),
-								"title": body.title
+								"title": body.title,
+								"width": 480,
+								"height": 270,
+								"thumbnail_width":480,
+								"thumbnail_height":270
 							})
 							res.writeHead(200, {
 								"Access-Control-Allow-Origin": "*",
