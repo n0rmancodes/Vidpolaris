@@ -498,6 +498,16 @@ async function runServer(request, res) {
 			});
 			res.end(d);
 		}
+	} else if (path == "/api/instances" | path == "/api/instances/") {
+		need("https://raw.githubusercontent.com/n0rmancodes/vidpolaris-rw/master/instances.json", function(err, resp, body) {
+			if (body) {
+				res.writeHead(200, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(body);
+			}
+		})
 	} else {
 		var d = JSON.stringify({
 			"err": "invalidEndpoint",
