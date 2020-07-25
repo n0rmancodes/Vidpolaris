@@ -18,14 +18,15 @@ const url = require("url");
 const fs = require("fs");
 // boot up
 console.log("starting server...");
-const version = "0.2 [ALPHA]";
+const version = "0.2";
+const version_type = "ALPHA"
 const port = process.env.PORT || 3001;
 const hostUrl = "https://beta.vidpolaris.ml/";
 need.defaults({
 	user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0"
 });
 http.createServer(runServer).listen(port);
-console.log("listening on port " + port + " | version " + version);
+console.log("listening on port " + port + " | version " + version + " [" + version_type + "]");
 console.log("====================================================");
 async function runServer(request, res) {
 	const req = url.parse(request.url, true);
