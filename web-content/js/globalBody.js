@@ -40,8 +40,6 @@ function calcLString(string) {
 	}
 }
 
-
-
 function varLinks(t) {
 	var replacePattern = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
 	return t.replace(replacePattern, '<a href="$1" class="channelLink">$1</a>');
