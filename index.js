@@ -503,7 +503,15 @@ async function runServer(request, res) {
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
 			console.log(request.headers);
 			need("https://www.youtube.com/oembed/?url=https://youtu.be/YIALlhlyqO4", function(err, resp, body) {
-				var body = JSON.stringify(body);
+				var body = JSON.stringify({
+					"author_url": body.author_url,
+					"provider_name": "VidPolaris Beta",
+					"version": version,
+					"type": "photo",
+					"author_name": body.author_name,
+					"thumbnail_url": body.thumbnail_url,
+					"title": body.title
+				})
 				res.writeHead(200, {
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "application/json"
