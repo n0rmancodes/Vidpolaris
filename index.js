@@ -502,33 +502,31 @@ async function runServer(request, res) {
 				}
 			})
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
-			if (param.url) {
-				if (param.url.includes("?")) {
-					if (param.url.split("?")[0] == "/w") {
-						need("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?")[1], function(err, resp, body) {
-							var body = JSON.stringify({
-								"author_url": body.author_url,
-								"provider_name": "VidPolaris Beta",
-								"provider_url": hostUrl,
-								"version": version,
-								"type": "video",
-								"html": "<iframe src='https://beta.vidpolaris.ml/old/embed#w#" + param.url.split("?")[1] + "'></iframe>",
-								"url": hostUrl + param.url.substring(1),
-								"author_name": body.author_name,
-								"thumbnail_url": hostUrl + "api/proxy?url=" + Buffer.from(body.thumbnail_url).toString("base64"),
-								"title": body.title,
-								"width": 480,
-								"height": 270,
-								"thumbnail_width":480,
-								"thumbnail_height":270
-							})
-							res.writeHead(200, {
-								"Access-Control-Allow-Origin": "*",
-								"Content-Type": "application/json"
-							});
-							res.end(body)
+			if (param.url && param.url.includes("?")) {
+				if (param.url.split("?")[0] == "/w" | param.url.split("?")[0] == "w") {
+					need("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?")[1], function(err, resp, body) {
+						var body = JSON.stringify({
+							"author_url": body.author_url,
+							"provider_name": "VidPolaris Beta",
+							"provider_url": hostUrl,
+							"version": version,
+							"type": "video",
+							"html": "<iframe src='https://beta.vidpolaris.ml/old/embed#w#" + param.url.split("?")[1] + "'></iframe>",
+							"url": hostUrl + param.url.substring(1),
+							"author_name": body.author_name,
+							"thumbnail_url": body.thumbnail_url,
+							"title": body.title,
+							"width": 480,
+							"height": 270,
+							"thumbnail_width":480,
+							"thumbnail_height":270
 						})
-					}
+						res.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						});
+						res.end(body)
+					})
 				}
 			}
 		} else {
