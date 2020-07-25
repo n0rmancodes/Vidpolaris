@@ -505,7 +505,7 @@ async function runServer(request, res) {
 			if (param.url && param.url.includes("?")) {
 				if (param.url.split("?")[0] == "/w" | param.url.split("?")[0] == "w") {
 					if (hostUrl == "https://beta.vidpolaris.ml/") {
-						var hUrl = "https://vidpolaris.ml:9027/";
+						var hUrl = "http://vidpolaris.ml:9027/";
 					} else {
 						var hUrl = hostUrl;
 					}
