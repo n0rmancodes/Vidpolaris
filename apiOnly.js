@@ -14,7 +14,7 @@ let filter;
 // built-in pkgs
 const http = require("http");
 const url = require("url");
-const fs = require("fs")
+const fs = require("fs");
 // boot up
 console.log("starting server...");
 const version = "0.2 [ALPHA]";

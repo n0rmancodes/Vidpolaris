@@ -14,7 +14,7 @@ let filter;
 // built-in pkgs
 const http = require("http");
 const url = require("url");
-const fs = require("fs")
+const fs = require("fs");
 // boot up
 console.log("starting server...");
 const version = "0.2 [ALPHA]";
@@ -494,7 +494,8 @@ async function runServer(request, res) {
 			var d = JSON.stringify({
 				"err": "invalidEndpoint",
 				"version": version,
-				"port": port
+				"port": port,
+				"type": "all"
 			})
 			res.writeHead(404, {
 				"Access-Control-Allow-Origin": "*",
