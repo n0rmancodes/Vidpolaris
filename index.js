@@ -504,7 +504,7 @@ async function runServer(request, res) {
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
 			if (param.url) {
 				if (param.url.includes("?")) {
-					if (param.url.split("?")[0] == "w") {
+					if (param.url.split("?")[0] == "/w") {
 						need("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?")[1], function(err, resp, body) {
 							var body = JSON.stringify({
 								"author_url": body.author_url,
