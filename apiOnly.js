@@ -18,7 +18,7 @@ const fs = require("fs")
 // boot up
 console.log("starting server...");
 const version = "0.2 [ALPHA]";
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 2002;
 const hostUrl = "https://beta.vidpolaris.ml/";
 need.defaults({
 	user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0"
@@ -502,11 +502,13 @@ async function runServer(request, res) {
 		var d = JSON.stringify({
 			"err": "invalidEndpoint",
 			"version": version,
-			"port": port
-	})
-	res.writeHead(404, {
-		"Access-Control-Allow-Origin": "*",
-		"Content-Type": "application/json"
-	})
-	res.end(d);
+			"port": port,
+			"type": "apiOnly"
+		})
+		res.writeHead(404, {
+			"Access-Control-Allow-Origin": "*",
+			"Content-Type": "application/json"
+		})
+		res.end(d);
+	}
 }
