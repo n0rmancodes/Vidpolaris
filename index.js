@@ -511,7 +511,7 @@ async function runServer(request, res) {
 								"provider_name": "VidPolaris Beta",
 								"version": version,
 								"type": "video",
-								"html": "<iframe src='https://beta.vidpolaris.ml/old/embed#" + param.url.split("?")[0] + "'></iframe>"
+								"html": "<iframe src='https://beta.vidpolaris.ml/old/embed#" + param.url.split("?")[0] + "'></iframe>",
 								"url": hostUrl + param.url,
 								"author_name": body.author_name,
 								"thumbnail_url": hostUrl + "api/proxy?url=" + Buffer.from(body.thumbnail_url).toString("base64"),
