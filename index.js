@@ -513,7 +513,7 @@ async function runServer(request, res) {
 								"type": "photo",
 								"url": hostUrl + param.url,
 								"author_name": body.author_name,
-								"thumbnail_url": body.thumbnail_url,
+								"thumbnail_url": hostUrl + "api/proxy?url=" + Buffer.from(body.thumbnail_url).toString("base64"),
 								"title": body.title
 							})
 							res.writeHead(200, {
