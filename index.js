@@ -10,6 +10,7 @@ const ytsg = require("youtube-suggest");
 const redddit = require("redddit");
 const need = require("needle");
 const ytch = require('yt-channel-info');
+const cheerio = require("cheerio");
 let filter;
 // built-in pkgs
 const http = require("http");
@@ -564,11 +565,14 @@ async function runServer(request, res) {
 								})
 							}
 						} else {
+							var $ = cheerio.load(resp);
+							$("#h").append("<link type='application/json+oembed' href='/api/oembed/?url=" + request.url + "'>");
+							var resp = $.html();
 							res.writeHead(200, {
 								"Access-Control-Allow-Origin": "*",
-								"Content-Type": "text/html"
+								"Content-Type":"text/html"
 							})
-							res.end(resp)
+							res.end(resp);
 						}
 					})
 				} else {
@@ -597,6 +601,9 @@ async function runServer(request, res) {
 						res.end(resp)
 					}
 				} else {
+					var $ = cheerio.load(resp);
+					$("#h").append("<link type='application/json+oembed' href='/api/oembed/?url=" + request.url + "'>");
+					var resp = $.html();
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type":"text/html"
