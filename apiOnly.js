@@ -282,112 +282,112 @@ async function runServer(request, res) {
 				})
 			} 
 	} else if (path == "/api/itag" | path == "/api/itag/") {
-			if (param.id) {
-				var i = param.id;
+		if (param.id) {
+			var i = param.id;
+		} else {
+			if (ytdl.validateURL(param.url)) {
+				var i = ytdl.getURLVideoId(param.url);
 			} else {
-				if (ytdl.validateURL(param.url)) {
-					var i = ytdl.getURLVideoId(param.url);
-				} else {
-					var d = JSON.stringify({
-						"err": "invalidData"
-					});
-					res.writeHead(404, {
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "application/json"
-					})
-					res.end(d);
-				}
+				var d = JSON.stringify({
+					"err": "invalidData"
+				});
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				})
+				res.end(d);
 			}
-			var itag = param.itag;
-			let info = ytdl(i);
-			info.on('info', function(info) {
-				if (info.formats) {
-					let d = JSON.stringify(ytdl.chooseFormat(info.formats, { quality: itag }));
-					res.writeHead(200,{
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "application/json"
-					})
-					res.end(d);
-				} else {
+		}
+		var itag = param.itag;
+		let info = ytdl(i);
+		info.on('info', function(info) {
+			if (info.formats) {
+				let d = JSON.stringify(ytdl.chooseFormat(info.formats, { quality: itag }));
+				res.writeHead(200,{
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				})
+				res.end(d);
+			} else {
+				var d = JSON.stringify({
+					"err":"noFormats"
+				});
+				res.writeHead(404,{
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				})
+				res.end(d);
+			}
+		})
+		info.on('err',function(err) {
+			let d = JSON.stringify({
+				"err":err.stack.split("Error: ")[1].split("\n")[0]
+			})
+			res.writeHead(404,{
+				"Access-Control-Allow-Origin": "*",
+				"Content-Type": "application/json"
+			})
+			res.end(d);
+		})
+	} else if (path == "/api/reddit/search" | path == "/api/reddit/search/") {
+		if (param.id) {
+			if (param.id) {
+				var q = param.id;
+			} else {
+				if (!ytdl.validateURL(param.url)) {
 					var d = JSON.stringify({
-						"err":"noFormats"
+						"err":"invalidData"
 					});
 					res.writeHead(404,{
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					})
 					res.end(d);
-				}
-			})
-			info.on('err',function(err) {
-				let d = JSON.stringify({
-					"err":err.stack.split("Error: ")[1].split("\n")[0]
-				})
-				res.writeHead(404,{
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type": "application/json"
-				})
-				res.end(d);
-		})
-	} else if (path == "/api/reddit/search" | path == "/api/reddit/search/") {
-			if (param.id) {
-				if (param.id) {
-					var q = param.id;
+					return;
 				} else {
-					if (!ytdl.validateURL(param.url)) {
+					var q = ytdl.getURLVideoId(param.url);
+				}
+			}
+			redddit.search("url:youtu.be/"+q, function(err,res) {
+				if (res) {
+					if (res[0]) {
+						var d = JSON.stringify(res);
+						res.writeHead(200,{
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						res.end(d);
+					} else {
 						var d = JSON.stringify({
-							"err":"invalidData"
+							"err":"noResults"
 						});
 						res.writeHead(404,{
 							"Access-Control-Allow-Origin": "*",
 							"Content-Type": "application/json"
 						})
 						res.end(d);
-						return;
-					} else {
-						var q = ytdl.getURLVideoId(param.url);
 					}
+				} else {
+					var d = JSON.stringify({
+						"err":err.stack.split("Error: ")[1].split("\n")[0]
+					});
+					res.writeHead(200, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					res.end(d);
 				}
-				redddit.search("url:youtu.be/"+q, function(err,res) {
-					if (res) {
-						if (res[0]) {
-							var d = JSON.stringify(res);
-							res.writeHead(200,{
-								"Access-Control-Allow-Origin": "*",
-								"Content-Type": "application/json"
-							})
-							res.end(d);
-						} else {
-							var d = JSON.stringify({
-								"err":"noResults"
-							});
-							res.writeHead(404,{
-								"Access-Control-Allow-Origin": "*",
-								"Content-Type": "application/json"
-							})
-							res.end(d);
-						}
-					} else {
-						var d = JSON.stringify({
-							"err":err.stack.split("Error: ")[1].split("\n")[0]
-						});
-						res.writeHead(200, {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json"
-						})
-						res.end(d);
-					}
-				})
-			} else {
-				var d = JSON.stringify({
-					"err": "requiresMoreData"
-				})
-				res.writeHead(404, {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type": "application/json"
-				});
-				res.end(d);
-			}
+			})
+		} else {
+			var d = JSON.stringify({
+				"err": "requiresMoreData"
+			})
+			res.writeHead(404, {
+				"Access-Control-Allow-Origin": "*",
+				"Content-Type": "application/json"
+			});
+			res.end(d);
+		}
 	} else if (path == "/api/proxy" | path == "/api/proxy/") {
 		if (param.url) {
 			var d = Buffer.from(param.url,"base64").toString();
