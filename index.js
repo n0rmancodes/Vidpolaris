@@ -500,6 +500,16 @@ async function runServer(request, res) {
 					res.end(body);
 				}
 			})
+		} else if (path == "/api/oembed" | path == "/api/oembed/") {
+			console.log(request.headers);
+			need("https://www.youtube.com/oembed/?url=https://youtu.be/YIALlhlyqO4", function(err, resp, body) {
+				var body = JSON.stringify(body);
+				res.writeHead(200, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(body)
+			})
 		} else {
 			var d = JSON.stringify({
 				"err": "invalidEndpoint",
