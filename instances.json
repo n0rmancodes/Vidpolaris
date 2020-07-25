@@ -5,7 +5,8 @@
 		"official":true,
 		"https":true,
 		"port":80,
-		"type":"all"
+		"type":"all",
+		"maintainedBy":"electrohaxz"
 	},
 	{
 		"url":"http://dl4.electrohaxz.tk:8002",
@@ -13,6 +14,7 @@
 		"official":true,
 		"https":true,
 		"port":8002,
-		"type":"apiOnly"
+		"type":"apiOnly",
+		"maintainedBy":"electohaxz"
 	}
 ]
