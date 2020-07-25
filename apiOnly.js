@@ -165,9 +165,9 @@ async function runServer(request, res) {
 				});
 				res.end(d);
 			})
-			info.on("err", function(err) {
+			info.on("error", function(e) {
 				var json = JSON.stringify ({
-					"err":err.stack.split("Error: ")[1].split("\n")[0]
+					"err":e.stack.split("Error: ")[1].split("\n")[0]
 				})
 				res.writeHead(200, {
 					"Content-Type": "application/json",
@@ -225,26 +225,26 @@ async function runServer(request, res) {
 				})
 			}
 	} else if (path == "/api/search" | path == "/api/search/") {
-			var q = param.q;
-			if (!q) {
-				var d = JSON.stringify({
-					"err": "requiresMoreData"
-				})
-				res.writeHead(404, {
+		var q = param.q;
+		if (!q) {
+			var d = JSON.stringify({
+				"err": "requiresMoreData"
+			})
+			res.writeHead(404, {
+				"Access-Control-Allow-Origin": "*",
+				"Content-Type": "application/json"
+			});
+			res.end(d);
+		} else {
+			let data = await ytsr(q).then(function(searchResults) {
+				var d = JSON.stringify(searchResults);
+				res.writeHead(200, {
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "application/json"
 				});
 				res.end(d);
-			} else {
-				let data = await ytsr(q).then(function(searchResults) {
-					var d = JSON.stringify(searchResults);
-					res.writeHead(200, {
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "application/json"
-					});
-					res.end(d);
-				})
-			}
+			})
+		}
 	} else if (path == "/api/translate" | path == "/api/translate/") {
 		if (!param.data) {
 				var d = JSON.stringify({
