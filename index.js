@@ -502,23 +502,29 @@ async function runServer(request, res) {
 				}
 			})
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
-			console.log(request.headers);
-			need("https://www.youtube.com/oembed/?url=https://youtu.be/YIALlhlyqO4", function(err, resp, body) {
-				var body = JSON.stringify({
-					"author_url": body.author_url,
-					"provider_name": "VidPolaris Beta",
-					"version": version,
-					"type": "photo",
-					"author_name": body.author_name,
-					"thumbnail_url": body.thumbnail_url,
-					"title": body.title
-				})
-				res.writeHead(200, {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type": "application/json"
-				});
-				res.end(body)
-			})
+			if (param.url) {
+				if (param.url.includes("?")) {
+					if (param.url.split("?")[0] == "w") {
+						need("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?")[1], function(err, resp, body) {
+							var body = JSON.stringify({
+								"author_url": body.author_url,
+								"provider_name": "VidPolaris Beta",
+								"version": version,
+								"type": "photo",
+								"url": hostUrl + param.url,
+								"author_name": body.author_name,
+								"thumbnail_url": body.thumbnail_url,
+								"title": body.title
+							})
+							res.writeHead(200, {
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "application/json"
+							});
+							res.end(body)
+						})
+					}
+				}
+			}
 		} else {
 			var d = JSON.stringify({
 				"err": "invalidEndpoint",
@@ -566,7 +572,7 @@ async function runServer(request, res) {
 							}
 						} else {
 							var $ = cheerio.load(resp);
-							$("#h").append("<link type='application/json+oembed' href='/api/oembed/?url=" + request.url + "'>");
+							$("#h").append("<link type='application/json+oembed' href='https://vidpolaris.ml:9027/api/oembed/?url=" + request.url + "'>");
 							var resp = $.html();
 							res.writeHead(200, {
 								"Access-Control-Allow-Origin": "*",
@@ -602,7 +608,7 @@ async function runServer(request, res) {
 					}
 				} else {
 					var $ = cheerio.load(resp);
-					$("#h").append("<link type='application/json+oembed' href='/api/oembed/?url=" + request.url + "'>");
+					$("#h").append("<link type='application/json+oembed' href='https://vidpolaris.ml:9027/api/oembed/?url=" + request.url + "'>");
 					var resp = $.html();
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
