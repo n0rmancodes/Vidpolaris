@@ -176,14 +176,39 @@ function load() {
 
 function getItag(itag, type) {
 	if (sessionStorage.getItem("info")) {
+		if (document.getElementById("main").style.display == "" && type) {
+			sessionStorage.setItem("prog", document.getElementById("player").currentTime);
+			if (document.getElementById("aPlayer").src) {
+				document.getElementById("aPlayer").pause();
+			}
+			document.getElementById("player").pause();
+		}
 		var json = JSON.parse(sessionStorage.getItem("info"));
 		var formats = json.info.formats;
 		for (var c in formats) {
 			if (formats[c].itag == parseInt(itag)) {
 				if (type == "v") {
 					document.getElementById("player").src = formats[c].url;
+					if (sessionStorage.getItem("prog")) {
+						document.getElementById("player").currentTime = parseInt(sessionStorage.getItem("prog"));
+						if (document.getElementById("aPlayer").src) {
+							document.getElementById("aPlayer").currentTime = parseInt(sessionStorage.getItem("prog"));
+						}
+						if (parseInt(sessionStorage.getItem("prog")) > 1) {
+							document.getElementById("player").play();
+						}
+						sessionStorage.removeItem("prog");
+					}
 				} else if (type == "a") {
 					document.getElementById("aPlayer").src = formats[c].url;
+					if (sessionStorage.getItem("prog")) {
+						document.getElementById("aPlayer").currentTime = parseInt(sessionStorage.getItem("prog"));
+						document.getElementById("player").currentTime = parseInt(sessionStorage.getItem("prog"));
+						if (parseInt(sessionStorage.getItem("prog")) > 1) {
+							document.getElementById("player").play();
+						}
+						sessionStorage.removeItem("prog");
+					}
 				} else {
 					return formats[c].url;
 				}

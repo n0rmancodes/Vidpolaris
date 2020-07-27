@@ -26,8 +26,8 @@
     "redddit": "^1.0.2",
     "youtube-suggest": "^1.1.0",
     "yt-channel-info": "^1.0.1",
-    "ytdl-core": "^3.1.2",
+    "ytdl-core": "^3.1.3",
     "ytpl": "^0.1.22",
-    "ytsr": "^0.1.18"
+    "ytsr": "^0.1.19"
   }
 }
