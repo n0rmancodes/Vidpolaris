@@ -36,6 +36,20 @@
 					<option value="enabled">Enabled</option>
 				</select>
 			</div>
+			<div class="option">
+				<label>Allow overscaling:</label>
+				<select id="ov" onInput="save('ov', this.value)">
+					<option value="disabled">Disabled</option>
+					<option value="enabled">Enabled</option>
+				</select>
+			</div>
+			<div class="option">
+				<label>Ignore VP9 codec:</label>
+				<select id="vp9" onInput="save('vp9', this.value)">
+					<option value="disabled">Disabled</option>
+					<option value="enabled">Enabled</option>
+				</select>
+			</div>
 			<button onClick="apply()">Apply</button>
 		</div>
 		<script src="/js/globalBody.js" type="text/javascript"></script>

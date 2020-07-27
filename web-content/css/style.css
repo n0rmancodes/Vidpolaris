@@ -138,6 +138,11 @@ a:hover {
 	text-decoration:none;
 }
 
+.option {
+	text-align:left;
+	margin-bottom:7.5px;
+}
+
 @media (max-width:1000px) {
 	body {
 		text-align:center;
@@ -341,6 +346,10 @@ a:hover {
 	.channelInf {
 		padding-left:1%;
 		padding-right:1%;
+	}
+	
+	.option {
+		padding-left:5%;
 	}
 }
 @media (min-width:1001px) {

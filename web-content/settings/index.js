@@ -10,6 +10,14 @@ if (localStorage.getItem("sq")) {
 	document.getElementById("sq").value = localStorage.getItem("sq");
 }
 
+if (localStorage.getItem("ov")) {
+	document.getElementById("ov").value = localStorage.getItem("ov");
+}
+
+if (localStorage.getItem("vp9")) {
+	document.getElementById("vp9").value = localStorage.getItem("vp9");
+}
+
 function save(setting, val) {
 	localStorage.setItem(setting, val);
 }
