@@ -216,7 +216,7 @@ function load() {
 						document.getElementById("player").load();
 					}
 				}
-				document.getElementById("player").poster = "/api/proxy/?url=" + btoa(json.info.videoDetails.thumbnail.thumbnails[json.info.videoDetails.thumbnail.thumbnails.length-1].url);
+				document.getElementById("player").poster = "/api/thumb/" + id;
 				document.getElementById("title").innerHTML = json.info.videoDetails.title;
 				if (json.info.videoDetails.author.avatar) {
 					document.getElementById("authIco").src = json.info.videoDetails.author.avatar;
@@ -260,7 +260,7 @@ function load() {
 					var vidChip = document.createElement("DIV");
 					vidChip.classList.add("horiVidChip");
 					var img = document.createElement("IMG");
-					img.src = "/api/proxy?url=" + btoa(json.info.related_videos[c].video_thumbnail.split("?")[0]);
+					img.src = "/api/thumb/" + json.info.related_videos[c].id;
 					vidChip.appendChild(img);
 					var div = document.createElement("DIV");
 					var tit = document.createElement("H3");

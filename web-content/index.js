@@ -29,7 +29,7 @@ function getTrending(type, country) {
 			var base = document.createElement("DIV");
 			base.classList.add("vidChip");
 			var img = document.createElement("IMG");
-			img.src = "/api/proxy?url=" + btoa("https://i.ytimg.com/vi/" + json[c].videoId + "/hqdefault.jpg");
+			img.src = "/api/thumb/" + json[c].videoId;
 			base.appendChild(img);
 			if (json[c].title.length < 74) {
 				var tit = document.createElement("H3");
