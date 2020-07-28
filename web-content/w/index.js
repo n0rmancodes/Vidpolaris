@@ -124,34 +124,37 @@ function load() {
 									var hori = false;
 								}
 								if (hori == true) {
-									if (w < json.video[c].width) {
+									if (w < json.joined[c].width) {
 										var isOver = true;
 									} else {
 										var isOver = false;
 									}
 								} else if (hori == false) {
-									if (h < json.video[c].height) {
+									if (h < json.joined[c].height) {
 										var isOver = true;
 									} else {
 										var isOver = false;
 									}
 								}
+								console.log(isOver)
 								if (isOver == false) {
 									if (localStorage.getItem("vp9") == "enabled") {
-										if (json.video[c].videoCodec == "vp9") {
+										if (json.joined[c].videoCodec == "vp9") {
 											console.log("ignored because codec is vp9");
 										} else {
 											var opt = document.createElement("OPTION");
 											opt.innerHTML = json.joined[c].qualityLabel + " (" + json.joined[c].audioBitrate + " audio kbps) [" + json.joined[c].codecs + "]";
-											opt.value = json.video[c].itag;
+											opt.value = json.joined[c].itag;
 											document.getElementById("va").appendChild(opt);
 										}
 									} else {
 										var opt = document.createElement("OPTION");
 										opt.innerHTML = json.joined[c].qualityLabel + " (" + json.joined[c].audioBitrate + " audio kbps) [" + json.joined[c].codecs + "]";
-										opt.value = json.video[c].itag;
+										opt.value = json.joined[c].itag;
 										document.getElementById("va").appendChild(opt);
 									}
+								} else {
+									console.log("skipped quality due to overscan settings")
 								}
 							}
 						}
@@ -186,24 +189,25 @@ function load() {
 								var hori = false;
 							}
 							if (hori == true) {
-								if (w < json.video[c].width) {
-									var isOver = true;
-								} else {
-									var isOver = false;
-								}
+								if (w < json.joined[c].width) {
+										var isOver = true;
+									} else {
+										var isOver = false;
+									}
 							} else if (hori == false) {
-								if (h < json.video[c].height) {
+								if (h < json.joined[c].width) {
 									var isOver = true;
 								} else {
 									var isOver = false;
 								}
 							}
+							console.log(isOver)
 							if (isOver == false) {
 								var opt = document.createElement("OPTION");
-								opt.innerHTML = json.video[c].qualityLabel + " [" + json.video[c].codecs + "]";
-								opt.value = json.video[c].itag;
+								opt.innerHTML = json.joined[c].qualityLabel + " [" + json.joined[c].codecs + "]";
+								opt.value = json.joined[c].itag;
 								document.getElementById("va").appendChild(opt);
-							}
+							} 
 						}
 					}
 					if (!document.getElementById("va").options[0]) {
