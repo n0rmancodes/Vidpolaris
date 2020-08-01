@@ -548,6 +548,36 @@ async function runServer(request, res) {
 			} else {
 				need.get("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
 			}
+		} else if (path == "/api/suggest" | path == "/api/suggest/") {
+			if (param.q) {
+				ytsg(param.q).then(function(results) {
+					var d = JSON.stringify({results})
+					res.writeHead(200, {
+						"Content-Type": "application/json",
+						"Access-Control-Allow-Origin": "*"
+					});
+					res.end(d);
+					return;
+				}).catch((err) => {
+					var d = JSON.stringify({
+						"err":err.stack.split("Error: ")[1].split("\n")[0]
+					});
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					res.end(d);
+				})
+			} else {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(d);
+			}
 		} else {
 			var d = JSON.stringify({
 				"err": "invalidEndpoint",
