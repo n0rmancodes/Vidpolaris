@@ -1,0 +1,35 @@
+body, select {
+	background:black;
+	color:#c8c8c8;
+}
+
+a, #authLink {
+	color:#9b9b9b;
+}
+
+a:hover, #authLink:hover {
+	color:#93f5ff;
+}
+
+input, button{
+	background:#2b2b2b;
+	color:#c8c8c8;
+}
+
+.lodr div {
+	background:white;
+}
+
+.hdr h1 {
+	color:white;
+}
+
+.vidChip, .horiVidChip, .largeHoriChip {
+	background:#1a1a1a;
+	color:#c8c8c8;
+}
+
+.horiInnerChip {
+	background:#1a1a1a;
+	color:#c8c8c8;
+}
