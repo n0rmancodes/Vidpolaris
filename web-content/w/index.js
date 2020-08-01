@@ -1,4 +1,5 @@
 load();
+if (localStorage.getItem("theaterNew") == "y") {theater("update")}
 if (localStorage.getItem("sq") == "enabled") {
 	document.getElementById("player").addEventListener("play", function() {
 		if (!document.getElementById("aPlayer").src == "") {
@@ -25,11 +26,122 @@ if (localStorage.getItem("sq") == "enabled") {
 		}
 	})
 
-	document.getElementById("player").addEventListener("waiting",function() {
+	document.getElementById("player").addEventListener("waiting", function() {
 		if (!document.getElementById("aPlayer").src == "") {
 			document.getElementById("aPlayer").pause();
 		}
 	})
+}
+
+document.addEventListener('keydown', function (event) {
+	if (event.defaultPrevented) {return;}
+	var k = event.key || event.keyCode;
+	var intK = event.keyCode;
+	if (isNumberKey(intK)) {
+		if (document.getElementById("main").style.display == "") {
+			var n = returnNumber(intK);
+			var integer = document.getElementById("player").duration / 10
+			var goTo = integer * n;
+			document.getElementById("player").currentTime = goTo;
+		}
+	} else {
+		if (document.activeElement.tagName == "INPUT" | document.activeElement.tagName == "SELECT") {
+			console.log("ignored due to being inside an input or select element");
+		} else {
+			if (k == "k" | k == "K" | k == 75) {
+				if (document.getElementById("player").paused == true) {
+					document.getElementById("player").play();
+				} else {
+					document.getElementById("player").pause();
+				}
+			} else if (k == "t" | k == "T" | k == 84) {
+				theater();
+			} else if (k == "j" | k == "J" | k == 74) {
+				if (document.getElementById("player").currentTime > 10) {
+					var t = document.getElementById("player").currentTime - 10
+					document.getElementById("player").currentTime = t
+				} else {
+					document.getElementById("player").currentTime = 0;
+				}
+			} else if (k == "l" | k == "L" | k == 76) {
+				var d = document.getElementById("player").duration;
+				var c = document.getElementById("player").currentTime;
+				var diff = document.getElementById("player").duration - document.getElementById("player").currentTime;
+				if (diff > 10) {
+					document.getElementById("player").currentTime = document.getElementById("player").currentTime + 10
+				} else {
+					document.getElementById("player").currentTime = d;
+				}
+			}
+		}
+	}
+})
+
+function isNumberKey(j) {
+	if (j <= 57 && j >= 48) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function returnNumber(j) {
+	if (j == 48) {
+		return 0;
+	} else if (j == 49) {
+		return 1;
+	} else if (j == 50) {
+		return 2;
+	} else if (j == 51) {
+		return 3;
+	} else if (j == 52) {
+		return 4;
+	} else if (j == 53) {
+		return 5;
+	} else if (j == 54) {
+		return 6;
+	} else if (j == 55) {
+		return 7;
+	} else if (j == 56) {
+		return 8;
+	} else if (j == 57) {
+		return 9;
+	} else {
+		return null;
+	}
+}
+
+function theater(t) {
+	if (!t) {
+		if (!localStorage.getItem("theaterNew") | localStorage.getItem("theaterNew") == "n") {
+			document.getElementById("vinf").style = "width:100%";
+			document.getElementById("rlv").style = "width:100%";
+			document.getElementById("player").style = "max-height:750px";
+			for (var c in document.getElementById("relatedFeed").querySelectorAll("a div img")) {
+				document.getElementById("relatedFeed").querySelectorAll("a div img")[c].style = "height:75%";
+			}
+			localStorage.setItem("theaterNew", "y");
+		} else {
+			document.getElementById("vinf").style = "width:60%";
+			document.getElementById("rlv").style = "width:35%";
+			document.getElementById("player").style = "max-height:630px";
+			for (var c in document.getElementById("relatedFeed").querySelectorAll("a div img")) {
+				document.getElementById("relatedFeed").querySelectorAll("a div img")[c].style = "height:92%";
+			}
+			localStorage.setItem("theaterNew", "n");
+		}
+	} else {
+		if (t == "update") {
+			if (localStorage.getItem("theaterNew") == "y") {
+				document.getElementById("vinf").style = "width:100%";
+				document.getElementById("rlv").style = "width:100%";
+				document.getElementById("player").style = "max-height:750px";
+				for (var c in document.getElementById("relatedFeed").querySelectorAll("a div img")) {
+					document.getElementById("relatedFeed").querySelectorAll("a div img")[c].style = "height:75%";
+				}
+			}
+		}
+	}
 }
 
 function load() {
@@ -136,7 +248,6 @@ function load() {
 										var isOver = false;
 									}
 								}
-								console.log(isOver)
 								if (isOver == false) {
 									if (localStorage.getItem("vp9") == "enabled") {
 										if (json.joined[c].videoCodec == "vp9") {
@@ -291,6 +402,11 @@ function load() {
 					vidChip.appendChild(div);
 					l.appendChild(vidChip);
 					document.getElementById("relatedFeed").appendChild(l);
+				}
+				if (localStorage.getItem("theaterNew") == "y") {
+					for (var c in document.getElementById("relatedFeed").querySelectorAll("a div img")) {
+						document.getElementById("relatedFeed").querySelectorAll("a div img")[c].style = "height:75%";
+					}
 				}
 			} else {
 				document.getElementById("loader").style.display = "none";

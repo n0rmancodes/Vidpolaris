@@ -469,6 +469,7 @@ a:hover {
 	.vidInfo {
 		width:60%;
 		margin-right:1%;
+		transition:width .5s;
 	}
 	
 	.vidInfo, .related {
@@ -478,6 +479,7 @@ a:hover {
 	.related {
 		width:35%;
 		margin:0;
+		transition:width .5s;
 	}
 	
 	.related h2 {
@@ -491,7 +493,7 @@ a:hover {
 		margin:5px;
 	}
 	
-	.horiVidChip .inner{
+	.horiVidChip .inner {
 		float:left;
 		width:60%;
 		height:91%;

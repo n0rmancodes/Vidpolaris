@@ -26,7 +26,7 @@
 				<h2 id="deet" class="ldrD">please wait...</h2>
 			</div>
 			<div id="main" style="display:none;">
-				<div class="vidInfo">
+				<div class="vidInfo" id="vinf">
 					<div id="playerContainer">
 						<video id="player" controls></video>
 						<audio id="aPlayer"></audio>
@@ -37,7 +37,7 @@
 							<select id="a" onInput="getItag(this.value, 'a');"></select>
 							<input id="volume" type="range" min="1" max="100" onInput="changeVolume(this.value)">
 						</div><br>
-						<div id="qSB">
+						<div id="qSB" class="snackBar">
 							<select id="va" onInput="getItag(this.value, 'va');"></select>
 						</div><br>
 						<h2 id="title"></h2>
@@ -61,7 +61,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="related">
+				<div class="related" id="rlv">
 					<h2>Related Videos</h2>
 					<div id="relatedFeed"></div>
 				</div>

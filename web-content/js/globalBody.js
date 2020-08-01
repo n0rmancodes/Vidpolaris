@@ -1,11 +1,7 @@
 if (document.getElementById("q")) {
 	document.getElementById("q").addEventListener('keydown', function (event) {
-		if (event.defaultPrevented) {
-			return;
-		}
-
+		if (event.defaultPrevented) {return;}
 		var key = event.key || event.keyCode;
-		
 		if (key == "Enter" | key == 13) {
 			search();
 		}
