@@ -7,9 +7,13 @@ An alternative client for YouTube.
 
 ## Special Thanks
 In no particular order, here are all of my thanks for keeping this project running!
+
 - [Electrohaxz](http://electrohaxz.tk) for making this project possible. Without him, this project would be nowhere.
+
 - [3guFEu9CNvo6M3onKG3e](https://www.reddit.com/user/3guFEu9CNvo6M3onKG3e) is another inspiration to keep this project going.
+
 - Family and friends for encouraging me to continue this project.
+
 - The awesome package writers who, without them, this project wouldn't even be alive right now.
 
 ## Requirements
