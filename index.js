@@ -5,7 +5,6 @@ console.log("defining packages...");
 const ytdl = require("ytdl-core");
 const ytsr = require("ytsr");
 const ytpl = require("ytpl");
-const trans = require("@vitalets/google-translate-api");
 const ytsg = require("youtube-suggest");
 const redddit = require("redddit");
 const need = require("needle");
@@ -248,42 +247,6 @@ async function runServer(request, res) {
 					res.end(d);
 				})
 			}
-		} else if (path == "/api/translate" | path == "/api/translate/") {
-			if (!param.data) {
-				var d = JSON.stringify({
-					"err": "requiresMoreData"
-				})
-				res.writeHead(404, {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type": "application/json"
-				});
-				res.end(d);
-			} else {
-				var data = param.data;
-				if (!param.to) {
-					var lang = "en"
-				} else {
-					var lang = oUrl.query.to;
-				}
-				trans(data,{to:lang}).then(res => {
-					if (!res) {
-						res.writeHead(404, {
-							"Content-Type": "application/json",
-							"Access-Control-Allow-Origin": "*"
-						})
-						res.end(JSON.stringify({"err":"couldNotResolve"}));
-						return;
-					} else {
-						var json = JSON.stringify({res})
-						res.writeHead(200, {
-							"Content-Type": "application/json",
-							"Access-Control-Allow-Origin": "*"
-						});
-						res.end(json);
-						return;
-					}
-				})
-			} 
 		} else if (path == "/api/itag" | path == "/api/itag/") {
 			if (param.id) {
 				var i = param.id;
