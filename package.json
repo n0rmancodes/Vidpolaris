@@ -1,6 +1,6 @@
 {
   "name": "vidpolaris",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "alternative youtube client, written in primarily javascript",
   "main": "index.js",
   "scripts": {
@@ -25,8 +25,9 @@
     "redddit": "^1.0.2",
     "youtube-suggest": "^1.1.0",
     "yt-channel-info": "^1.0.1",
-    "ytdl-core": "^3.1.3",
+    "ytdl-core": "^3.2.0",
     "ytpl": "^0.1.22",
-    "ytsr": "^0.1.19"
-  }
+    "ytsr": "^0.1.20"
+  },
+  "devDependencies": {}
 }
