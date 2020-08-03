@@ -362,6 +362,7 @@ async function runServer(request, res) {
 		} else if (path == "/api/channel" | path == "/api/channel/") {
 			if (param.id) {
 				ytch.getChannelInfo(param.id).then((response) => {
+					// i cant stop partyin partying 
 					var d = JSON.stringify(response);
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
