@@ -542,6 +542,22 @@ async function runServer(request, res) {
 				});
 				res.end(d);
 			}
+		} else if (path == "/api/sponsors" | path == "/api/sponsors/") {
+			if (param.id) {
+			 	need("https://sponsor.ajay.app/api/skipSegments?videoID=" + param.id, function(err,resp,body) {
+					res.writeHead(resp.statusCode, resp.headers);
+					res.end(JSON.stringify(resp.body));
+				})
+			} else {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(d);
+			}
 		} else {
 			var d = JSON.stringify({
 				"err": "invalidEndpoint",
