@@ -38,19 +38,17 @@ async function runServer(request, res) {
 			var locale = param.locale;
 			var type = param.type;
 			if (inst) {
-				if (inst == "official") {
-					var r = "https://invidio.us/api/v1/trending";
-				} else if (inst == "snopyta"){
+				if (inst == "snopyta"){
 					var r = "https://invidious.snopyta.org/api/v1/trending";
 				} else if (inst == "13ad") {
 					var r = "https://invidious.13ad.de/api/v1/trending";
 				} else if (inst == "ggc") {
 					var r = "https://invidious.ggc-project.de/api/v1/trending";
 				} else {
-					var r = "https://invidio.us/api/v1/trending";
+					var r = "https://invidious.snopyta.org/api/v1/trending";
 				}
 			} else {
-				var r = "https://invidio.us/api/v1/trending";
+				var r = "https://invidious.snopyta.org/api/v1/trending";
 			}
 			if (locale) {
 				var r = r + "?region=" + locale

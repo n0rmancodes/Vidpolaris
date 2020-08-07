@@ -19,7 +19,12 @@ function getTrending(type, country) {
 	if (param == undefined) {
 		var param = "";
 	}
-	xhr.open("GET", "api/trending?inst=" + localStorage.getItem("invSrc") + param);
+	if (localStorage.getItem("invSrc")) {
+		var inst = localStorage.getItem("invSrc");
+	} else {
+		var inst = "snopyta";
+	}
+	xhr.open("GET", "api/trending?inst=" + inst + param);
 	xhr.send();
 	xhr.onload = function () {
 		var json = JSON.parse(xhr.responseText);

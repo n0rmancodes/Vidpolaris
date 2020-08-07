@@ -8,6 +8,10 @@ if (document.getElementById("q")) {
 	})
 }
 
+if (localStorage.getItem("invSrc") == "official") {
+	localStorage.setItem("invSrc", "snopyta");
+}
+
 function search() {
 	var q = document.getElementById("q").value;
 	window.open("/s?"+q, "_self");
