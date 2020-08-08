@@ -498,6 +498,10 @@ async function runServer(request, res) {
 				}
 			}
 		} else if (path.includes("/api/thumb")) {
+			if (!path.split("/api/thumb")[1]) {
+				need.get("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
+				return;
+			}
 			if (path.split("/api/thumb/")[1].split("/")[0]) {
 				var id = path.split("/api/thumb/")[1].split("/")[0];
 				need.get("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg", function(err,resp,body) {
