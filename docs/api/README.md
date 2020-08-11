@@ -102,7 +102,7 @@ This examples get the top videos in /r/DeepIntoYouTube.
 
 Search Reddit for posts about a specific YouTube video.
 
-### GET ``/api/reddit/search```
+### GET ``/api/reddit/search``
 
 ### Parameters
 ```
