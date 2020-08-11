@@ -11,12 +11,12 @@ Information like the version of the instance, the port it is running on, and wha
 #### Example Body:
 
 ```json
-    {
-        "err": "invalidEnpoint",
-        "version": "0.2",
-        "port": 3001,
-        "type": "all"
-    }
+{
+    "err": "invalidEnpoint",
+    "version": "0.2",
+    "port": 3001,
+    "type": "all"
+}
 ```
 
 [Example](https://beta.vidpolaris.ml/api/)
