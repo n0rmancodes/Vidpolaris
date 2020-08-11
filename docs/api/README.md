@@ -30,9 +30,9 @@ This currently runs on Invidious's data, but will be replaced with our own scrap
 #### Parameters
 
 ```
-inst: snopyta, 13ad, gcc
-type: music, gaming, news, movies
-locale: ISO 3166 country code (defaults to US)
+inst: "snopyta", "13ad", "gcc" (defaults to "snopyta")
+type: "music", "gaming", "news", "movies", none (defaults to none (general))
+locale: ISO 3166 country code (defaults to "US")
 ```
 
 #### Example Body
@@ -40,13 +40,18 @@ locale: ISO 3166 country code (defaults to US)
 ```json
 [
     {
-        "type": "video",
+        "type":"video",
         "title":"I Downloaded The World's Hardest Mod!",
         "videoId":"ELS5RLbSukU",
         "author":"MrBeast Gaming",
         "authorId":"UCIPPMRA040LQr5QPyJEbmXA",
         "authorUrl":"/channel/UCIPPMRA040LQr5QPyJEbmXA",
-        "videoThumbnails":[{ ... }],
+        "videoThumbnails":[{
+            "quality":"maxres",
+            "url":"https://invidious.snopyta.org/vi/ELS5RLbSukU/maxres.jpg",
+            "width":1280,
+            "height":720
+        }],
         "description":"We played the hardest mod created for Minecraft. Dark Souls is basically for babies after this.\n\n\nShout out to RL Craft for the content! Check it out here: https://www.curseforge.com/minecraft/modp...",
         "descriptionHtml":"We played the hardest mod created for Minecraft. Dark Souls is basically for babies after this.\n\n\nShout out to RL Craft for the content! Check it out here: https://www.curseforge.com/minecraft/modp...",
         "viewCount":1356774,
@@ -62,6 +67,8 @@ locale: ISO 3166 country code (defaults to US)
 ```
 
 [Example](https://beta.vidpolaris.ml/api/trending?type=gaming&locale=CA)
+
+The example gets trending gaming videos in Canada.
 
 ## Trending on Reddit
 
