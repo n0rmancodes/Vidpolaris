@@ -93,3 +93,39 @@ sub: subreddit to look at
     }
 ]
 ```
+
+[Example](https://beta.vidpolaris.ml/api/reddit?sub=DeepIntoYouTube)
+
+This examples get the top videos in /r/DeepIntoYouTube.
+
+## Video Infomation
+
+This gets video infomation and formats from any given ID and/or YouTube url. Retrived by [``node-ytdl-core``](https://github.com/fent/node-ytdl-core).
+
+### GET ``/api/info``
+
+#### Parameters
+```
+id: YouTube video ID
+url: YouTube video URL
+```
+
+**NOTE** You cannot use both, you must use one or the other.
+
+#### Example Body 
+
+```json
+{
+    "video": [], // An array of video only formats.
+    "audio": [], // An array of audio only formats.
+    "joined": [], // An array of formats with audio and video joined together.
+    "info": {
+        // To be written
+    }
+}
+
+```
+
+[Example](https://beta.vidpolaris.ml/api/info?id=ymbw2R3uIqc)
+
+This example gets formats and metadata of [the legendary SiIvagunner rip of Creative Exercise](https://www.youtube.com/watch?v=ymbw2R3uIqc).
