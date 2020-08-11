@@ -63,18 +63,18 @@ locale: ISO 3166 country code (defaults to US)
 
 [Example](https://beta.vidpolaris.ml/api/trending?type=gaming&locale=CA)
 
-### Trending on Reddit
+## Trending on Reddit
 
 This uses a package called [``redddit``](https://github.com/n0rmancodes/redddit) to get the top posts with YouTube links of any given subreddit.
 
-#### GET ``/api/reddit``
+### GET ``/api/reddit``
 
-##### Parameters
+#### Parameters
 ```
 sub: subreddit to look at
 ```
 
-##### Example Body
+#### Example Body
 ```json
 [
     {
