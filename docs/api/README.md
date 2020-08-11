@@ -1,6 +1,6 @@
 # Endpoint Documentation
 
-All endpoints return a JSON body that can be parsed and used to your liking.
+All endpoints return a JSON body (unless otherwise noted) that can be parsed and used to your liking.
 
 ## Instance Information
 
@@ -120,6 +120,61 @@ To be written.
 
 This example gets formats and metadata of [the legendary SiIvagunner rip of Creative Exercise](https://www.youtube.com/watch?v=ymbw2R3uIqc).
 
+
+## Specific Format for YouTube video
+
+### GET ``/api/itag/``
+
+#### Parameters
+```
+id*: YouTube video ID.
+url*: YouTube video URL.
+itag: YouTube video ITAG.
+```
+* = One or the other, **not both**.
+
+#### Example Body 
+```json
+{
+    "mimeType":"video/mp4; codecs=\"avc1.4d400d\"",
+    "qualityLabel":"240p",
+    "bitrate":225840,
+    "audioBitrate":null,
+    "itag":133,
+    "width":352,
+    "height":240,
+    "initRange":{
+        "start":"0",
+        "end":"733"
+    },
+    "indexRange":{
+        "start":"734",
+        "end":"1677"},
+    "lastModified":"1577535225391991",
+    "contentLength":"9932885",
+    "quality":"small",
+    "fps":30,
+    "projectionType":"RECTANGULAR",
+    "averageBitrate":195527,
+    "approxDurationMs":"406403",
+    "s":"===gJ0jWlRpH421emBpKH-zHSpiuPU_1nLlH39pkP1hWVpDQICofVXiKaAqks7qj7VxBxHgvU00NZD1l6t6wN9_9_6o1WgIQRw8JQ0qO55",
+    "sp":"sig",
+    "url":"<insert url here>",
+    "hasVideo":true,
+    "hasAudio":false,
+    "container":"mp4",
+    "codecs":"avc1.4d400d",
+    "videoCodec":"avc1.4d400d",
+    "audioCodec":null,
+    "isLive":false,
+    "isHLS":false,
+    "isDashMPD":false
+}
+```
+
+[Example](https://beta.vidpolaris.ml/api/itag?id=0XgdWnsT0yc&itag=133)
+
+Getting itag 133 on a random video I found browsing Reddit.
 
 ## Search YouTube
 
