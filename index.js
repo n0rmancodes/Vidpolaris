@@ -80,10 +80,10 @@ async function runServer(request, res) {
 			})
 		} else if (path == "/api/reddit" | path == "/api/reddit/") {
 			var sub = param.sub || "videos";
-			redddit.topPosts(sub, function(err,res) {
+			redddit.topPosts(sub, function(err,resp) {
 				if (!err) {
 					let dat = [];
-					var json = res;
+					var json = resp;
 					for (var c in json) {
 						if (!json[c].data.url | !json[c].data.url.includes("youtu")) {
 							
