@@ -119,3 +119,42 @@ To be written.
 [Example](https://beta.vidpolaris.ml/api/info?id=ymbw2R3uIqc)
 
 This example gets formats and metadata of [the legendary SiIvagunner rip of Creative Exercise](https://www.youtube.com/watch?v=ymbw2R3uIqc).
+
+
+## Search YouTube
+
+This searches YouTube for content using [``ytsr``](https://github.com/TimeForANinja/node-ytsr).
+
+### Parameters
+```
+q: query
+```
+
+### Example Body 
+```json
+{
+    "query":"creative exercise siivagunner",
+    "items":[
+        {
+            "type":"video",
+            "live":false,
+            "title":"Creative Exercise - Mario Paint",
+            "link":"https://www.youtube.com/watch?v=ymbw2R3uIqc",
+            "thumbnail":"https://i.ytimg.com/vi/ymbw2R3uIqc/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLBxJZ0Vk2TEe9qPo5ccuw-i7rtEsA",         
+            "author":{
+                "name":"SiIvaGunner",
+                "ref":"https://www.youtube.com/channel/UC9ecwl3FTG66jIKA9JRDtmg",
+                "verified":false
+            },
+            "description":"Music: Creative Exercise Composer: Kazumi Totaka Playlist: ...",
+            "views":2122280,
+            "duration":"2:02",
+            "uploaded_at":"4 years ago"
+        }
+    ]
+}
+```
+
+[Example](https://beta.vidpolaris.ml/api/search?q=creative exercise siivagunner)
+
+This searches YouTube for Creative Excerise by SiIvagunner.
