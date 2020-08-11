@@ -132,7 +132,19 @@ async function runServer(request, res) {
 				res.end(d)
 			} else {
 				if (param.id) {
-					var i = param.id;
+					if (ytdl.validateID(param.id)) {
+						var i = param.id;
+					} else {
+						var d = JSON.stringify({
+							"err": "invalidData"
+						})
+						res.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						res.end(d);
+						return;
+					}
 				} else {
 					if (ytdl.validateURL(param.url)) {
 						var i = ytdl.getURLVideoID(param.url);
@@ -145,6 +157,7 @@ async function runServer(request, res) {
 							"Content-Type": "application/json"
 						})
 						res.end(d);
+						return;
 					}
 				}
 				let info = await ytdl(i);
@@ -247,10 +260,8 @@ async function runServer(request, res) {
 			}
 		} else if (path == "/api/itag" | path == "/api/itag/") {
 			if (param.id) {
-				var i = param.id;
-			} else {
-				if (ytdl.validateURL(param.url)) {
-					var i = ytdl.getURLVideoId(param.url);
+				if (ytdl.validateID(param.id)) {
+					var i = param.id;
 				} else {
 					var d = JSON.stringify({
 						"err": "invalidData"
@@ -260,11 +271,25 @@ async function runServer(request, res) {
 						"Content-Type": "application/json"
 					})
 					res.end(d);
+					return;
+				}
+			} else {
+				if (ytdl.validateURL(param.url)) {
+					var i = ytdl.getURLVideoID(param.url);
+				} else {
+					var d = JSON.stringify({
+						"err": "invalidData"
+					});
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					res.end(d);
+					return;
 				}
 			}
 			var itag = param.itag;
-			let info = ytdl(i);
-			info.on('info', function(info) {
+			let inf = ytdl(i).on("info", function(info) {
 				if (info.formats) {
 					let d = JSON.stringify(ytdl.chooseFormat(info.formats, { quality: itag }));
 					res.writeHead(200,{
@@ -282,8 +307,7 @@ async function runServer(request, res) {
 					})
 					res.end(d);
 				}
-			})
-			info.on('err',function(err) {
+			}).on("err", function(err) {
 				let d = JSON.stringify({
 					"err":err.stack.split("Error: ")[1].split("\n")[0]
 				})
@@ -309,7 +333,7 @@ async function runServer(request, res) {
 						res.end(d);
 						return;
 					} else {
-						var q = ytdl.getURLVideoId(param.url);
+						var q = ytdl.getURLVideoID(param.url);
 					}
 				}
 				redddit.search("url:youtu.be/"+q, function(err,resp) {
@@ -356,6 +380,15 @@ async function runServer(request, res) {
 			if (param.url) {
 				var d = Buffer.from(param.url,"base64").toString();
 				need.get(d).pipe(res);
+			} else {
+				var d = JSON.stringify({
+					"err": "noUrl"
+				})
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(d);
 			}
 		} else if (path == "/api/channel" | path == "/api/channel/") {
 			if (param.id) {

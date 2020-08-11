@@ -77,10 +77,10 @@ async function runServer(request, res) {
 		})
 	} else if (path == "/api/reddit" | path == "/api/reddit/") {
 		var sub = param.sub || "videos";
-		redddit.topPosts(sub, function(err,res) {
+		redddit.topPosts(sub, function(err,resp) {
 			if (!err) {
 				let dat = [];
-				var json = res;
+				var json = resp;
 				for (var c in json) {
 					if (!json[c].data.url | !json[c].data.url.includes("youtu")) {
 						
@@ -129,7 +129,19 @@ async function runServer(request, res) {
 			res.end(d)
 		} else {
 			if (param.id) {
-				var i = param.id;
+				if (ytdl.validateID(param.id)) {
+					var i = param.id;
+				} else {
+					var d = JSON.stringify({
+						"err": "invalidData"
+					})
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					res.end(d);
+					return;
+				}
 			} else {
 				if (ytdl.validateURL(param.url)) {
 					var i = ytdl.getURLVideoID(param.url);
@@ -142,6 +154,7 @@ async function runServer(request, res) {
 						"Content-Type": "application/json"
 					})
 					res.end(d);
+					return;
 				}
 			}
 			let info = await ytdl(i);
@@ -173,54 +186,54 @@ async function runServer(request, res) {
 				res.end(json);
 			})
 		}
-	} else if (path == "/api/playlist" | path == "/api/playlist/"){
-			var id = param.id;
-			var pUrl = param.url;
-			if (!id && !pUrl) {
-				var d = JSON.stringify({
-					"err": "requiresMoreData"
-				})
-				res.writeHead(404, {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type": "application/json"
-				});
-				res.end(d);
+	} else if (path == "/api/playlist" | path == "/api/playlist/"){	
+		var id = param.id;
+		var pUrl = param.url;
+		if (!id && !pUrl) {
+			var d = JSON.stringify({
+				"err": "requiresMoreData"
+			})
+			res.writeHead(404, {
+				"Access-Control-Allow-Origin": "*",
+				"Content-Type": "application/json"
+			});
+			res.end(d);
+		} else {
+			if (id) {
+				var i = param.id;
 			} else {
-				if (id) {
-					var i = param.id;
-				} else {
-					var i = param.url;
-				}
-				if (param.limit) {
-					var opt = {
-						limit: 0
-					}
-				} else {
-					var opt = {
-						limit: param.limit
-					}
-				}
-				ytpl(i, opt, function(err,result) {
-					if (err) {
-						var errTxt = err.stack.split("Error: ")[1].split("\n")[0];
-						var d = JSON.stringify({
-							"err": errTxt
-						})
-						res.writeHead(404, {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json"
-						});
-						res.end(d);
-					} else {
-						var d = JSON.stringify(result);
-						res.writeHead(200, {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json"
-						});
-						res.end(d);
-					}
-				})
+				var i = param.url;
 			}
+			if (param.limit) {
+				var opt = {
+					limit: 0
+				}
+			} else {
+				var opt = {
+					limit: param.limit
+				}
+			}
+			ytpl(i, opt, function(err,result) {
+				if (err) {
+					var errTxt = err.stack.split("Error: ")[1].split("\n")[0];
+					var d = JSON.stringify({
+						"err": errTxt
+					})
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(d);
+				} else {
+					var d = JSON.stringify(result);
+					res.writeHead(200, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(d);
+				}
+			})
+		}
 	} else if (path == "/api/search" | path == "/api/search/") {
 		var q = param.q;
 		if (!q) {
