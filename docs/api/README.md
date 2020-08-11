@@ -114,17 +114,7 @@ url: YouTube video URL
 
 #### Example Body 
 
-```json
-{
-    "video": [], // An array of video only formats.
-    "audio": [], // An array of audio only formats.
-    "joined": [], // An array of formats with audio and video joined together.
-    "info": {
-        // To be written
-    }
-}
-
-```
+To be written.
 
 [Example](https://beta.vidpolaris.ml/api/info?id=ymbw2R3uIqc)
 
