@@ -98,6 +98,25 @@ sub: subreddit to look at
 
 This examples get the top videos in /r/DeepIntoYouTube.
 
+## Search for a video on Reddit
+
+Search Reddit for posts about a specific YouTube video.
+
+### GET ``/api/reddit/search```
+
+### Parameters
+```
+id: YouTube video ID.
+url: YouTube video URL.
+```
+
+You must use one parameter or the other **not both**.
+
+### Example Body 
+```json
+
+```
+
 ## Video Infomation
 
 This gets video infomation and formats from any given ID and/or YouTube url. Retrived by [``node-ytdl-core``](https://github.com/fent/node-ytdl-core).
@@ -114,7 +133,9 @@ url: YouTube video URL
 
 #### Example Body 
 
+```
 To be written.
+```
 
 [Example](https://beta.vidpolaris.ml/api/info?id=ymbw2R3uIqc)
 
@@ -180,12 +201,14 @@ Getting itag 133 on a random video I found browsing Reddit.
 
 This searches YouTube for content using [``ytsr``](https://github.com/TimeForANinja/node-ytsr).
 
-### Parameters
+### GET ``/api/search``
+
+#### Parameters
 ```
 q: query
 ```
 
-### Example Body 
+#### Example Body 
 ```json
 {
     "query":"creative exercise siivagunner",

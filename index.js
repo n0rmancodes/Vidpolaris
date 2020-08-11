@@ -312,9 +312,9 @@ async function runServer(request, res) {
 						var q = ytdl.getURLVideoId(param.url);
 					}
 				}
-				redddit.search("url:youtu.be/"+q, function(err,res) {
-					if (res) {
-						if (res[0]) {
+				redddit.search("url:youtu.be/"+q, function(err,resp) {
+					if (resp) {
+						if (resp[0]) {
 							var d = JSON.stringify(res);
 							res.writeHead(200,{
 								"Access-Control-Allow-Origin": "*",
