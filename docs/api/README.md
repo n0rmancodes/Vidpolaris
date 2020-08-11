@@ -114,8 +114,195 @@ You must use one parameter or the other **not both**.
 
 ### Example Body 
 ```json
-
+[
+    {
+        "kind":"t3",
+        "data":{
+            "approved_at_utc":null,
+            "subreddit":"Reaper",
+            "selftext":"",
+            "author_fullname":"t2_20nyhj",
+            "saved":false,
+            "mod_reason_title":null,
+            "gilded":0,
+            "clicked":false,
+            "title":"How would I make something like this in reaper?",
+            "link_flair_richtext":[],
+            "subreddit_name_prefixed":"r/Reaper",
+            "hidden":false,
+            "pwls":6,
+            "link_flair_css_class":"",
+            "downs":0,
+            "thumbnail_height":105,
+            "top_awarded_type":null,
+            "hide_score":false,
+            "name":"t3_c20kli",
+            "quarantine":false,
+            "link_flair_text_color":"light",
+            "upvote_ratio":0.5,
+            "author_flair_background_color":null,
+            "subreddit_type":"public",
+            "ups":0,
+            "total_awards_received":0,
+            "media_embed":{
+                "content":"&lt;iframe width=\"600\" height=\"338\" src=\"https://www.youtube.com/embed/ymbw2R3uIqc?feature=oembed&amp;enablejsapi=1\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen&gt;&lt;/iframe&gt;",
+                "width":600,
+                "scrolling":false,
+                "height":338
+            },
+            "thumbnail_width":140,
+            "author_flair_template_id":null,
+            "is_original_content":false,
+            "user_reports":[],
+            "secure_media":{
+                "type":"youtube.com",
+                "oembed":{
+                    "provider_url":"https://www.youtube.com/",
+                    "version":"1.0",
+                    "title":"Creative Exercise - Mario Paint",
+                    "type":"video",
+                    "thumbnail_width":480,
+                    "height":338,
+                    "width":600,
+                    "html":"&lt;iframe width=\"600\" height=\"338\" src=\"https://www.youtube.com/embed/ymbw2R3uIqc?feature=oembed&amp;enablejsapi=1\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen&gt;&lt;/iframe&gt;",
+                    "author_name":"SiIvaGunner",
+                    "provider_name":"YouTube",
+                    "thumbnail_url":"https://i.ytimg.com/vi/ymbw2R3uIqc/hqdefault.jpg",
+                    "thumbnail_height":360,
+                    "author_url":"https://www.youtube.com/channel/UC9ecwl3FTG66jIKA9JRDtmg"
+                }
+            },
+            "is_reddit_media_domain":false,
+            "is_meta":false,
+            "category":null,
+            "secure_media_embed":{
+                "content":"&lt;iframe width=\"600\" height=\"338\" src=\"https://www.youtube.com/embed/ymbw2R3uIqc?feature=oembed&amp;enablejsapi=1\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen&gt;&lt;/iframe&gt;",
+                "width":600,
+                "scrolling":false,
+                "media_domain_url":"https://www.redditmedia.com/mediaembed/c20kli",
+                "height":338
+            },
+            "link_flair_text":"help request",
+            "can_mod_post":false,
+            "score":0,
+            "approved_by":null,
+            "author_premium":false,
+            "thumbnail":"https://b.thumbs.redditmedia.com/9FXCJ44WnaTmGPE33s37wbaESdCSH33he4iFUq9uYoQ.jpg",
+            "edited":false,
+            "author_flair_css_class":null,
+            "author_flair_richtext":[],
+            "gildings":{},
+            "post_hint":"rich:video",
+            "content_categories":null,
+            "is_self":false,
+            "mod_note":null,
+            "created":1560882396,
+            "link_flair_type":"text",
+            "wls":6,
+            "removed_by_category":null,
+            "banned_by":null,
+            "author_flair_type":"text",
+            "domain":"youtu.be",
+            "allow_live_comments":false,
+            "selftext_html":null,
+            "likes":null,
+            "suggested_sort":null,
+            "banned_at_utc":null,
+            "url_overridden_by_dest":"https://youtu.be/ymbw2R3uIqc",
+            "view_count":null,
+            "archived":true,
+            "no_follow":true,
+            "is_crosspostable":false,
+            "pinned":false,
+            "over_18":false,
+            "preview":{
+                "images":[
+                    {"source":{
+                        "url":"https://external-preview.redd.it/CK2dnsk9Di7A9-kkEBhZA9IzhLxXm_waU0SgGEqbnBI.jpg?auto=webp&amp;s=73a1216d5b309dddf8491e75fb6d2218f9f92935",
+                        "width":480,
+                        "height":360
+                    },"resolutions":[
+                        {
+                            "url":"https://external-preview.redd.it/CK2dnsk9Di7A9-kkEBhZA9IzhLxXm_waU0SgGEqbnBI.jpg?width=108&amp;
+                        crop=smart&amp;auto=webp&amp;s=5ec5985b3c48336a38c42ab52c60237c7b4ea5b8",
+                            "width":108,
+                            "height":81
+                        },{
+                            "url":"https://external-preview.redd.it/CK2dnsk9Di7A9-kkEBhZA9IzhLxXm_waU0SgGEqbnBI.jpg?width=216&amp;crop=smart&amp;auto=webp&amp;s=a8ee90005babac5bb7248ad1d0159d6c198a2e4f",
+                            "width":216,
+                            "height":162
+                        },{
+                            "url":"https://external-preview.redd.it/CK2dnsk9Di7A9-kkEBhZA9IzhLxXm_waU0SgGEqbnBI.jpg?width=320&amp;crop=smart&amp;auto=webp&amp;s=c019929912948dd7835e95fa6f0bdd0b5e19ecd5",
+                            "width":320,
+                            "height":240
+                        }
+                    ],
+                    "variants":{},
+                    "id":"WXfE6XBU88YcePnUC7d7O8kw-9UXiifOiDuY280Sbd4"
+                }
+            ],
+            "enabled":false
+        },
+        "all_awardings":[],
+        "awarders":[],
+        "media_only":false,
+        "link_flair_template_id":"88b0cca8-d9e0-11e5-a548-0e81bdc99363",
+        "can_gild":false,
+        "spoiler":false,
+        "locked":false,
+        "author_flair_text":null,
+        "treatment_tags":[],
+        "visited":false,
+        "removed_by":null,
+        "num_reports":null,
+        "distinguished":null,
+        "subreddit_id":"t5_2rm0e",
+        "mod_reason_by":null,
+        "removal_reason":null,
+        "link_flair_background_color":"#2192cc",
+        "id":"c20kli",
+        "is_robot_indexable":true,
+        "report_reasons":null,
+        "author":"WaveOfMicrowave",
+        "discussion_type":null,
+        "num_comments":9,
+        "send_replies":true,
+        "whitelist_status":"all_ads",
+        "contest_mode":false,
+        "mod_reports":[],
+        "author_patreon_flair":false,
+        "author_flair_text_color":null,
+        "permalink":"/r/Reaper/comments/c20kli/how_would_i_make_something_like_this_in_reaper/",
+        "parent_whitelist_status":"all_ads",
+        "stickied":false,
+        "url":"https://youtu.be/ymbw2R3uIqc",
+        "subreddit_subscribers":26411,
+        "created_utc":1560853596,
+        "num_crossposts":0,
+        "media":{
+            "type":"youtube.com",
+            "oembed":{
+                "provider_url":"https://www.youtube.com/",
+                "version":"1.0","title":"Creative Exercise - Mario Paint",
+                "type":"video",
+                "thumbnail_width":480,
+                "height":338,
+                "width":600,
+                "html":"&lt;iframe width=\"600\" height=\"338\" src=\"https://www.youtube.com/embed/ymbw2R3uIqc?feature=oembed&amp;enablejsapi=1\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen&gt;&lt;/iframe&gt;",
+                "author_name":"SiIvaGunner",
+                "provider_name":"YouTube",
+                "thumbnail_url":"https://i.ytimg.com/vi/ymbw2R3uIqc/hqdefault.jpg",
+                "thumbnail_height":360,
+                "author_url":"https://www.youtube.com/channel/UC9ecwl3FTG66jIKA9JRDtmg"
+            }
+        },
+        "is_video":false
+        }
+    }
+]
 ```
+
+[Example](https://beta.vidpolaris.ml/api/reddit/search?id=ymbw2R3uIqc)
 
 ## Video Infomation
 
