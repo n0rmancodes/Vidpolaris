@@ -155,6 +155,6 @@ q: query
 }
 ```
 
-[Example](https://beta.vidpolaris.ml/api/search?q=creative exercise siivagunner)
+[Example](https://beta.vidpolaris.ml/api/search?q=creative%20exercise%20siivagunner)
 
 This searches YouTube for Creative Excerise by SiIvagunner.
