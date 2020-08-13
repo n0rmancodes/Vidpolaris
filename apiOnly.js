@@ -257,10 +257,8 @@ async function runServer(request, res) {
 		}
 	} else if (path == "/api/itag" | path == "/api/itag/") {
 		if (param.id) {
-			var i = param.id;
-		} else {
-			if (ytdl.validateURL(param.url)) {
-				var i = ytdl.getURLVideoId(param.url);
+			if (ytdl.validateID(param.id)) {
+				var i = param.id;
 			} else {
 				var d = JSON.stringify({
 					"err": "invalidData"
@@ -270,6 +268,21 @@ async function runServer(request, res) {
 					"Content-Type": "application/json"
 				})
 				res.end(d);
+				return;
+			}
+		} else {
+			if (ytdl.validateURL(param.url)) {
+				var i = ytdl.getURLVideoID(param.url);
+			} else {
+				var d = JSON.stringify({
+					"err": "invalidData"
+				});
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				})
+				res.end(d);
+				return;
 			}
 		}
 		var itag = param.itag;
@@ -319,16 +332,16 @@ async function runServer(request, res) {
 					res.end(d);
 					return;
 				} else {
-					var q = ytdl.getURLVideoId(param.url);
+					var q = ytdl.getURLVideoID(param.url);
 				}
 			}
 			redddit.search("url:youtu.be/"+q, function(err,res) {
-				if (res) {
-					if (res[0]) {
-						var d = JSON.stringify(res);
+				if (resp) {
+					if (resp[0]) {
+						var d = JSON.stringify(resp);
 						res.writeHead(200,{
 							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json"
+							"Content-Type": "application/json" 
 						})
 						res.end(d);
 					} else {

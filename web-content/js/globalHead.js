@@ -9,7 +9,7 @@ if (localStorage.getItem("n_theme")) {
 	}
 } else {
 	var css = document.createElement("LINK");
-	css.href = "/css/light/style.css";
+	css.href = "/css/dark/style.css";
 	css.rel = "stylesheet";
 	document.getElementById("h").appendChild(css);
 }

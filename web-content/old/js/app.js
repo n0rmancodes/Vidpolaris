@@ -29,7 +29,6 @@ http.onerror=(e)=>{
 	document.getElementById("serverdown").style.display = "";
 	document.getElementById("trendingLoader").style.display = "none";
 }
- 
 
 document.getElementById("trendingLoader").style.display = "";
 
@@ -1566,7 +1565,7 @@ function openVideo(opt,ret) {
 							var wUrl = jsond.info.formats[0].url;
 							var titl = jsond.info.player_response.videoDetails.title;
 							var auth = jsond.info.player_response.videoDetails.author;
-							var aLink = "#c#" + jsond.info.author.id;
+							var aLink = "#c#" + jsond.info.videoDetails.author.id;
 							document.getElementById("vidAuthor").style.display = "";
 							if (!aLink && !aLink == null && !aLink == undefined) {
 								// do nothing
@@ -1728,7 +1727,7 @@ function openVideo(opt,ret) {
 								}
 							}
 							document.getElementById("vidLoaderTxt").innerHTML = "defining more things...";
-							var cat = jsond.info.media.category;
+							var cat = jsond.info.videoDetails.category;
 							if (cat == undefined) {
 								document.getElementById("catCont").style.display = "none";
 							} else {
@@ -1838,8 +1837,8 @@ function openVideo(opt,ret) {
 									var ratio = 0;
 									sessionStorage.setItem("ratio", ratio);
 								}
-								if (jsond.info.author.subscriber_count) {
-									document.getElementById("subText").innerHTML = "[" + jsond.info.author.subscriber_count.toLocaleString() + " subscribers]";
+								if (jsond.info.videoDetails.author.subscriber_count) {
+									document.getElementById("subText").innerHTML = "[" + jsond.info.videoDetails.author.subscriber_count.toLocaleString() + " subscribers]";
 								} else {
 									document.getElementById("subText").innerHTML = "";
 								}
