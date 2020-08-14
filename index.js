@@ -10,6 +10,8 @@ const redddit = require("redddit");
 const need = require("needle");
 const ytch = require('yt-channel-info');
 const cheerio = require("cheerio");
+const deez = require("deezer-public-api");
+const deezer = new deez();
 let filter;
 // built-in pkgs
 const http = require("http");
@@ -21,9 +23,6 @@ const version = "0.2";
 const version_type = "ALPHA"
 const port = process.env.PORT || 3001;
 const hostUrl = "https://beta.vidpolaris.ml/";
-need.defaults({
-	user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0"
-});
 http.createServer(runServer).listen(port);
 console.log("listening on port " + port + " | version " + version + " [" + version_type + "]");
 console.log("====================================================");
@@ -249,7 +248,7 @@ async function runServer(request, res) {
 				});
 				res.end(d);
 			} else {
-				let data = await ytsr(q).then(function(searchResults) {
+				await ytsr(q).then(function(searchResults) {
 					var d = JSON.stringify(searchResults);
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
@@ -375,6 +374,100 @@ async function runServer(request, res) {
 					"Content-Type": "application/json"
 				});
 				res.end(d);
+			}
+		} else if (path == "/api/deezer/charts" | path == "/api/deezer/charts/") {
+			deezer.chart.tracks(100).then(function(response) {
+				res.writeHead(200, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(JSON.stringify(response.data));
+			}).catch((e) =>{
+				var d = JSON.stringify({
+					"err":e.stack.split("Error: ")[1].split("\n")[0]
+				});
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				})
+				res.end(d);
+			})
+		} else if (path == "/api/deezer/search" | path == "/api/deezer/search/") {
+			if (!param.q) {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(d);
+			} else {
+				deezer.search(param.q).then(function(response) {
+					res.writeHead(200, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(JSON.stringify(response.data));
+				}).catch((e) =>{
+					var d = JSON.stringify({
+						"err":e.stack.split("Error: ")[1].split("\n")[0]
+					});
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					res.end(d);
+				})
+			}
+		} else if (path == "/api/deezer" | path == "/api/deezer/") {
+			if (param.id) {
+				if (param.type == "song") {
+					deezer.track(param.id).then(function(response) {
+						ytsr(response.title + " " + response.artist.name + " official").then(function(searchResults) {
+							ytdl(searchResults.items[0].link).on("info", function(info) {
+								res.writeHead(200, {
+									"Access-Control-Allow-Origin": "*",
+									"Content-Type": "application/json"
+								});
+								res.end(JSON.stringify({
+									"deezer": response,
+									"ytdl": ytdl.filterFormats(info.formats, "audioonly")
+								}));
+							})
+						})
+					}).catch((e) =>{
+						var d = JSON.stringify({
+							"err":e.stack.split("Error: ")[1].split("\n")[0]
+						});
+						res.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						res.end(d);
+					})
+				} else if (param.type == "artist") {
+					deezer.artist(param.id).then(function(response) {
+						deezer.artist.top(param.id, 100).then(function(resp2) {
+							res.writeHead(200, {
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "application/json"
+							});
+							res.end(JSON.stringify({
+								"info":response,
+								"topTracks":resp2
+							}));
+						})
+					})
+				} else if (param.type == "album") {
+					deezer.album(param.id).then(function(response) {
+						res.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						});
+						res.end(JSON.stringify(response))
+					})
+				}
 			}
 		} else if (path == "/api/proxy" | path == "/api/proxy/") {
 			if (param.url) {

@@ -98,6 +98,46 @@ sub: subreddit to look at
 
 This examples get the top videos in /r/DeepIntoYouTube.
 
+## Search YouTube
+
+This searches YouTube for content using [``ytsr``](https://github.com/TimeForANinja/node-ytsr).
+
+### GET ``/api/search``
+
+#### Parameters
+```
+q: query
+```
+
+#### Example Body 
+```json
+{
+    "query":"creative exercise siivagunner",
+    "items":[
+        {
+            "type":"video",
+            "live":false,
+            "title":"Creative Exercise - Mario Paint",
+            "link":"https://www.youtube.com/watch?v=ymbw2R3uIqc",
+            "thumbnail":"https://i.ytimg.com/vi/ymbw2R3uIqc/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLBxJZ0Vk2TEe9qPo5ccuw-i7rtEsA",         
+            "author":{
+                "name":"SiIvaGunner",
+                "ref":"https://www.youtube.com/channel/UC9ecwl3FTG66jIKA9JRDtmg",
+                "verified":false
+            },
+            "description":"Music: Creative Exercise Composer: Kazumi Totaka Playlist: ...",
+            "views":2122280,
+            "duration":"2:02",
+            "uploaded_at":"4 years ago"
+        }
+    ]
+}
+```
+
+[Example](https://beta.vidpolaris.ml/api/search?q=creative%20exercise%20siivagunner)
+
+This searches YouTube for Creative Excerise by SiIvagunner.
+
 ## Search for a video on Reddit
 
 Search Reddit for posts about a specific YouTube video.
@@ -306,8 +346,91 @@ You must use one parameter or the other **not both**.
 
 [Example](https://beta.vidpolaris.ml/api/reddit/search?id=ymbw2R3uIqc)
 
-## Video Infomation
+## Deezer Charts
+Get the most popular songs on Deezer.
 
+### GET ``/api/deezer/charts``
+
+#### Example Body
+
+```json
+    {
+        "id":986939372,
+        "title":"Savage Love (Laxed - Siren Beat)",
+        "title_short":"Savage Love (Laxed - Siren Beat)",
+        "title_version":"",
+        "link":"https://www.deezer.com/track/986939372",
+        "duration":171,
+        "rank":997408,
+        "explicit_lyrics":true,
+        "explicit_content_lyrics":0,
+        "explicit_content_cover":0,
+        "preview":"https://cdns-preview-f.dzcdn.net/stream/c-fad919850f67c847921eee0647c068ea-3.mp3",
+        "position":1,
+        "artist":{
+            "id":92319522,
+            "name":"Jawsh 685",
+            "link":"https://www.deezer.com/artist/92319522",
+            "picture":"https://api.deezer.com/artist/92319522/image",
+            "picture_small":"https://cdns-images.dzcdn.net/images/artist/ae220905519d1bb84cddd953abbc08da/56x56-000000-80-0-0.jpg",
+            "picture_medium":"https://cdns-images.dzcdn.net/images/artist/ae220905519d1bb84cddd953abbc08da/250x250-000000-80-0-0.jpg",
+            "picture_big":"https://cdns-images.dzcdn.net/images/artist/ae220905519d1bb84cddd953abbc08da/500x500-000000-80-0-0.jpg",
+            "picture_xl":"https://cdns-images.dzcdn.net/images/artist/ae220905519d1bb84cddd953abbc08da/1000x1000-000000-80-0-0.jpg",
+            "radio":true,
+            "tracklist":"https://api.deezer.com/artist/92319522/top?limit=50",
+            "type":"artist"
+        },
+        "album":{
+            "id":153680822,
+            "title":"Savage Love (Laxed - Siren Beat)",
+            "cover":"https://api.deezer.com/album/153680822/image",
+            "cover_small":"https://cdns-images.dzcdn.net/images/cover/ae220905519d1bb84cddd953abbc08da/56x56-000000-80-0-0.jpg",
+            "cover_medium":"https://cdns-images.dzcdn.net/images/cover/ae220905519d1bb84cddd953abbc08da/250x250-000000-80-0-0.jpg",
+            "cover_big":"https://cdns-images.dzcdn.net/images/cover/ae220905519d1bb84cddd953abbc08da/500x500-000000-80-0-0.jpg",
+            "cover_xl":"https://cdns-images.dzcdn.net/images/cover/ae220905519d1bb84cddd953abbc08da/1000x1000-000000-80-0-0.jpg",
+            "tracklist":"https://api.deezer.com/album/153680822/tracks",
+            "type":"album"
+        },
+        "type":"track"
+    }
+```
+
+## Deezer Search
+This searches a query on Deezer, for use with the audio mode on VidPolaris
+
+### GET ``/api/deezer/search`` 
+
+#### Parameters
+```
+q: query
+type: "artist", "album", "song"
+```
+
+#### Example Body
+```
+WIP
+```
+
+[Example](https://beta.vidpolaris.ml/api/deezer/search?type=song&id=12345678) 
+
+## Deezer Album/Artist/Song
+
+### GET ``/api/deezer/``
+
+#### Parameters
+```
+type: "album", "artist", "song",
+id: Deezer id
+```
+
+#### Example Body
+```
+WIP
+```
+
+[Example](https://beta.vidpolaris.ml/api/deezer?type=song&id=12345678) 
+
+## Video Infomation
 This gets video infomation and formats from any given ID and/or YouTube url. Retrived by [``node-ytdl-core``](https://github.com/fent/node-ytdl-core).
 
 ### GET ``/api/info``
@@ -332,6 +455,7 @@ This example gets formats and metadata of [the legendary SiIvagunner rip of Crea
 
 
 ## Specific Format for YouTube video
+Gets a specific format/quality of a YouTube video.
 
 ### GET ``/api/itag/``
 
@@ -385,43 +509,3 @@ itag: YouTube video ITAG.
 [Example](https://beta.vidpolaris.ml/api/itag?id=0XgdWnsT0yc&itag=133)
 
 Getting itag 133 on a random video I found browsing Reddit.
-
-## Search YouTube
-
-This searches YouTube for content using [``ytsr``](https://github.com/TimeForANinja/node-ytsr).
-
-### GET ``/api/search``
-
-#### Parameters
-```
-q: query
-```
-
-#### Example Body 
-```json
-{
-    "query":"creative exercise siivagunner",
-    "items":[
-        {
-            "type":"video",
-            "live":false,
-            "title":"Creative Exercise - Mario Paint",
-            "link":"https://www.youtube.com/watch?v=ymbw2R3uIqc",
-            "thumbnail":"https://i.ytimg.com/vi/ymbw2R3uIqc/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLBxJZ0Vk2TEe9qPo5ccuw-i7rtEsA",         
-            "author":{
-                "name":"SiIvaGunner",
-                "ref":"https://www.youtube.com/channel/UC9ecwl3FTG66jIKA9JRDtmg",
-                "verified":false
-            },
-            "description":"Music: Creative Exercise Composer: Kazumi Totaka Playlist: ...",
-            "views":2122280,
-            "duration":"2:02",
-            "uploaded_at":"4 years ago"
-        }
-    ]
-}
-```
-
-[Example](https://beta.vidpolaris.ml/api/search?q=creative%20exercise%20siivagunner)
-
-This searches YouTube for Creative Excerise by SiIvagunner.
