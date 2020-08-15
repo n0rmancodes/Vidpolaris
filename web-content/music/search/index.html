@@ -6,14 +6,18 @@
     </head>
     <body>
         <div class="sidebar">
-            <h1>VidPolaris Music</h1>
+            <a href="/music/"><h1 class="hoverline">VidPolaris Music</h1></a>
             <input placeholder="Search" id="q">
             <button onclick="search()">Search</button>
         </div>
         <div class="body">
-            <h2 class="sectionTitle"><span class="material-icons">public</span> Trending Worldwide</h2>
-            <div class="chart" id="chart"></div>
-            <div class="pSpace"></div>
+            <div id="load" style="margin:1%;">
+                <p>Please wait...</p>
+            </div>
+            <div id="content" style="display:none;">
+                <h2>Search Results for <span id="query"></span></h2>
+                <div id="searchFeed"></div>
+            </div>
         </div>
         <div id="playerLoading" style="display:none;">
             Please wait...
@@ -33,7 +37,7 @@
             <div class="prog"><div id="in" class="progIn"></div></div>
             <audio id="p"></audio>
         </div>
-        <script src="/music/index.js"></script>
+        <script src="/music/search/index.js"></script>
         <script src="/music/global.js"></script>
     </body>
 </html>

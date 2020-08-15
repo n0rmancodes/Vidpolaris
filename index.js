@@ -7,9 +7,9 @@ const ytsr = require("ytsr");
 const ytpl = require("ytpl");
 const ytsg = require("youtube-suggest");
 const redddit = require("redddit");
-const need = require("needle");
 const ytch = require('yt-channel-info');
 const cheerio = require("cheerio");
+const got = require("got");
 const deez = require("deezer-public-api");
 const deezer = new deez();
 let filter;
@@ -59,23 +59,13 @@ async function runServer(request, res) {
 					var r = r + "?type=" + type
 				}
 			}
-			need("get", r, function(error, body) {
-				if (error | !body) {
-					var d = JSON.stringify({
-						"err": "noTrending"
-					})
-					res.writeHead(404, {
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "application/json"
-					})
-					res.end(d);
-				} else {
-					res.writeHead(200, {
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "application/json"
-					})
-					res.end(JSON.stringify(body.body));
-				}
+			got.get(r).then(function(response) {
+				var body = response.body
+				res.writeHead(200, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				})
+				res.end(JSON.stringify(body.body));
 			})
 		} else if (path == "/api/reddit" | path == "/api/reddit/") {
 			var sub = param.sub || "videos";
@@ -424,7 +414,7 @@ async function runServer(request, res) {
 			if (param.id) {
 				if (param.type == "song") {
 					deezer.track(param.id).then(function(response) {
-						ytsr(response.title + " " + response.artist.name + " official").then(function(searchResults) {
+						ytsr(response.title + " " + response.artist.name + " official audio").then(function(searchResults) {
 							ytdl(searchResults.items[0].link).on("info", function(info) {
 								res.writeHead(200, {
 									"Access-Control-Allow-Origin": "*",
@@ -432,7 +422,8 @@ async function runServer(request, res) {
 								});
 								res.end(JSON.stringify({
 									"deezer": response,
-									"ytdl": ytdl.filterFormats(info.formats, "audioonly")
+									"ytdl": ytdl.filterFormats(info.formats, "audioonly"),
+									"ytdl_alt": ytdl.filterFormats(info.formats, "audioandvideo")
 								}));
 							})
 						})
@@ -449,15 +440,45 @@ async function runServer(request, res) {
 				} else if (param.type == "artist") {
 					deezer.artist(param.id).then(function(response) {
 						deezer.artist.top(param.id, 100).then(function(resp2) {
-							res.writeHead(200, {
+							deezer.artist.albums(param.id, response.nb_album).then(function(resp3) {
+								res.writeHead(200, {
+									"Access-Control-Allow-Origin": "*",
+									"Content-Type": "application/json"
+								});
+								res.end(JSON.stringify({
+									"info":response,
+									"topTracks":resp2.data,
+									"albumList":resp3.data
+								}));
+							}).catch((e) =>{
+								var d = JSON.stringify({
+									"err":e.stack.split("Error: ")[1].split("\n")[0]
+								});
+								res.writeHead(404, {
+									"Access-Control-Allow-Origin": "*",
+									"Content-Type": "application/json"
+								})
+								res.end(d);
+							})
+						}).catch((e) =>{
+							var d = JSON.stringify({
+								"err":e.stack.split("Error: ")[1].split("\n")[0]
+							});
+							res.writeHead(404, {
 								"Access-Control-Allow-Origin": "*",
 								"Content-Type": "application/json"
-							});
-							res.end(JSON.stringify({
-								"info":response,
-								"topTracks":resp2
-							}));
+							})
+							res.end(d);
 						})
+					}).catch((e) =>{
+						var d = JSON.stringify({
+							"err":e.stack.split("Error: ")[1].split("\n")[0]
+						});
+						res.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						res.end(d);
 					})
 				} else if (param.type == "album") {
 					deezer.album(param.id).then(function(response) {
@@ -466,13 +487,49 @@ async function runServer(request, res) {
 							"Content-Type": "application/json"
 						});
 						res.end(JSON.stringify(response))
+					}).catch((e) =>{
+						var d = JSON.stringify({
+							"err":e.stack.split("Error: ")[1].split("\n")[0]
+						});
+						res.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						res.end(d);
 					})
+				} else {
+					var d = JSON.stringify({
+						"err": "invalidData"
+					});
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					})
+					res.end(d);
 				}
+			} else {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				});
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				})
+				res.end(d);
 			}
 		} else if (path == "/api/proxy" | path == "/api/proxy/") {
 			if (param.url) {
 				var d = Buffer.from(param.url,"base64").toString();
-				need.get(d).pipe(res);
+				got.stream(d).pipe(res).on("err", function(e) {
+					var d = JSON.stringify({
+						"err": e.message
+					})
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(d);
+				});
 			} else {
 				var d = JSON.stringify({
 					"err": "noUrl"
@@ -581,14 +638,23 @@ async function runServer(request, res) {
 				res.end(d);
 			}
 		} else if (path == "/api/instances" | path == "/api/instances/") {
-			need("https://raw.githubusercontent.com/n0rmancodes/vidpolaris-rw/master/instances.json", function(err, resp, body) {
-				if (body) {
+			got("https://raw.githubusercontent.com/n0rmancodes/vidpolaris-rw/master/instances.json").then(function(response) {
+				if (response.body) {
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					});
-					res.end(body);
+					res.end(response.body);
 				}
+			}).catch(function(e) {
+				var d = JSON.stringify({
+					"err": e.message
+				})
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(d);
 			})
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
 			if (param.url && param.url.includes("?")) {
@@ -598,7 +664,8 @@ async function runServer(request, res) {
 					} else {
 						var hUrl = hostUrl;
 					}
-					need("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?")[1], function(err, resp, body) {
+					got("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?")[1]).then(function(response) {
+						var body = JSON.parse(response.body);
 						var body = JSON.stringify({
 							"author_url": body.author_url,
 							"provider_name": "VidPolaris Beta",
@@ -620,17 +687,26 @@ async function runServer(request, res) {
 							"Content-Type": "application/json"
 						});
 						res.end(body)
+					}).catch(function(e) {
+						var d = JSON.stringify({
+							"err": e.message
+						})
+						res.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						});
+						res.end(d);
 					})
 				}
 			}
 		} else if (path.includes("/api/thumb")) {
 			if (!path.split("/api/thumb")[1]) {
-				need.get("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
+				got.stream("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
 				return;
 			}
 			if (path.split("/api/thumb/")[1].split("/")[0]) {
 				var id = path.split("/api/thumb/")[1].split("/")[0];
-				need.get("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg", function(err,resp,body) {
+				got.stream("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg").then(function(response) {
 					res.writeHead(200, {
 						"Content-Type":"image/jpeg",
 						"Access-Control-Allow-Origin":"*"
@@ -638,7 +714,7 @@ async function runServer(request, res) {
 					res.end(body);
 				});
 			} else {
-				need.get("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
+				got.stream("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
 			}
 		} else if (path == "/api/suggest" | path == "/api/suggest/") {
 			if (param.q) {
@@ -672,9 +748,18 @@ async function runServer(request, res) {
 			}
 		} else if (path == "/api/sponsors" | path == "/api/sponsors/") {
 			if (param.id) {
-			 	need("https://sponsor.ajay.app/api/skipSegments?videoID=" + param.id, function(err,resp,body) {
+			 	got("https://sponsor.ajay.app/api/skipSegments?videoID=" + param.id).then(function(resp) {
 					res.writeHead(resp.statusCode, resp.headers);
 					res.end(JSON.stringify(resp.body));
+				}).catch(function(e) {
+					var d = JSON.stringify({
+						"err": e.message
+					})
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(d);
 				})
 			} else {
 				var d = JSON.stringify({
@@ -708,7 +793,7 @@ async function runServer(request, res) {
 						if (err) {
 							res.end(err.code)
 						} else {
-							res.writeHead(200, {
+							res.writeHead(404, {
 								"Access-Control-Allow-Origin": "*",
 								"Content-Type": "text/html"
 							})
@@ -723,7 +808,7 @@ async function runServer(request, res) {
 									if (err) {
 										res.end(err.code)
 									} else {
-										res.writeHead(200, {
+										res.writeHead(404, {
 											"Access-Control-Allow-Origin": "*",
 											"Content-Type": "text/html"
 										})
