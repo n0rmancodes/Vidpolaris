@@ -712,6 +712,12 @@ async function runServer(request, res) {
 						"Access-Control-Allow-Origin":"*"
 					})
 					res.end(body);
+				}).catch(function(e) {
+					res.writeHead(200, {
+						"Content-Type":"image/jpeg",
+						"Access-Control-Allow-Origin":"*"
+					})
+					res.end("err");
 				});
 			} else {
 				got.stream("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);

@@ -14,6 +14,10 @@ if (document.getElementById("p")) {
         document.getElementById("togglePlayback").innerHTML = "Pause";
         sessionStorage.setItem("status", "play");
     })
+    document.getElementById("p").addEventListener("play", function () {
+        document.getElementById("togglePlayback").innerHTML = "Pause";
+        sessionStorage.setItem("status", "play");
+    })
 }
 
 if (sessionStorage.getItem("id") && sessionStorage.getItem("time")) {
