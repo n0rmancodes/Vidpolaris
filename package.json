@@ -26,7 +26,7 @@
     "redddit": "^1.0.2",
     "youtube-suggest": "^1.1.0",
     "yt-channel-info": "^1.0.1",
-    "ytdl-core": "^3.2.0",
+    "ytdl-core": "^3.2.1",
     "ytpl": "^0.1.22",
     "ytsr": "^0.1.20"
   },
