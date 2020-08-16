@@ -706,7 +706,7 @@ async function runServer(request, res) {
 			}
 			if (path.split("/api/thumb/")[1].split("/")[0]) {
 				var id = path.split("/api/thumb/")[1].split("/")[0];
-				got.stream("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg").then(function(response) {
+				got("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg").then(function(response) {
 					res.writeHead(200, {
 						"Content-Type":"image/jpeg",
 						"Access-Control-Allow-Origin":"*"
