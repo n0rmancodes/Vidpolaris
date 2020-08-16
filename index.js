@@ -20,7 +20,7 @@ const url = require("url");
 const fs = require("fs");
 // boot up
 console.log("starting server...");
-const version = "0.2";
+const version = "0.3";
 const version_type = "ALPHA"
 const port = process.env.PORT || 3001;
 const hostUrl = "https://beta.vidpolaris.ml/";
@@ -152,7 +152,7 @@ async function runServer(request, res) {
 				})
 				info.on("error", function(e) {
 					var json = JSON.stringify ({
-						"err":e.stack.split("Error: ")[1].split("\n")[0]
+						"err":e.message
 					})
 					res.writeHead(200, {
 						"Content-Type": "application/json",
@@ -190,7 +190,7 @@ async function runServer(request, res) {
 				}
 				ytpl(i, opt, function(err,result) {
 					if (err) {
-						var errTxt = err.stack.split("Error: ")[1].split("\n")[0];
+						var errTxt = err.message;
 						var d = JSON.stringify({
 							"err": errTxt
 						})
@@ -281,7 +281,7 @@ async function runServer(request, res) {
 				}
 			}).on("err", function(err) {
 				let d = JSON.stringify({
-					"err":err.stack.split("Error: ")[1].split("\n")[0]
+					"err":err.message
 				})
 				res.writeHead(404,{
 					"Access-Control-Allow-Origin": "*",
@@ -329,7 +329,7 @@ async function runServer(request, res) {
 						}
 					} else {
 						var d = JSON.stringify({
-							"err":err.stack.split("Error: ")[1].split("\n")[0]
+							"err":err.message
 						});
 						res.writeHead(200, {
 							"Access-Control-Allow-Origin": "*",
@@ -357,7 +357,7 @@ async function runServer(request, res) {
 				res.end(JSON.stringify(response.data));
 			}).catch((e) =>{
 				var d = JSON.stringify({
-					"err":e.stack.split("Error: ")[1].split("\n")[0]
+					"err":e.message
 				});
 				res.writeHead(404, {
 					"Access-Control-Allow-Origin": "*",
@@ -384,7 +384,7 @@ async function runServer(request, res) {
 					res.end(JSON.stringify(response.data));
 				}).catch((e) =>{
 					var d = JSON.stringify({
-						"err":e.stack.split("Error: ")[1].split("\n")[0]
+						"err":e.message
 					});
 					res.writeHead(404, {
 						"Access-Control-Allow-Origin": "*",
@@ -410,9 +410,9 @@ async function runServer(request, res) {
 								}));
 							})
 						})
-					}).catch((e) =>{
+					}).catch((err) =>{
 						var d = JSON.stringify({
-							"err":e.stack.split("Error: ")[1].split("\n")[0]
+							"err":err.message
 						});
 						res.writeHead(404, {
 							"Access-Control-Allow-Origin": "*",
@@ -435,7 +435,7 @@ async function runServer(request, res) {
 								}));
 							}).catch((e) =>{
 								var d = JSON.stringify({
-									"err":e.stack.split("Error: ")[1].split("\n")[0]
+									"err":e.message
 								});
 								res.writeHead(404, {
 									"Access-Control-Allow-Origin": "*",
@@ -445,7 +445,7 @@ async function runServer(request, res) {
 							})
 						}).catch((e) =>{
 							var d = JSON.stringify({
-								"err":e.stack.split("Error: ")[1].split("\n")[0]
+								"err":e.message
 							});
 							res.writeHead(404, {
 								"Access-Control-Allow-Origin": "*",
@@ -455,7 +455,7 @@ async function runServer(request, res) {
 						})
 					}).catch((e) =>{
 						var d = JSON.stringify({
-							"err":e.stack.split("Error: ")[1].split("\n")[0]
+							"err":e.message
 						});
 						res.writeHead(404, {
 							"Access-Control-Allow-Origin": "*",
@@ -472,7 +472,7 @@ async function runServer(request, res) {
 						res.end(JSON.stringify(response))
 					}).catch((e) =>{
 						var d = JSON.stringify({
-							"err":e.stack.split("Error: ")[1].split("\n")[0]
+							"err":e.message
 						});
 						res.writeHead(404, {
 							"Access-Control-Allow-Origin": "*",
@@ -536,7 +536,7 @@ async function runServer(request, res) {
 					res.end(d);
 				}).catch((err) => {
 					var d = JSON.stringify({
-						"err":err.stack.split("Error: ")[1].split("\n")[0]
+						"err":err.message
 					});
 					res.writeHead(404, {
 						"Access-Control-Allow-Origin": "*",
@@ -566,7 +566,7 @@ async function runServer(request, res) {
 						res.end(d);
 					}).catch((err) => {
 						var d = JSON.stringify({
-							"err":err.stack.split("Error: ")[1].split("\n")[0]
+							"err":err.message
 						});
 						res.writeHead(404, {
 							"Access-Control-Allow-Origin": "*",
@@ -584,7 +584,7 @@ async function runServer(request, res) {
 						res.end(d);
 					}).catch((err) => {
 						var d = JSON.stringify({
-							"err":err.stack.split("Error: ")[1].split("\n")[0]
+							"err":err.message
 						});
 						res.writeHead(404, {
 							"Access-Control-Allow-Origin": "*",
@@ -603,7 +603,7 @@ async function runServer(request, res) {
 					res.end(d);
 				}).catch((err) => {
 					var d = JSON.stringify({
-						"err":err.stack.split("Error: ")[1].split("\n")[0]
+						"err":err.message
 					});
 					res.writeHead(404, {
 						"Access-Control-Allow-Origin": "*",
@@ -728,7 +728,7 @@ async function runServer(request, res) {
 					return;
 				}).catch((err) => {
 					var d = JSON.stringify({
-						"err":err.stack.split("Error: ")[1].split("\n")[0]
+						"err":err.message
 					});
 					res.writeHead(404, {
 						"Access-Control-Allow-Origin": "*",
