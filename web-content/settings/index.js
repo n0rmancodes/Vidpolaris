@@ -1,5 +1,5 @@
 if (localStorage.getItem("invSrc")) {
-	document.getElementById("invSrc").value = localStorage.getItem("invSrc");
+	localStorage.removeItem("invSrc");
 }
 
 if (localStorage.getItem("n_theme")) {

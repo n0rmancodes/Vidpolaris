@@ -1,30 +1,9 @@
-if (!localStorage.getItem("invSrc")) {
-	localStorage.setItem("invSrc", "official")
-}
 getTrending();
 
 function getTrending(type, country) {
 	document.getElementById("deet").innerHTML = "requesting server...";
 	var xhr = new XMLHttpRequest();
-	if (type == "") {
-		var param = "";
-	} else if (type == "gaming") {
-		var param = "&type=gaming";
-	} else if (type == "music") {
-		var param = "&type=music"
-	}
-	if (country) {
-		var param = param + "&locale=" + country
-	}
-	if (param == undefined) {
-		var param = "";
-	}
-	if (localStorage.getItem("invSrc")) {
-		var inst = localStorage.getItem("invSrc");
-	} else {
-		var inst = "snopyta";
-	}
-	xhr.open("GET", "api/trending?inst=" + inst + param);
+	xhr.open("GET", "/api/trending/");
 	xhr.send();
 	xhr.onload = function () {
 		var json = JSON.parse(xhr.responseText);

@@ -12,6 +12,7 @@ const cheerio = require("cheerio");
 const got = require("got");
 const deez = require("deezer-public-api");
 const deezer = new deez();
+const trending = require("yt-trending-scraper");
 let filter;
 // built-in pkgs
 const http = require("http");
@@ -33,39 +34,21 @@ async function runServer(request, res) {
 	if (path.includes("/api")) {
 		// api endpoints
 		if (path == "/api/trending" | path == "/api/trending/") {
-			var inst = param.inst;
-			var locale = param.locale;
-			var type = param.type;
-			if (inst) {
-				if (inst == "snopyta"){
-					var r = "https://invidious.snopyta.org/api/v1/trending";
-				} else if (inst == "13ad") {
-					var r = "https://invidious.13ad.de/api/v1/trending";
-				} else if (inst == "ggc") {
-					var r = "https://invidious.ggc-project.de/api/v1/trending";
-				} else {
-					var r = "https://invidious.snopyta.org/api/v1/trending";
-				}
-			} else {
-				var r = "https://invidious.snopyta.org/api/v1/trending";
-			}
-			if (locale) {
-				var r = r + "?region=" + locale
-			}
-			if (type) {
-				if (locale) {
-					var r = r + "&type=" + type
-				} else {
-					var r = r + "?type=" + type
-				}
-			}
-			got.get(r).then(function(response) {
-				var body = response.body
+			trending.scrape_trending_page().then(function(data) {
 				res.writeHead(200, {
+					"Content-Type": "application/json",
+					"Access-Control-Allow-Origin": "*"
+				});
+				res.end(JSON.stringify(data));
+			}).catch(function(error) {
+				var data = JSON.stringify({
+					"err": error.message
+				});
+				res.writeHead(404, {
 					"Access-Control-Allow-Origin": "*",
 					"Content-Type": "application/json"
 				})
-				res.end(JSON.stringify(body.body));
+				res.end(data)
 			})
 		} else if (path == "/api/reddit" | path == "/api/reddit/") {
 			var sub = param.sub || "videos";
@@ -520,7 +503,7 @@ async function runServer(request, res) {
 		} else if (path == "/api/proxy" | path == "/api/proxy/") {
 			if (param.url) {
 				var d = Buffer.from(param.url,"base64").toString();
-				got.stream(d).pipe(res).on("err", function(e) {
+				var dd = got.stream(d).on("err", function(e) {
 					var d = JSON.stringify({
 						"err": e.message
 					})
@@ -530,6 +513,7 @@ async function runServer(request, res) {
 					});
 					res.end(d);
 				});
+				dd.pipe(res);
 			} else {
 				var d = JSON.stringify({
 					"err": "noUrl"
@@ -701,26 +685,36 @@ async function runServer(request, res) {
 			}
 		} else if (path.includes("/api/thumb")) {
 			if (!path.split("/api/thumb")[1]) {
-				got.stream("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
+				var d = fs.createReadStream("./web-content/undefined.jpg");
+				d.pipe(res);
 				return;
 			}
 			if (path.split("/api/thumb/")[1].split("/")[0]) {
-				var id = path.split("/api/thumb/")[1].split("/")[0];
-				got("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg").then(function(response) {
-					res.writeHead(200, {
-						"Content-Type":"image/jpeg",
-						"Access-Control-Allow-Origin":"*"
+				var id = path.split("/api/thumb/")[1];
+				var d = got.stream("https://i.ytimg.com/vi/" + id + "/hqdefault.jpg", {
+					headers: {
+						"Accept": "image/webp, */*",
+						"Accept-Encoding": "gzip, deflate",
+						"Accept-Language": "en-US,en;q=0.5",
+						"Cache-Control": "max-age=0",
+						"Connection": "keep-alive",
+						"DNT": "1",
+						"Referer": "https://youtube.com/",
+						"Host": "i.ytimg.com",
+						"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0"
+					}
+				}).on("error", function(e) {
+					res.writeHead(404, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "text/plain"
 					})
-					res.end(body);
-				}).catch(function(e) {
-					res.writeHead(200, {
-						"Content-Type":"image/jpeg",
-						"Access-Control-Allow-Origin":"*"
-					})
-					res.end("err");
-				});
+					res.end(e.message);
+				})
+				d.pipe(res);
 			} else {
-				got.stream("https://i.ytimg.com/vi/undefined/hqdefault.jpg").pipe(res);
+				var d = fs.createReadStream("./web-content/undefined.jpg");
+				d.pipe(res);
+				return;
 			}
 		} else if (path == "/api/suggest" | path == "/api/suggest/") {
 			if (param.q) {
