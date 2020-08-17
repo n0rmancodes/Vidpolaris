@@ -14,7 +14,7 @@ if (localStorage.getItem("invSrc") == "official") {
 
 function search() {
 	var q = document.getElementById("q").value;
-	window.open("/s?"+q, "_self");
+	window.open("/search?q="+q, "_self");
 }
 
 function calcLString(string) {

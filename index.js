@@ -642,13 +642,13 @@ async function runServer(request, res) {
 			})
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
 			if (param.url && param.url.includes("?")) {
-				if (param.url.split("?")[0] == "/w" | param.url.split("?")[0] == "w") {
+				if (param.url.split("?")[0] == "/watch" | param.url.split("?")[0] == "watch") {
 					if (hostUrl == "https://beta.vidpolaris.ml/") {
 						var hUrl = "http://vidpolaris.ml:9027/";
 					} else {
 						var hUrl = hostUrl;
 					}
-					got("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?")[1]).then(function(response) {
+					got("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?v=")[1]).then(function(response) {
 						var body = JSON.parse(response.body);
 						var body = JSON.stringify({
 							"author_url": body.author_url,

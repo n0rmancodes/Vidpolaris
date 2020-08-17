@@ -9,7 +9,7 @@ function getTrending(type, country) {
 		var json = JSON.parse(xhr.responseText);
 		for (var c in json) {
 			var link = document.createElement("A");
-			link.href = "w?" + json[c].videoId;
+			link.href = "watch?v=" + json[c].videoId;
 			var base = document.createElement("DIV");
 			base.classList.add("vidChip");
 			var img = document.createElement("IMG");

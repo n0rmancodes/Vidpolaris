@@ -1,7 +1,7 @@
 load();
 
 function load() {
-	var q = window.location.search.substring(1);
+	var q = window.location.search.split("?q=")[1];
 	if (q == "") {
 		window.open("/", "_self");
 	} else {

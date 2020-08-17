@@ -145,7 +145,7 @@ function theater(t) {
 }
 
 function load() {
-	var id = window.location.search.substring(1,12) 
+	var id = window.location.search.split("?v=")[1];
 	if (id) {
 		document.getElementById("deet").innerHTML = "requesting server...";
 		var xhr = new XMLHttpRequest();
@@ -371,7 +371,7 @@ function load() {
 				document.getElementById("main").style.display = "";
 				for (var c in json.info.related_videos) {
 					var l = document.createElement("A");
-					l.href = "w?" + json.info.related_videos[c].id;
+					l.href = "watch?v=" + json.info.related_videos[c].id;
 					var vidChip = document.createElement("DIV");
 					vidChip.classList.add("horiVidChip");
 					var img = document.createElement("IMG");
