@@ -20,11 +20,11 @@ function load() {
 					var chip = document.createElement("DIV");
 					document.getElementById("searchResults").appendChild(chip);
 					if (json.items[c].type == "video") {
-						link.href = "w?" + json.items[c].link.substring(32);
+						link.href = "watch?v=" + json.items[c].link.substring(32);
 						chip.classList.add("largeHoriChip");
 						var img = document.createElement("IMG");
 						img.classList.add("bImg");
-						img.src = "/api/proxy?url=" + btoa(json.items[c].thumbnail.split("?")[0]);
+						img.src = "/api/thumb/" + json.items[c].link.substring(32);
 						chip.appendChild(img);
 						var d = document.createElement("DIV");
 						d.classList.add("inner");
