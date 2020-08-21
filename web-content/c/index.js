@@ -11,8 +11,14 @@ function load() {
 		if (!json.err) {
 			document.getElementById("auth").innerHTML = json.author;
 			document.title = json.author + " | VidPolaris";
-			document.getElementById("authIcon").src = "/api/proxy?url=" + btoa(json.authorThumbnails[0].url.split("=s")[0]);
-			document.getElementById("back").style = "background:url('api/proxy?url=" + btoa(json.authorBanners[0].url.split("=w")[0] + "=w2560") + "');background-size:cover;"
+			if (json.authorThumbnails) {
+				document.getElementById("authIcon").src = "/api/proxy?url=" + btoa(json.authorThumbnails[0].url.split("=s")[0]);
+			} else {
+				document.getElementById("authIcon").src = "/undefined.jpg";
+			}
+			if (json.authorBanners) {
+				document.getElementById("back").style = "background:url('api/proxy?url=" + btoa(json.authorBanners[0].url.split("=w")[0] + "=w2560") + "');background-size:cover;"
+			}
 			if (json.description.includes("\n")) {
 				document.getElementById("authDescShort").innerHTML = varLinks(json.description.split("\n")[0]);
 				document.getElementById("authDesc").innerHTML = varLinks(json.description.replace("\n","<br>"));

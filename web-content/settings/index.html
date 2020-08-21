@@ -30,6 +30,13 @@
 				</select>
 			</div>
 			<div class="option">
+				<label>Homepage Data:</label>
+				<select id="hp" onInput="save('hp', this.value);">
+					<option value="reddit">Trending on Reddit</option>
+					<option value="youtube">Trending on YouTube</option>
+				</select>
+			</div>
+			<div class="option">
 				<label>Allow overscaling:</label>
 				<select id="ov" onInput="save('ov', this.value)">
 					<option value="disabled">Disabled</option>
