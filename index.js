@@ -4,6 +4,7 @@ console.log("defining packages...");
 // installable pkgs
 const ytdl = require("ytdl-core");
 const ytsr = require("ytsr");
+let filter;
 const ytpl = require("ytpl");
 const ytsg = require("youtube-suggest");
 const redddit = require("redddit");
@@ -13,7 +14,7 @@ const got = require("got");
 const deez = require("deezer-public-api");
 const deezer = new deez();
 const trending = require("yt-trending-scraper");
-let filter;
+const ftl = require("findthelyrics");
 // built-in pkgs
 const http = require("http");
 const url = require("url");
@@ -161,7 +162,7 @@ async function runServer(request, res) {
 					res.end(json);
 				})
 			}
-		} else if (path == "/api/playlist" | path == "/api/playlist/"){
+		} else if (path == "/api/playlist" | path == "/api/playlist/") {
 			var id = param.id;
 			var pUrl = param.url;
 			if (!id && !pUrl) {
@@ -499,6 +500,32 @@ async function runServer(request, res) {
 					"Content-Type": "application/json"
 				})
 				res.end(d);
+			}
+		} else if (path == "/api/lyrics" | path == "/api/lyrics") {
+			if (param.artist && param.title) {
+				var a = param.artist;
+				var t = param.title;
+				ftl.find(a, t, function(err, resp) {
+					if (err) {
+						var d = JSON.stringify({
+							"err": err.message
+						});
+						res.writeHead(404, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						res.end(d);
+					} else {
+						var d = JSON.stringify({
+							"lyrics": resp
+						})
+						res.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						})
+						res.end(d);
+					}
+				})
 			}
 		} else if (path == "/api/proxy" | path == "/api/proxy/") {
 			if (param.url) {
