@@ -36,7 +36,7 @@ function load() {
 				var json = JSON.parse(xhr.responseText);
 				for (var c in json.items) {
 					var link = document.createElement("A");
-					link.href = "w?" + json.items[c].videoId;
+					link.href = "watch?v=" + json.items[c].videoId;
 					var base = document.createElement("DIV");
 					base.classList.add("vidChip");
 					var img = document.createElement("IMG");
