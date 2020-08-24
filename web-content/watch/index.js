@@ -339,7 +339,7 @@ function load() {
 					document.getElementById("authIco").src = "/img/default.jpg";
 				}
 				document.getElementById("viewCount").innerHTML = parseInt(json.info.videoDetails.viewCount).toLocaleString() + " views";
-				document.getElementById("pText").innerHTML = json.info.videoDetails.publishDate;
+				document.getElementById("pText").innerHTML = parseDate(json.info.videoDetails.publishDate);
 				if (json.info.videoDetails.description) {
 					var desc = varLinks(json.info.videoDetails.description.simpleText.replace(/\n/g, "<br>"));
 					document.getElementById("fullDesc").innerHTML = desc;
@@ -463,4 +463,29 @@ function getItag(itag, type) {
 function changeVolume(val) {
 	val = (val / 100);
 	document.getElementById("aPlayer").volume = val;
+}
+
+function parseDate(string) {
+	if (string.split("-").length == 3) {
+		var year = string.split("-")[0];
+		var month = parseInt(string.split("-")[1]);
+		var day = parseInt(string.split("-")[2]);
+		if (month == 1) { var m = "January"; } 
+		else if (month == 2) { var m = "February"; }
+		else if (month == 3) { var m = "March"; }
+		else if (month == 4) { var m = "April"; }
+		else if (month == 5) { var m = "May"; }
+		else if (month == 6) { var m = "June"; }
+		else if (month == 7) { var m = "July"; }
+		else if (month == 8) { var m = "August"; }
+		else if (month == 9) { var m = "September"; }
+		else if (month == 10) { var m = "October"; }
+		else if (month == 11) { var m = "November"; }
+		else if (month == 12) { var m = "December"; }
+		else { var m = null; }
+		var dat = m + " " + day + ", " + year
+		return dat;
+	} else {
+		return string;
+	}
 }
