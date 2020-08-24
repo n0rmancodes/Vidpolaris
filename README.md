@@ -1,4 +1,4 @@
-# vidpolaris-rw
+![vidpolaris](images/black-on-white.png)
 An alternative client for YouTube.
 
 [Original Version](https://github.com/n0rmancodes/vidpolaris) | [Original API](https://github.com/n0rmancodes/vidpolarisAPI)
