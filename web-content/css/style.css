@@ -99,8 +99,14 @@ a:hover {
 	width:100%;
 }
 
-.allFloat *, .snackBar {
+.snackBar {
+	width:100%;
+	height:30px;
+}
+
+.allFloat *, .snackBar * {
 	float:left;
+	margin-right:5px;
 }
 
 .allFloat select {
@@ -403,7 +409,7 @@ a:hover {
 		margin-bottom:0;
 		margin-left:.35%;
 	}
-	
+
 	.vidChip {
 		width:300px;
 		height:300px;
