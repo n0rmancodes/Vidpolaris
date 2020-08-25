@@ -111,6 +111,25 @@ function returnNumber(j) {
 	}
 }
 
+function autoCorrect() {
+	if (document.getElementById("aPlayer").src && !document.getElementById("aPlayer").paused) {
+		var diff = (document.getElementById("player").currentTime - document.getElementById("aPlayer").currentTime);
+		if (diff > 0.15) {
+			document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+			console.log("autocorrected time gap");
+			console.log(diff);
+			setTimeout(autoCorrect, 5000);
+		} else if (diff < -0.15) {
+			document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
+			console.log("autocorrected time gap");
+			console.log(diff);
+			setTimeout(autoCorrect, 5000);
+		}
+	} else {
+		setTimeout(autoCorrect, 5000);
+	}
+}
+
 function theater(t) {
 	if (!t) {
 		if (!localStorage.getItem("theaterNew") | localStorage.getItem("theaterNew") == "n") {
@@ -369,6 +388,7 @@ function load() {
 				}
 				document.title = json.info.videoDetails.title + " | VidPolaris";
 				document.getElementById("main").style.display = "";
+				loaded();
 				for (var c in json.info.related_videos) {
 					var l = document.createElement("A");
 					l.href = "watch?v=" + json.info.related_videos[c].id;
@@ -414,6 +434,12 @@ function load() {
 				document.getElementById("errTxt").innerHTML = json.err;
 			}
 		} 
+	}
+}
+
+function loaded() {
+	if (localStorage.getItem("sq") && localStorage.getItem("sq") == "enabled") {
+		autoCorrect();
 	}
 }
 

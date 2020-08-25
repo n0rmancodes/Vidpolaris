@@ -275,6 +275,10 @@ a:hover {
 		margin-top:10%;
 	}
 	
+	.moreDetails * {
+		width:100%;
+	}
+
 	.horiVidChip {
 		width:99%;
 		height:225px;

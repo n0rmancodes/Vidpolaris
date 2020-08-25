@@ -731,13 +731,13 @@ async function runServer(request, res) {
 						"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0"
 					}
 				}).on("error", function(e) {
-					res.writeHead(404, {
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "text/plain"
-					})
-					res.end(e.message);
+					res.end();
+				}).on("close", function() {
+					res.end();
 				})
-				d.pipe(res);
+				d.pipe(res).on("close", function() {
+					res.end();
+				});
 			} else {
 				var d = fs.createReadStream("./web-content/undefined.jpg");
 				d.pipe(res);
