@@ -388,7 +388,8 @@ a:hover {
 	}
 
 	.hdr input {
-		height:35px;
+		height:37px;
+		border:0;
 		padding-left:5px;
 		padding-right:5px;
 		transition:width .5s;
