@@ -14,7 +14,6 @@ const got = require("got");
 const deez = require("deezer-public-api");
 const deezer = new deez();
 const trending = require("yt-trending-scraper");
-const ftl = require("findthelyrics");
 // built-in pkgs
 const http = require("http");
 const url = require("url");
@@ -500,32 +499,6 @@ async function runServer(request, res) {
 					"Content-Type": "application/json"
 				})
 				res.end(d);
-			}
-		} else if (path == "/api/lyrics" | path == "/api/lyrics") {
-			if (param.artist && param.title) {
-				var a = param.artist;
-				var t = param.title;
-				ftl.find(a, t, function(err, resp) {
-					if (err) {
-						var d = JSON.stringify({
-							"err": err.message
-						});
-						res.writeHead(404, {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json"
-						})
-						res.end(d);
-					} else {
-						var d = JSON.stringify({
-							"lyrics": resp
-						})
-						res.writeHead(200, {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json"
-						})
-						res.end(d);
-					}
-				})
 			}
 		} else if (path == "/api/proxy" | path == "/api/proxy/") {
 			if (param.url) {
