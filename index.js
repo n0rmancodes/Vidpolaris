@@ -398,15 +398,21 @@ async function runServer(request, res) {
 				if (param.type == "song") {
 					deezer.track(param.id).then(function(response) {
 						ytsr(response.title + " " + response.artist.name + " official audio").then(function(searchResults) {
-							ytdl(searchResults.items[0].link).on("info", function(info) {
+							ytdl.getBasicInfo(searchResults.items[0].link).then(function(info) {
+								var i = [];
+								for (var c in info.formats) {
+									if (info.formats[c].audioQuality && !info.formats[c].isHLS && !info.formats[c].isDashMPD) {
+										var o = info.formats[c]; 
+										i.push(o);
+									}
+								}
 								res.writeHead(200, {
 									"Access-Control-Allow-Origin": "*",
 									"Content-Type": "application/json"
 								});
 								res.end(JSON.stringify({
 									"deezer": response,
-									"ytdl": ytdl.filterFormats(info.formats, "audioonly"),
-									"ytdl_alt": ytdl.filterFormats(info.formats, "audioandvideo")
+									"ytdl": i
 								}));
 							})
 						})

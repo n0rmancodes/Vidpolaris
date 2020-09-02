@@ -114,6 +114,7 @@ function returnNumber(j) {
 function autoCorrect() {
 	if (document.getElementById("aPlayer").src && !document.getElementById("aPlayer").paused) {
 		var diff = (document.getElementById("player").currentTime - document.getElementById("aPlayer").currentTime);
+		console.log(diff)
 		if (diff > 0.15) {
 			document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
 			console.log("autocorrected time gap");
@@ -123,6 +124,8 @@ function autoCorrect() {
 			document.getElementById("aPlayer").currentTime = document.getElementById("player").currentTime;
 			console.log("autocorrected time gap");
 			console.log(diff);
+			setTimeout(autoCorrect, 5000);
+		} else {
 			setTimeout(autoCorrect, 5000);
 		}
 	} else {

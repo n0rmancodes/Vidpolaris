@@ -54,8 +54,6 @@ function openTrack(id, goTo) {
         }
         if (compat[0]) {
             document.getElementById("p").src = compat[0].url;
-        } else {
-            document.getElementById("p").src = json.ytdl_alt[0].url
         }
         sessionStorage.setItem("playerSrc", document.getElementById("p").src)
         document.getElementById("player").style.display = "";
