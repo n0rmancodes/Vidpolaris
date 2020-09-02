@@ -31,6 +31,24 @@ if (localStorage.getItem("sq") == "enabled") {
 			document.getElementById("aPlayer").pause();
 		}
 	})
+
+	document.getElementById("player").addEventListener("ended", function() {
+		if (localStorage.getItem("ap") && localStorage.getItem("ap") == "true") {
+			if (document.querySelectorAll("#relatedFeed a").length == 0) {
+				console.log("we want to autoplay but can't due to there being no reccomendations");
+			} else {
+				setTimeout(function () {
+					document.querySelectorAll("#relatedFeed a")[0].click();
+				}, 1000)
+			}
+		}
+	})
+}
+
+if (localStorage.getItem("ap") && localStorage.getItem("ap") == "true") {
+	document.getElementById("autoplay").checked = true;
+} else {
+	document.getElementById("autoplay").checked = false;
 }
 
 document.addEventListener('keydown', function (event) {
@@ -66,7 +84,7 @@ document.addEventListener('keydown', function (event) {
 			} else if (k == "l" | k == "L" | k == 76) {
 				var d = document.getElementById("player").duration;
 				var c = document.getElementById("player").currentTime;
-				var diff = document.getElementById("player").duration - document.getElementById("player").currentTime;
+				var diff = d - c;
 				if (diff > 10) {
 					document.getElementById("player").currentTime = document.getElementById("player").currentTime + 10
 				} else {
@@ -442,7 +460,12 @@ function load() {
 
 function loaded() {
 	if (localStorage.getItem("sq") && localStorage.getItem("sq") == "enabled") {
-		autoCorrect();
+		if (localStorage.getItem("actg") && localStorage.getItem("atcg") == "enabled") {
+			autoCorrect();
+		}
+		if (!localStorage.getItem("pv") | localStorage.getItem("pv") == "enabled") {
+			document.getElementById("player").play();
+		}
 	}
 }
 
@@ -517,4 +540,9 @@ function parseDate(string) {
 	} else {
 		return string;
 	}
+}
+
+function autoplay(val) {
+	val = val.toString();
+	localStorage.setItem("ap", val);
 }

@@ -63,7 +63,18 @@
 					</div>
 				</div>
 				<div class="related" id="rlv">
-					<h2>Related Videos</h2>
+					<div class="splitSnackBar" style="height:35px;">
+						<div class="ssbLeft">
+							<h2>Related Videos</h2>
+						</div>
+						<div class="ssbRight">
+							<label id="apLabel" for="autoplay">AUTOPLAY</label>
+							<label class="switch">
+								<input name="autoplay" id="autoplay" type="checkbox" onclick="autoplay(this.checked);">
+								<span class="slider"></span>
+							</label>
+						</div>
+					</div><br>
 					<div id="relatedFeed"></div>
 				</div>
 			</div>
