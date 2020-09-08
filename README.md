@@ -1,4 +1,6 @@
 ![vidpolaris](images/black_on_white.png)
+*Logo made by [njchaltry](https://github.com/njchaltry).*
+
 An alternative client for YouTube.
 
 [Original Version](https://github.com/n0rmancodes/vidpolaris) | [Original API](https://github.com/n0rmancodes/vidpolarisAPI)
@@ -16,4 +18,3 @@ In no particular order, here are all of my thanks for keeping this project runni
 ## Requirements
 - NodeJS 10 or higher
 - All the required packages ([seen in package.json](https://github.com/n0rmancodes/vidpolaris-rw/blob/master/package.json)).
-- Port ``3001`` to be open (or ``8002`` for api only instances).
