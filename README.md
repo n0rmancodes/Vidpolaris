@@ -17,3 +17,7 @@ In no particular order, here are all of my thanks for keeping this project runni
 - [njchaltry](https://github.com/njchaltry) is another inspiration to keep this project going.
 - Family and friends for encouraging me to continue this project.
 - The awesome package writers who, without them, this project wouldn't even be alive right now.
+
+## To Be Added
+- Custom theme writer.
+- Better configuration for server owners.
