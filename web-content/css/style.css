@@ -590,7 +590,7 @@ input:checked + .slider:before {
 	.horiVidChip img {
 		object-fit:cover;
 		float:left;
-		width:35%;
+		width:38%;
 		margin-left:2%;
 		margin-right:2%;
 		margin-top:1%;
