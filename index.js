@@ -398,7 +398,7 @@ async function runServer(request, res) {
 				if (param.type == "song") {
 					deezer.track(param.id).then(function(response) {
 						ytsr(response.title + " " + response.artist.name + " official audio").then(function(searchResults) {
-							ytdl.getBasicInfo(searchResults.items[0].link).then(function(info) {
+							ytdl(searchResults.items[0].link).on("info",function(info) {
 								var i = [];
 								for (var c in info.formats) {
 									if (info.formats[c].audioQuality && !info.formats[c].isHLS && !info.formats[c].isDashMPD) {
@@ -508,18 +508,12 @@ async function runServer(request, res) {
 			}
 		} else if (path == "/api/proxy" | path == "/api/proxy/") {
 			if (param.url) {
-				var d = Buffer.from(param.url,"base64").toString();
-				var dd = got.stream(d).on("err", function(e) {
-					var d = JSON.stringify({
-						"err": e.message
-					})
-					res.writeHead(404, {
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "application/json"
-					});
-					res.end(d);
-				});
-				dd.pipe(res);
+				var d = Buffer.from(param.url, "base64").toString();
+				got.stream(d).on("error", function() {
+					res.end();
+				}).on("close", function() {
+					res.end();
+				}).pipe(res);
 			} else {
 				var d = JSON.stringify({
 					"err": "noUrl"

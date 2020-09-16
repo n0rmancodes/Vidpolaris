@@ -22,10 +22,10 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "deezer-public-api": "^1.0.1",
-    "got": "^11.5.2",
+    "got": "^11.6.2",
     "redddit": "^1.0.2",
     "youtube-suggest": "^1.1.0",
-    "yt-channel-info": "^1.1.0",
+    "yt-channel-info": "^1.1.1",
     "yt-trending-scraper": "^1.0.3",
     "ytdl-core": "^3.2.2",
     "ytpl": "^0.3.0",

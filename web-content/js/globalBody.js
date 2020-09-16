@@ -1,3 +1,7 @@
+if (localStorage.getItem("pf") == "o") {
+	adapt();
+}
+
 if (document.getElementById("q")) {
 	document.getElementById("q").addEventListener('keydown', function (event) {
 		if (event.defaultPrevented) {return;}
@@ -43,4 +47,12 @@ function calcLString(string) {
 function varLinks(t) {
 	var replacePattern = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
 	return t.replace(replacePattern, '<a href="$1" class="channelLink">$1</a>');
+}
+
+function adapt() {
+	if (window.location.pathname == "/settings") {window.open("/old/#settings", "_self");}
+	if (window.location.pathname == "/") {window.open("/old/", "_self");}
+	if (window.location.pathname == "/watch") {window.open("/old/#w#" + window.location.search.substring(3), "_self");}
+	if (window.location.pathname == "/c") {window.open("/old/#c#" + window.location.search.substring(1), "_self");}
+	if (window.location.pathname == "/search") {window.open("/old/#s#" + window.location.search.substring(3), "_self")}
 }

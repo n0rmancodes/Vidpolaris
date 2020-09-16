@@ -47,14 +47,21 @@ function openTrack(id, goTo) {
         sessionStorage.setItem("id", json.deezer.id);
         sessionStorage.setItem("oldTitle", document.title);
         let compat = [];
+        console.log(json.ytdl)
         for (var c in json.ytdl) {
             if (json.ytdl[c].isHLS == false && json.ytdl[c].isDashMPD == false) {
-                compat.push(json.ytdl[c]);
+                if (json.ytdl[c].url) {compat.push(json.ytdl[c])};
+            }
+        }
+        for (var c in json.ytdl_alt) {
+            if (json.ytdl_alt[c].isHLS == false && json.ytdl_alt[c].isDashMPD == false) {
+                if (json.ytdl_alt[c].url) {compat.push(json.ytdl_alt[c])};
             }
         }
         if (compat[0]) {
             document.getElementById("p").src = compat[0].url;
         }
+        console.log(compat)
         sessionStorage.setItem("playerSrc", document.getElementById("p").src)
         document.getElementById("player").style.display = "";
         document.getElementById("playerLoading").style.display = "none";
