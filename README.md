@@ -5,6 +5,15 @@ An alternative client for YouTube made with NodeJS meant for privacy and simplic
 
 **NOTE: This project is in no way affiliated with or endorsed by YouTube™ or Google™. YouTube is owned and operated by Google and I do not claim to own any of Google's properties. Use this at your own risk.**
 
+## Features
+- [Unlicensed, free to use code](./LICENSE).
+- Small in size (Entire project in total with dependencies is ~20Mb)
+- [Music mode](https://beta.vidpolaris.ml/music/)
+- Multiple themes.
+- [Easy-to-learn API](./docs/api/README.md)
+- [Easy installation](./docs/startup/README.md)
+- Heroku compatible
+
 ## Documentation 
 For installation and requirement documentation, [click here](./docs/startup/README.md)!
 
@@ -21,3 +30,5 @@ In no particular order, here are all of my thanks for keeping this project runni
 ## To Be Added
 - Custom theme writer.
 - Better configuration for server owners.
+- Write a version of the site to require no client side Javascript.
+- Figure out how to proxy videos to make 100% Google-free experience.

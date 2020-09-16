@@ -3,6 +3,11 @@ First off let me just say thank you for your interest in the project. I have a c
 you may want to read before you get started.
 
 ## Notes
+- You need a basic understanding of how a computer works.
+
+If you don't know that much about computers, this tutorial isn't for you. However, if you know how
+to set up a couple accounts and have 10 minutes, might I reccomend [this easy way of making your own instance](../heroku/README.md)
+
 - This may get your IP blocked from making queries to YouTube temporarily.
 
 This is because VidPolaris is an unofficial client for YouTube, this is known as a 429 error and

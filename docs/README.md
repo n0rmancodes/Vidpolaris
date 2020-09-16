@@ -1,9 +1,15 @@
 # Documentation
 
-- [API](/docs/api/)
+# [API](./api/README.md)
 
-Documentation to the API in the VidPolaris rewrite. Human written.
+Documentation to the API in VidPolaris. Human written.
 
-- [Installation](/docs/startup)
+# [Easy Heorku Instance](./heroku/README.md)
 
-This is a guide to start your own instance of VidPolaris.
+This is a tutorial of how to create an instance if you want it quickly or don't know how to make 
+one on your own computer.
+
+# [DIY Instance](./startup/README.md)
+
+This is a guide to start your own instance of VidPolaris. Depending on what you're hosting it on, 
+this may take from 10 minutes to an hour.
