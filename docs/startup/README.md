@@ -38,6 +38,7 @@ Otherwise, use "Browser Download".
 
 ### Browser Download
 Navigate to [the main repo page](https://github.com/n0rmancodes/vidpolaris-rw) and click the green button. It should look similar to the image below.
+
 ![Repository page](./imgs/2.png)
 
 Click the "Download ZIP" button in the dropdown.
@@ -46,6 +47,7 @@ Once it has downloaded, open it in your favorite ZIP extracting software and ext
 folder you'd like to install VidPolaris in.
 
 ![Downloaded VidPolaris master](./imgs/3.png)
+
 ![Extract ZIP](./imgs/4.png)
 
 ### Git Download
