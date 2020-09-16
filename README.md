@@ -12,7 +12,7 @@ An alternative client for YouTube made with NodeJS meant for privacy and simplic
 - Multiple themes.
 - [Easy-to-learn API](./docs/api/README.md)
 - [Easy installation](./docs/startup/README.md)
-- Heroku compatible
+- Heroku compatible ([See tutorial](./docs/heroku/README.md))
 
 ## Documentation 
 For installation and requirement documentation, [click here](./docs/startup/README.md)!
