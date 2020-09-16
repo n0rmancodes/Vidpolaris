@@ -7,6 +7,11 @@ An alternative client for YouTube.
 
 **NOTE: This project is in no way affiliated with or endorsed by YouTube™ or Google™. YouTube is owned and operated by Google and I do not claim to own any of Google's properties. Use this at your own risk.**
 
+## Documentation 
+For installation documentation, [click here](./docs/startup/README.md)!
+
+For API documentation, [click here](./docs/api/README.md)!
+
 ## Special Thanks
 In no particular order, here are all of my thanks for keeping this project running!
 
