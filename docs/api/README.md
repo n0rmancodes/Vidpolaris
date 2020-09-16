@@ -19,7 +19,7 @@ Information like the version of the instance, the port it is running on, and wha
 }
 ```
 
-[Example](https://beta.vidpolaris.ml/api/)
+[Example](https://vidpolaris.tube/api/)
 
 ## Trending Tab
 
@@ -50,7 +50,7 @@ Information like the version of the instance, the port it is running on, and wha
 ]
 ```
 
-[Example](https://beta.vidpolaris.ml/api/trending?type=gaming&locale=CA)
+[Example](https://vidpolaris.tube/api/trending?type=gaming&locale=CA)
 
 The example gets trending gaming videos in Canada.
 
@@ -78,7 +78,7 @@ sub: subreddit to look at
 ]
 ```
 
-[Example](https://beta.vidpolaris.ml/api/reddit?sub=DeepIntoYouTube)
+[Example](https://vidpolaris.tube/api/reddit?sub=DeepIntoYouTube)
 
 This examples get the top videos in /r/DeepIntoYouTube.
 
@@ -118,7 +118,7 @@ q: query
 }
 ```
 
-[Example](https://beta.vidpolaris.ml/api/search?q=creative%20exercise%20siivagunner)
+[Example](https://vidpolaris.tube/api/search?q=creative%20exercise%20siivagunner)
 
 This searches YouTube for Creative Excerise by SiIvagunner.
 
@@ -328,7 +328,7 @@ You must use one parameter or the other **not both**.
 ]
 ```
 
-[Example](https://beta.vidpolaris.ml/api/reddit/search?id=ymbw2R3uIqc)
+[Example](https://vidpolaris.tube/api/reddit/search?id=ymbw2R3uIqc)
 
 ## Deezer Charts
 Get the most popular songs on Deezer.
@@ -395,7 +395,7 @@ type: "artist", "album", "song"
 WIP
 ```
 
-[Example](https://beta.vidpolaris.ml/api/deezer/search?type=song&id=12345678) 
+[Example](https://vidpolaris.tube/api/deezer/search?type=song&id=12345678) 
 
 ## Deezer Album/Artist/Song
 
@@ -412,7 +412,7 @@ id: Deezer id
 WIP
 ```
 
-[Example](https://beta.vidpolaris.ml/api/deezer?type=song&id=12345678) 
+[Example](https://vidpolaris.tube/api/deezer?type=song&id=12345678) 
 
 ## Video Infomation
 This gets video infomation and formats from any given ID and/or YouTube url. Retrived by [``node-ytdl-core``](https://github.com/fent/node-ytdl-core).
@@ -433,7 +433,7 @@ url: YouTube video URL
 To be written.
 ```
 
-[Example](https://beta.vidpolaris.ml/api/info?id=ymbw2R3uIqc)
+[Example](https://vidpolaris.tube/api/info?id=ymbw2R3uIqc)
 
 This example gets formats and metadata of [the legendary SiIvagunner rip of Creative Exercise](https://www.youtube.com/watch?v=ymbw2R3uIqc).
 
@@ -490,6 +490,6 @@ itag: YouTube video ITAG.
 }
 ```
 
-[Example](https://beta.vidpolaris.ml/api/itag?id=0XgdWnsT0yc&itag=133)
+[Example](https://vidpolaris.tube/api/itag?id=0XgdWnsT0yc&itag=133)
 
 Getting itag 133 on a random video I found browsing Reddit.

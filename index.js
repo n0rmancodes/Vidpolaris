@@ -22,9 +22,10 @@ const fs = require("fs");
 console.log("starting server...");
 const version = "0.3";
 const version_type = "ALPHA"
-const port = process.env.PORT || 3001;
-const hostUrl = "https://beta.vidpolaris.ml/";
-http.createServer(runServer).listen(port);
+const config = JSON.parse(fs.readFileSync("./config.json"));
+const port = process.env.PORT || config.port;
+const hostUrl = config.hostUrl;
+http.createServer(runServer).listen(config.port);
 console.log("listening on port " + port + " | version " + version + " [" + version_type + "]");
 console.log("====================================================");
 async function runServer(request, res) {
@@ -643,8 +644,8 @@ async function runServer(request, res) {
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
 			if (param.url && param.url.includes("?")) {
 				if (param.url.split("?")[0] == "/watch" | param.url.split("?")[0] == "watch") {
-					if (hostUrl == "https://beta.vidpolaris.ml/") {
-						var hUrl = "http://vidpolaris.ml:9027/";
+					if (hostUrl == "https://beta.vidpolaris.tube/") {
+						var hUrl = "http://vidpolaris.tube:9027/";
 					} else {
 						var hUrl = hostUrl;
 					}
@@ -818,7 +819,7 @@ async function runServer(request, res) {
 							}
 						} else {
 							var $ = cheerio.load(resp);
-							$("#h").append("<link type='application/json+oembed' href='http://vidpolaris.ml:9027/api/oembed/?url=" + request.url + "'>");
+							$("#h").append("<link type='application/json+oembed' href='http://vidpolaris.tube:9027/api/oembed/?url=" + request.url + "'>");
 							var resp = $.html();
 							res.writeHead(200, {
 								"Access-Control-Allow-Origin": "*",
@@ -854,7 +855,7 @@ async function runServer(request, res) {
 					}
 				} else {
 					var $ = cheerio.load(resp);
-					$("#h").append("<link type='application/json+oembed' href='http://vidpolaris.ml:9027/api/oembed/?url=" + request.url + "'>");
+					$("#h").append("<link type='application/json+oembed' href='http://vidpolaris.tube:9027/api/oembed/?url=" + request.url + "'>");
 					var resp = $.html();
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",

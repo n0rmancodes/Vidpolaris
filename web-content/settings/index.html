@@ -14,6 +14,13 @@
 		</div>
 		<div class="body">
 			<div class="option">
+				<label>Prefernce:</label>
+				<select id="pf" onInput="save('pf', this.value)">
+					<option value="b">Beta</option>
+					<option value="o">Old</option>
+				</select>
+			</div>
+			<div class="option">
 				<label>Theme:</label>
 				<select id="n_theme" onInput="save('n_theme', this.value);">
 					<option value="dark">Dark</option>

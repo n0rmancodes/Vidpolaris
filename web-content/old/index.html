@@ -32,17 +32,9 @@
 					<h1 class="material-icons ico">priority_high</h1>
 					<p>please enable javascript. vidpolaris does not log any private information or your viewing activities.</p>
 				</div>
-				<div id="serverdown" style="display:none;">
-					<h1 class="material-icons ico">report_problem</h1>
-					<p>the server is down. change your server <a href="#settings">here!</a></p>
-				</div>
 				<div id="trendingLoader" style="display:none;">
 					<div style="margin-top:20px;" class="loader centerMe"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-					<h2 id="homeLoadDeet">[javascript isn't loading completely, contact server manager for more]</h2>
-				</div>
-				<div id="importSettings" class="alert" style="display:none;">
-					<span class="material-icons ico">info</span>
-					<p>settings were imported via the url you set up or were sent.</p>
+					<h2 id="homeLoadDeet">loading...</h2>
 				</div>
 				<div id="trending" style="display:none;">
 					<div id="fallbacktoInv" style="display:none;">
@@ -50,15 +42,7 @@
 					</div>
 					<div class="pack">
 						<h2 class="noCenter homeTitle"><span class="material-icons ico">trending_up</span> trending right now</h2>
-						<div id="mainTrending" style="display:none;"></div><br>
-					</div>
-					<div class="pack">
-						<h2 class="noCenter homeTitle"><span class="material-icons ico">music_note</span> popular music</h2>
-						<div id="musicTrending" style="display:none;"></div><br>
-					</div>
-					<div class="pack">
-						<h2 class="noCenter homeTitle"><span class="material-icons ico">videogame_asset</span> popular gaming videos</h2>
-						<div id="gamingTrending" style="display:none;"></div><br>
+						<div id="mainTrending"></div><br>
 					</div>
 				</div>
 				<div id="redditTrending" style="display:none;">
@@ -173,17 +157,6 @@
 							<button id="expandRelated" onclick="document.getElementById('moreVideos').style.display='';this.style.display='none'">show more</button>
 							<div id="moreVideos" style='display:none;'></div>
 						</div>
-						<div id="commentsContainer">
-							<div id="loadComments">
-								<h2><span class="material-icons ico">comment</span> 
-									<a id="loadC" style="cursor:pointer;" class="channelLink" onclick="getComments('none', localStorage.getItem('sLoc'));"><span>Load the comments.</span></a>
-									<span id="loadedC" style="display:none;">Loaded <span id="loadedComm"></span> comments.</span>
-									<span id="loadinC">Loading the comments...</span>
-									<span id="errorC" style="display:none;">There was an error loading the comments.</span>
-								<h2>
-							</div>
-							<div id="loadedComments"></div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -224,6 +197,13 @@
 				<div id="resultsContainer" class="centerMe"></div>
 			</div>
 			<div id="settingsPage" style="display:none;" class="noCenter">
+				<div class="setting">
+					<label>preference:</label>
+					<select id="pf">
+						<option value="o">old</option>
+						<option value="b">beta</option>
+					</select>
+				</div>
 				<div class="setting" title="smartquality syncs up the highest quality audio and video, rather than the highest quality video/audio itag. only reccomended for those with a strong connection. this may cause slowdown if you have a weaker computer.">
 					<label>smartquality:</label>
 					<select id="sq">
@@ -239,14 +219,6 @@
 						<option value="b_v1">pure black v1</option>
 						<option value="v_v1">velvet v1</option>
 						<option value="m_v1">maroon v1</option>
-					</select>
-				</div>
-				<div class="setting" title="select a server to use. you can change it if a server isn't working for you.">
-					<label>server location:</label>
-					<select id="server">
-						<option value="a">server a [us west, electrohaxz]</option>
-						<option value="b">server b [us east, heroku]</option>
-						<option value="c">server c [eu west, heroku]</option>
 					</select>
 				</div>
 				<div class="setting" title="self explanitory.">
@@ -320,13 +292,6 @@
 						<option value="ua">ukraine</option>
 						<option value="ve">venezuela</option>
 						<option value="za">south africa</option>
-					</select>
-				</div>
-				<div class="setting" title="prevents or accepts the automatic loading of comments when you open a video. disbaling this will reduce requests to our servers.">
-					<label>automatically load comments when you load a video:</label>
-					<select id="autoComm">
-						<option value="y">enabled (default)</option>
-						<option value="n">disabled</option>
 					</select>
 				</div>
 				<div class="setting" title="if this is enabled, cards will be hidden. this will also save a small ammount of time when loading a video.">

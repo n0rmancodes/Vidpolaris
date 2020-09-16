@@ -1,5 +1,5 @@
 # Continuing
-Now that you are ready to start your server, here's how you use it like you would [beta.vidpolaris.ml](https://beta.vidpolaris.ml) or
+Now that you are ready to start your server, here's how you use it like you would [vidpolaris.tube](https://vidpolaris.tube) or
 any other public instance of VidPolaris.
 
 ## Using VidPolaris

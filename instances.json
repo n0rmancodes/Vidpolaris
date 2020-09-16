@@ -1,6 +1,6 @@
 [
 	{
-		"url":"https://beta.vidpolaris.ml",
+		"url":"https://vidpolaris.tube",
 		"location":"US West",
 		"official":true,
 		"https":true,
@@ -9,12 +9,12 @@
 		"maintainedBy":"electrohaxz"
 	},
 	{
-		"url":"http://dl4.electrohaxz.tk:8002",
-		"location":"Midwest Russia",
+		"url":"https://ca.vidpolaris.tube",
+		"location":"East Canada",
 		"official":true,
 		"https":true,
 		"port":8002,
-		"type":"apiOnly",
+		"type":"all",
 		"maintainedBy":"electohaxz"
 	}
 ]

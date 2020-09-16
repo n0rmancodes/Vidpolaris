@@ -8,7 +8,7 @@ An alternative client for YouTube made with NodeJS meant for privacy and simplic
 ## Features
 - [Unlicensed, free to use code](./LICENSE).
 - Small in size (Entire project in total with dependencies is ~20Mb)
-- [Music mode](https://beta.vidpolaris.ml/music/)
+- [Music mode](https://vidpolaris.tube/music/)
 - Multiple themes.
 - [Easy-to-learn API](./docs/api/README.md)
 - [Easy installation](./docs/startup/README.md)
@@ -28,6 +28,7 @@ In no particular order, here are all of my thanks for keeping this project runni
 - The awesome package writers who, without them, this project wouldn't even be alive right now.
 
 ## To Be Added
+- Playlist support
 - Custom theme writer.
 - Better configuration for server owners.
 - Write a version of the site to require no client side Javascript.

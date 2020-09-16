@@ -2,34 +2,11 @@ document.getElementById("noscript").style.display = "none";
 console.log("script loaded.");
 console.log("==================");
 resize("auto");
-const http = new XMLHttpRequest();
-document.getElementById("homeLoadDeet").innerHTML = "waking server...";
-if (localStorage.getItem("sLoc") == "a" | !localStorage.getItem("sLoc")) {
-	var url = "https://api.vidpolaris.ml/"
-} else if (localStorage.getItem("sLoc") == "b"){
-	var url = "https://vidpolaris.herokuapp.com"
-} else if (localStorage.getItem("sLoc") == "c") {
-	var url = "https://vidpolaris-europe.herokuapp.com/"
+if (localStorage.getItem("homePage") == "inv") {
+	getTrending();
+} else {
+	redditTrending();
 }
-http.open("GET", url);
-http.send();
-http.onload=(e)=>{
-	if (http.status == 404) {
-		if (window.location.href.includes("#c") | window.location.href.includes("#redir") | window.location.href.includes("#w") | window.location.href.includes("#s") | window.location.href.includes("#adapt") | window.location.href.includes("#p")) {
-			refresh();
-		} else {
-			home();
-		}
-	} else {
-		document.getElementById("serverdown").style.display = "";
-		document.getElementById("trendingLoader").style.display = "none";
-	}
-}
-http.onerror=(e)=>{
-	document.getElementById("serverdown").style.display = "";
-	document.getElementById("trendingLoader").style.display = "none";
-}
-
 document.getElementById("trendingLoader").style.display = "";
 
 // settings checkers
@@ -126,25 +103,11 @@ if (localStorage.getItem("trendCont")) {
 	localStorage.removeItem("trendCont");
 }
 
-if (!localStorage.getItem("sLoc")) {
-	document.getElementById("server").value = "a";
-	localStorage.setItem("sLoc", "a");
-} else {
-	document.getElementById("server").value = localStorage.getItem("sLoc");
-}
-
 if (!localStorage.getItem("injectRedir")) {
 	document.getElementById("injectRedir").value = "y";
 	localStorage.setItem("injectRedir", "y");
 } else {
 	document.getElementById("injectRedir").value = localStorage.getItem("injectRedir");
-}
-
-if (!localStorage.getItem("loadComm")) {
-	localStorage.setItem("loadComm", "y");
-	document.getElementById("autoComm").value = "y";
-} else {
-	document.getElementById("autoComm").value = localStorage.getItem("loadComm");
 }
 
 if (!localStorage.getItem("autoplay")) {
@@ -597,10 +560,6 @@ var observer = new MutationObserver(function(mutations) {
 var target = document.getElementById('loadErr');
 observer.observe(target, { attributes : true, attributeFilter : ['style'] });
 
-console.log("autoplay: " + localStorage.getItem('autoplay'));
-console.log("smartQual: " + localStorage.getItem('smart'));
-console.log("server: " + localStorage.getItem('sLoc'));
-
 // end onload functions
 
 function resize(actType, size) {
@@ -765,7 +724,7 @@ function getSLink() {
 	window.open("#s#" + encodeURIComponent(document.getElementById("q").value), "_self")
 }
 
-function search(opt) {
+function search() {
 	document.title = "vidpolaris";
 	var q = getClickedId(window.location.href, "#s#");
 	document.title = "search results for " + decodeURIComponent(q) + " | vidpolaris";
@@ -783,23 +742,7 @@ function search(opt) {
 	document.getElementById("player").pause();
 	document.getElementById("bannerPfpContainer").style.display = 'none';
 	const http = new XMLHttpRequest();
-	if (document.getElementById("sType").value == "all") {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?search=" + q;
-		} else if (opt == "b"){
-			var url = "https://vidpolaris.herokuapp.com/?search=" + q;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?search=" + q;
-		}
-	} else {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?search=" + q + "&type=" + document.getElementById("sType").value;
-		} else if (opt == "b"){
-			var url = "https://vidpolaris.herokuapp.com/?search=" + q + "&type=" + document.getElementById("sType").value;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?search=" + q + "&type=" + document.getElementById("sType").value;
-		}
-	}
+	var url = "/api/search?q=" + q;
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
@@ -978,8 +921,6 @@ function search(opt) {
 					desc.classList.add("stat");
 					document.getElementById(c+"sub"+cc+"Info").appendChild(desc);
 				}
-			} else {
-				
 			}
 		}
 		document.getElementById("seaLoader").style.display = 'none';
@@ -988,7 +929,7 @@ function search(opt) {
 	}
 }
 
-function feelingLucky(opt) {
+function feelingLucky() {
 	document.getElementById("homePage").style.display = 'none';
 	document.getElementById("searchContainer").style.display = 'none';
 	document.getElementById("vidPage").style.display = '';
@@ -996,13 +937,7 @@ function feelingLucky(opt) {
 	const http = new XMLHttpRequest();
 	if (!document.getElementById("q").value == "") {
 		var q = document.getElementById("q").value;
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?search=" + encodeURIComponent(q);
-		} else if (opt == "b") {
-			var url = "https://vidpolaris.herokuapp.com/?search=" + encodeURIComponent(q);
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?search=" + encodeURIComponent(q);
-		}
+		var url = "/api/search?q=" + q;
 		http.open("GET", url);
 		http.send();
 		http.onload=(e)=>{
@@ -1045,14 +980,7 @@ function feelingLucky(opt) {
 			"z"
 		]
 		var qLetter = randomLetter[Math.floor(Math.random()*randomLetter.length)];
-		console.log(qLetter)
-		if (opt == "a" | !opt) {
-			var surl = "https://api.vidpolaris.ml/?suggest=" + qLetter;
-		} else if (opt == "b") {
-			var surl = "https://vidpolaris.herokuapp.com/?suggest=" + qLetter;
-		} else if (opt == "c") {
-			var surl = "https://vidpolaris-europe.herokuapp.com/?suggest=" + qLetter;
-		}
+		var surl = "/api/suggest?q=" + qLetter;
 		console.log(surl)
 		http.open("GET",surl);
 		http.send();
@@ -1060,13 +988,7 @@ function feelingLucky(opt) {
 			var json = JSON.parse(http.responseText);
 			var res = json.results;
 			var q = res[Math.floor(Math.random()*res.length)];
-			if (opt == "a" | !opt) {
-				var url = "https://api.vidpolaris.ml/?search=" + encodeURIComponent(q);
-			} else if (opt == "b") {
-				var url = "https://vidpolaris.herokuapp.com/?search=" + encodeURIComponent(q);
-			} else if (opt == "c") {
-				var url = "https://vidpolaris-europe.herokuapp.com/?search=" + encodeURIComponent(q);
-			}
+			var url = "/api/search?q=" + q;
 			http.open("GET", url);
 			http.send();
 			http.onload=(e)=>{
@@ -1089,47 +1011,19 @@ function feelingLucky(opt) {
 	}
 }
 
-function getTrending(opt,inst) {
+function getTrending() {
 	const http = new XMLHttpRequest();
-	if (!inst | inst == "o") {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?trending=" + localStorage.getItem("country")
-		} else if (opt == "b") {
-			var url = "https://vidpolaris.herokuapp.com/?trending=" + localStorage.getItem("country");
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?trending=" + localStorage.getItem("country");
-		}
-	} else {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?trending=" + localStorage.getItem("country") + "&inst=" + inst
-		} else if (opt == "b") {
-			var url = "https://vidpolaris.herokuapp.com/?trending=" + localStorage.getItem("country") + "&inst=" + inst;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?trending=" + localStorage.getItem("country") + "&inst=" + inst;
-		}
-	}
+	var url = "/api/trending/"
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
 		var jsond = JSON.parse(http.responseText);
 		if (!jsond[0]) {
-			redditTrending(opt);
+			redditTrending();
 			document.getElementById("fallbacktoRed").style.display = "";
 			return;
 		}
 		for (var c in jsond) {
-			if (c > 17) {
-				document.getElementById("trendingLoader").style.display = 'none';
-				document.getElementById("trending").style.display = '';
-				document.getElementById("mainTrending").style.display = '';
-				document.getElementById("redditTrending").style.display = 'none';
-				if (!inst) {
-					getTrendingMusic(opt);
-				} else {
-					getTrendingMusic(opt,inst);
-				}
-				return;
-			}
 			var link = document.createElement("A");
 			link.href = "#w#" + jsond[c].videoId;
 			link.id = "l" + c;
@@ -1140,7 +1034,7 @@ function getTrending(opt,inst) {
 			document.getElementById("l"+c).appendChild(div);
 			var img = document.createElement("IMG");
 			img.classList.add("largeThumb");
-			img.src = "https://img.youtube.com/vi/" + jsond[c].videoId + "/hqdefault.jpg";
+			img.src = "/api/thumb/" + jsond[c].videoId;
 			document.getElementById("div"+c).appendChild(img);
 			var div2 = document.createElement("DIV");
 			div2.classList.add("td");
@@ -1159,181 +1053,26 @@ function getTrending(opt,inst) {
 			stat2.classList.add("stat");
 			document.getElementById("tdDiv"+c).appendChild(stat2);
 		}
+		document.getElementById("searchContainer").style.display = "";
+		document.getElementById("trending").style.display = "";
+		document.getElementById("trendingLoader").style.display = "none";
 	}
 	http.onerror = function (error) {
-		redditTrending(opt);
+		redditTrending();
 		document.getElementById("fallbacktoRed").style.display = "";
 		return;
 	}
 }
 
-function getTrendingMusic(opt, inst) {
+function redditTrending() {
 	const http = new XMLHttpRequest();
-	if (!inst | inst == "o") {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?trending=" + localStorage.getItem("country") + "&type=music";
-		} else if (opt == "b") {
-			var url = "https://vidpolaris.herokuapp.com/?trending=" + localStorage.getItem("country") + "&type=music";
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?trending=" + localStorage.getItem("country") + "&type=music";
-		}
-	} else {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?trending=" + localStorage.getItem("country") + "&type=music&inst=" + inst;
-		} else if (opt == "b") {
-			var url = "https://vidpolaris.herokuapp.com/?trending=" + localStorage.getItem("country") + "&type=music&inst=" + inst;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?trending=" + localStorage.getItem("country") + "&type=music&inst=" + inst;
-		}
-	}
+	var url = "/api/reddit"
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
 		var jsond = JSON.parse(http.responseText);
-		if (!jsond[0]) {
-			redditTrending(opt);
-			document.getElementById("fallbacktoRed").style.display = "";
-			return;
-		}
-		for (var c in jsond) {
-			if (c > 11) {
-				document.getElementById("musicTrending").style.display = '';
-				if (!inst) {
-					getTrendingGaming(opt);
-				} else {
-					getTrendingGaming(opt, inst);
-				}
-				return;
-			}
-			var link = document.createElement("A");
-			link.href = "#w#" + jsond[c].videoId;
-			link.id = "ml" + c;
-			document.getElementById("musicTrending").appendChild(link);
-			var div = document.createElement("DIV");
-			div.classList.add("video");
-			div.id = "mDiv" + c;
-			document.getElementById("ml"+c).appendChild(div);
-			var img = document.createElement("IMG");
-			img.classList.add("largeThumb");
-			img.src = "https://img.youtube.com/vi/" + jsond[c].videoId + "/hqdefault.jpg";
-			document.getElementById("mDiv"+c).appendChild(img);
-			var div2 = document.createElement("DIV");
-			div2.classList.add("td");
-			div2.id = "mtdDiv"+c;
-			document.getElementById("mDiv"+c).appendChild(div2);
-			var h3 = document.createElement("H3");
-			h3.classList.add("stat");
-			h3.innerHTML = jsond[c].title;
-			document.getElementById("mtdDiv"+c).appendChild(h3);
-			var stat1 = document.createElement("H4");
-			stat1.innerHTML = 'by ' + jsond[c].author;
-			stat1.classList.add("stat")
-			document.getElementById("mtdDiv"+c).appendChild(stat1);
-			var stat2 = document.createElement("H4");
-			stat2.innerHTML = 'posted ' + jsond[c].publishedText;
-			stat2.classList.add("stat");
-			document.getElementById("mtdDiv"+c).appendChild(stat2);
-		}
-	}
-}
-
-function getTrendingGaming(opt,inst) {
-	const http = new XMLHttpRequest();
-	if (!inst | inst == "o") {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?trending=" + localStorage.getItem("country") + "&type=gaming";
-		} else if (opt == "b") {
-			var url = "https://vidpolaris.herokuapp.com/?trending=" + localStorage.getItem("country") + "&type=gaming";
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?trending=" + localStorage.getItem("country") + "&type=gaming";
-		}
-	} else {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?trending=" + localStorage.getItem("country") + "&type=gaming&inst=" + inst;
-		} else if (opt == "b") {
-			var url = "https://vidpolaris.herokuapp.com/?trending=" + localStorage.getItem("country") + "&type=gaming&inst=" + inst;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?trending=" + localStorage.getItem("country") + "&type=gaming&inst=" + inst;
-		}
-	}
-	http.open("GET", url);
-	http.send();
-	http.onload=(e)=>{
-		var jsond = JSON.parse(http.responseText);
-		if (!jsond[0]) {
-			redditTrending(opt);
-			document.getElementById("fallbacktoRed").style.display = "";
-			return;
-		}
-		for (var c in jsond) {
-			if (c > 11) {
-				document.getElementById("gamingTrending").style.display = '';
-				return;
-			}
-			var link = document.createElement("A");
-			link.href = "#w#" + jsond[c].videoId;
-			link.id = "gl" + c;
-			document.getElementById("gamingTrending").appendChild(link);
-			var div = document.createElement("DIV");
-			div.classList.add("video");
-			div.id = "gDiv" + c;
-			document.getElementById("gl"+c).appendChild(div);
-			var img = document.createElement("IMG");
-			img.classList.add("largeThumb");
-			img.src = "https://img.youtube.com/vi/" + jsond[c].videoId + "/hqdefault.jpg";
-			document.getElementById("gDiv"+c).appendChild(img);
-			var div2 = document.createElement("DIV");
-			div2.classList.add("td");
-			div2.id = "gtdDiv"+c;
-			document.getElementById("gDiv"+c).appendChild(div2);
-			var h3 = document.createElement("H3");
-			h3.classList.add("stat");
-			h3.innerHTML = jsond[c].title;
-			document.getElementById("gtdDiv"+c).appendChild(h3);
-			var stat1 = document.createElement("H4");
-			stat1.innerHTML = 'by ' + jsond[c].author;
-			stat1.classList.add("stat")
-			document.getElementById("gtdDiv"+c).appendChild(stat1);
-			var stat2 = document.createElement("H4");
-			stat2.innerHTML = 'posted ' + jsond[c].publishedText;
-			stat2.classList.add("stat");
-			document.getElementById("gtdDiv"+c).appendChild(stat2);
-		}
-	}
-}
-
-function redditTrending(opt) {
-	const http = new XMLHttpRequest();
-	if (opt == "a" | !opt) {
-		var url = "https://api.vidpolaris.ml/?reddit=1";
-	} else if (opt == "b") {
-		var url = "https://vidpolaris.herokuapp.com/?reddit=1";
-	} else if (opt == "c") {
-		var url = "https://vidpolaris-europe.herokuapp.com/?reddit=1";
-	}
-	http.open("GET", url);
-	http.send();
-	http.onload=(e)=>{
-		var jsond = JSON.parse(http.responseText);
-		if (!jsond[0] && !jsond.err) {
-			getTrending(opt,localStorage.getItem("invIns"));
-			document.getElementById("fallbacktoInv").style.display = "none";
-			return;
-		}
-		if (jsond.err) {
-			getTrending(opt,localStorage.getItem("invIns"));
-			document.getElementById("fallbacktoInv").style.display = "none";
-			return;
-		}
-		for (var c in jsond) {
-			if (c > 17) {
-				document.getElementById("redditTrending").style.display = "";
-				document.getElementById("redTrending").style.display = "";
-				document.getElementById("mainTrending").style.display = "none";
-				document.getElementById("trendingLoader").style.display = "none";
-				redditmusicTrending(opt)
-				return;
-			} 
+		document.getElementById("reddit")
+		for (var c = 0; c > 17; c++) {
 			var link = document.createElement("A");
 			link.href = "#w#" + jsond[c].id;
 			var div = document.createElement("DIV");
@@ -1341,7 +1080,7 @@ function redditTrending(opt) {
 			link.appendChild(div);
 			var img = document.createElement("IMG");
 			img.classList.add("largeThumb");
-			img.src = "https://img.youtube.com/vi/" + jsond[c].id + "/hqdefault.jpg";
+			img.src = "/api/thumb/" + jsond[c].id;
 			div.appendChild(img);
 			var div2 = document.createElement("DIV");
 			div2.classList.add("td");
@@ -1360,36 +1099,35 @@ function redditTrending(opt) {
 			div2.appendChild(stat2);
 			document.getElementById("redTrending").appendChild(link);
 		}
+		document.getElementById("redditTrending").style.display = "";
+		document.getElementById("redTrending").style.display = "";
+		document.getElementById("mainTrending").style.display = "none";
+		document.getElementById("trendingLoader").style.display = "none";
+		redditmusicTrending();
 	}
 }
 
-function redditmusicTrending(opt) {
+function redditmusicTrending() {
 	const http = new XMLHttpRequest();
-	if (opt == "a" | !opt) {
-		var url = "https://api.vidpolaris.ml/?reddit=1&type=music";
-	} else if (opt == "b") {
-		var url = "https://vidpolaris.herokuapp.com/?reddit=1&type=music";
-	} else if (opt == "c") {
-		var url = "https://vidpolaris-europe.herokuapp.com/?reddit=1&type=music";
-	}
+	var url = "/api/reddit?sub=music"
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
 		var jsond = JSON.parse(http.responseText);
 		if (!jsond[0]) {
-			getTrending(opt,localStorage.getItem("invIns"));
+			getTrending();
 			document.getElementById("fallbacktoInv").style.display = "none";
 			return;
 		}
 		if (jsond.err) {
-			getTrending(opt,localStorage.getItem("invIns"));
+			getTrending();
 			document.getElementById("fallbacktoInv").style.display = "none";
 			return;
 		}
 		for (var c in jsond) {
 			if (c > 17) {
 				document.getElementById("redmuTrending").style.display = "";
-				redditdeepTrending(opt);
+				redditdeepTrending();
 				return;
 			} 
 			var link = document.createElement("A");
@@ -1399,7 +1137,7 @@ function redditmusicTrending(opt) {
 			link.appendChild(div);
 			var img = document.createElement("IMG");
 			img.classList.add("largeThumb");
-			img.src = "https://img.youtube.com/vi/" + jsond[c].id + "/hqdefault.jpg";
+			img.src = "/api/thumb/" + jsond[c].id;
 			div.appendChild(img);
 			var div2 = document.createElement("DIV");
 			div2.classList.add("td");
@@ -1421,26 +1159,20 @@ function redditmusicTrending(opt) {
 	}
 }
 
-function redditdeepTrending(opt) {
+function redditdeepTrending() {
 	const http = new XMLHttpRequest();
-	if (opt == "a" | !opt) {
-		var url = "https://api.vidpolaris.ml/?reddit=1&type=deep";
-	} else if (opt == "b") {
-		var url = "https://vidpolaris.herokuapp.com/?reddit=1&type=deep";
-	} else if (opt == "c") {
-		var url = "https://vidpolaris-europe.herokuapp.com/?reddit=1&type=deep";
-	}
+	var url = "/api/reddit?sub=DeepIntoYouTube"
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
 		var jsond = JSON.parse(http.responseText);
 		if (!jsond[0]) {
-			getTrending(opt,localStorage.getItem("invIns"));
+			getTrending();
 			document.getElementById("fallbacktoInv").style.display = "none";
 			return;
 		}
 		if (jsond.err) {
-			getTrending(opt,localStorage.getItem("invIns"));
+			getTrending();
 			document.getElementById("fallbacktoInv").style.display = "none";
 			return;
 		}
@@ -1456,7 +1188,7 @@ function redditdeepTrending(opt) {
 			link.appendChild(div);
 			var img = document.createElement("IMG");
 			img.classList.add("largeThumb");
-			img.src = "https://img.youtube.com/vi/" + jsond[c].id + "/hqdefault.jpg";
+			img.src = "/api/thumb/" + jsond[c].id;
 			div.appendChild(img);
 			var div2 = document.createElement("DIV");
 			div2.classList.add("td");
@@ -1533,15 +1265,8 @@ function openVideo(opt,ret) {
 					}
 					document.getElementById("vidLoaderTxt").innerHTML = "parsing url...";
 					var id = getClickedId(window.location.href, '#w#');
-					var fullUrl = "https://youtube.com/watch?v=" + id;
 					const http = new XMLHttpRequest();
-					if (opt == "a" | !opt) {
-						var url = "https://api.vidpolaris.ml/?info=1&url=" + fullUrl;
-					} else if (opt == "b"){
-						var url = "https://vidpolaris.herokuapp.com/?info=1&url=" + fullUrl;
-					} else if (opt == "c") {
-						var url = "https://vidpolaris-europe.herokuapp.com/?info=1&url=" + fullUrl;
-					}
+					var url = "/api/info?id=" + id;
 					document.getElementById("vidLoaderTxt").innerHTML = "generating request...";
 					http.open("GET", url);
 					http.send();
@@ -1750,10 +1475,8 @@ function openVideo(opt,ret) {
 								if (jsond.info.related_videos.length / 3) {
 									var n = (jsond.info.related_videos.length / 3).toString();
 									if (Number.isInteger(n)) {
-										document.getElementById("commentsContainer").style.display = "";
 										document.getElementById("helpOut").style.display = "";
 									} else {
-										document.getElementById("commentsContainer").style.display = "none";
 										document.getElementById("helpOut").style.display = "none";
 									}
 								}
@@ -1763,7 +1486,7 @@ function openVideo(opt,ret) {
 									var d = document.createElement("DIV");
 									d.classList.add("smallVideo")
 									var img = document.createElement("IMG");
-									img.src = "https://img.youtube.com/vi/" + jsond.info.related_videos[c].id + "/hqdefault.jpg";
+									img.src = "/api/thumb/" + jsond.info.related_videos[c].id;
 									img.classList.add("relatedThumb");
 									var h4 = document.createElement("H4");
 									h4.classList.add("stat");
@@ -2020,17 +1743,6 @@ function openVideo(opt,ret) {
 											sync();
 											document.getElementById("player").load();
 											document.getElementById("audioPlayer").load();
-											if (localStorage.getItem("loadComm") == "y") {
-												getComments("none", opt);
-												sessionStorage.removeItem("currentlyOpening");
-											} else {
-												document.getElementById("loadC").style.display = '';
-												document.getElementById("loadedC").style.display = 'none';
-												document.getElementById("loadedComments").style.display = 'none';
-												document.getElementById("loadinC").style.display = 'none';
-												document.getElementById("errorC").style.display = 'none';
-												sessionStorage.removeItem("currentlyOpening");
-											}
 											setSpeed();
 											rSearch(opt);
 											skipSponsors(opt);
@@ -2044,17 +1756,6 @@ function openVideo(opt,ret) {
 										sync();
 										document.getElementById("player").load();
 										document.getElementById("audioPlayer").load();
-										if (localStorage.getItem("loadComm") == "y") {
-											getComments("none", opt);
-											sessionStorage.removeItem("currentlyOpening");
-										} else {
-											document.getElementById("loadC").style.display = '';
-											document.getElementById("loadedC").style.display = 'none';
-											document.getElementById("loadedComments").style.display = 'none';
-											document.getElementById("loadinC").style.display = 'none';
-											document.getElementById("errorC").style.display = 'none';
-											sessionStorage.removeItem("currentlyOpening");
-										}
 										setSpeed();
 										rSearch(opt);
 										skipSponsors(opt);
@@ -2089,15 +1790,6 @@ function openVideo(opt,ret) {
 								document.getElementById("player").play();
 								document.getElementById("searchContainer").style.display = '';
 								sessionStorage.removeItem("currentlyOpening");
-								if (localStorage.getItem("loadComm") == "y") {
-									getComments("none", opt);
-								} else {
-									document.getElementById("loadC").style.display = '';
-									document.getElementById("loadedC").style.display = 'none';
-									document.getElementById("loadedComments").style.display = 'none';
-									document.getElementById("loadinC").style.display = 'none';
-									document.getElementById("errorC").style.display = 'none';
-								}
 								setSpeed();
 								rSearch(opt);
 								skipSponsors(opt);
@@ -2164,15 +1856,6 @@ function openVideo(opt,ret) {
 						document.getElementById("vidLoader").style.display = "none";
 						document.getElementById("loadErr").style.display = "none";
 						if (document.getElementById("vidLoaderTxt").innerHTML.includes("improper")) {
-							if (localStorage.getItem("loadComm") == "y") {
-								getComments("none", opt);
-							} else {
-								document.getElementById("loadC").style.display = '';
-								document.getElementById("loadedC").style.display = 'none';
-								document.getElementById("loadedComments").style.display = 'none';
-								document.getElementById("loadinC").style.display = 'none';
-								document.getElementById("errorC").style.display = 'none';
-							}
 							setSpeed();
 							if (localStorage.getItem("showReddit") == "y") {
 								rSearch(localStorage.getItem("sLoc"));
@@ -2332,8 +2015,6 @@ function home() {
 	document.getElementById("playlistPage").style.display = 'none';
 	document.getElementById("mainTrending").innerHTML = "";
 	document.getElementById("redTrending").innerHTML = "";
-	document.getElementById("musicTrending").innerHTML = "";
-	document.getElementById("gamingTrending").innerHTML = "";
 	document.getElementById("embedContainer").innerHTML = "";
 	document.getElementById("trendingLoader").style.display = "";
 	document.getElementById("trending").style.display = "none";
@@ -2703,10 +2384,7 @@ function sync() {
 function saveSettings() {
 	localStorage.setItem("smart", document.getElementById("sq").value);
 	localStorage.setItem("theme", document.getElementById("wTheme").value);
-	localStorage.setItem("sLoc", document.getElementById("server").value);
 	localStorage.setItem("suggest", document.getElementById("suggest").value);
-	localStorage.setItem("country", document.getElementById("country").value);
-	localStorage.setItem("loadComm", document.getElementById("autoComm").value);
 	localStorage.setItem("disableCards", document.getElementById("disableCards").value);
 	localStorage.setItem("showReddit", document.getElementById("showReddit").value);
 	localStorage.setItem("homePage", document.getElementById("home").value);
@@ -2717,6 +2395,7 @@ function saveSettings() {
 	localStorage.setItem("skipSponsors", document.getElementById("skipSponsors").value);
 	localStorage.setItem("injectRedir", document.getElementById("injectRedir").value);
 	localStorage.setItem("supportHDR", document.getElementById("hdrSupport").value);
+	localStorage.setItem("pf", document.getElementById("pf").value);
 	if (document.getElementById("aas").value == "n") {
 		localStorage.setItem("mScale", document.getElementById("mScale").value);
 		resize("manual", localStorage.getItem("mScale"));
@@ -2756,227 +2435,6 @@ function toggleFilters() {
 function dismiss() {
 	localStorage.setItem('dissmissed', 'y')
 	document.getElementById("lasaga").style.display = 'none';
-}
-
-function getComments(token, opt) {
-	if (!token | token == "none") {
-		document.getElementById("loadedComments").style.display = 'none';
-		document.getElementById("loadedComments").innerHTML = "";
-		document.getElementById("loadedC").style.display = 'none';
-		document.getElementById("errorC").style.display = 'none';
-		document.getElementById("loadC").style.display = 'none';
-		document.getElementById("loadinC").style.display = '';
-		var id = getClickedId(window.location.href, '#w#');
-		var fullUrl = "https://youtube.com/watch?v=" + id;
-		const http = new XMLHttpRequest();
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?comments=1&url=" + fullUrl;
-		} else if (opt == "b"){
-			var url = "https://vidpolaris.herokuapp.com/?comments=1&url=" + fullUrl
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?comments=1&url=" + fullUrl
-		}
-		http.open("GET", url);
-		http.send();
-		http.timeout = 10000;
-		http.ontimeout = () => {
-			if (opt == "a" | !opt) {
-				if (!localStorage.getItem("sLoc") == "b") {
-					getComments("none", "b");
-				} else {
-					document.getElementById("errorC").style.display = '';
-					document.getElementById("loadinC").style.display = 'none';
-					document.getElementById("loadedC").style.display = 'none';
-				}
-			} else if (opt == "b"){
-				if (!localStorage.getItem("sLoc") == "c") {
-					getComments("none", "c");
-				} else {
-					document.getElementById("errorC").style.display = '';
-					document.getElementById("loadinC").style.display = 'none';
-					document.getElementById("loadedC").style.display = 'none';
-				}
-			} else if (opt == "c") {
-				if (!localStorage.getItem("sLoc") == "a") {
-					getComments("none", "a");
-				} else {
-					document.getElementById("errorC").style.display = '';
-					document.getElementById("loadinC").style.display = 'none';
-					document.getElementById("loadedC").style.display = 'none';
-				}
-			}
-		}
-		http.onload=()=>{
-			var jsond = JSON.parse(http.responseText);
-			for (var c in jsond.comments) {
-				var div = document.createElement("DIV");
-				div.classList.add("comment");
-				if (c == 0 && jsond.comments[0].timestamp && jsond.comments[1].timestamp) {
-					if (jsond.comments[0].timestamp < jsond.comments[1].timestamp) {
-						var pinned = document.createElement("P");
-						pinned.classList.add("stat");
-						pinned.innerHTML = "<span class='ico material-icons'>announcement</span> pinned comment";
-						pinned.style = "margin-bottom:5px;";
-						div.appendChild(pinned);
-					}
-				}
-				var img = document.createElement("IMG");
-				img.src = jsond.comments[c].authorThumb;
-				img.classList.add("smallPfp");
-				div.appendChild(img);
-				if (jsond.comments[c].authorLink && jsond.comments[c].author) {
-					var cLink = document.createElement("A");
-					cLink.classList.add("channelLink");
-					cLink.href = "#c#" + jsond.comments[c].authorLink.substring(9);
-					div.appendChild(cLink);
-					var h3 = document.createElement("H3");
-					h3.classList.add("cAuthor");
-					h3.innerHTML = jsond.comments[c].author;
-					cLink.appendChild(h3);
-				} else {
-					var h3 = document.createElement("H3");
-					h3.innerHTML = "[Channel unavailable]";
-					div.appendChild(h3);
-				}
-				var cText = document.createElement("P");
-				cText.id = jsond.comments[c].id + "_text";
-				cText.innerHTML = varLinks(jsond.comments[c].text.replace(/\n/g, "<br>"));
-				cText.classList.add("cText");
-				var stats = document.createElement("P");
-				stats.classList.add("stat");
-				if (!jsond.comments[c].numReplies) {
-					var rep = "0";
-				} else {
-					var rep = jsond.comments[c].numReplies;
-				}
-				var tFunction = `translate('` + jsond.comments[c].id + `_text')`
-				stats.innerHTML = "<span class='material-icons ico'>comment</span> " + rep + " replies • <span class='material-icons ico'>thumb_up</span> " + jsond.comments[c].likes.toLocaleString() + " likes • <span onclick=" + tFunction + " style='cursor:pointer'><span class='material-icons ico'>translate</span> translate this comment</span> • <span>posted " + jsond.comments[c].time + "</span>";
-				div.appendChild(cText);
-				div.appendChild(stats);
-				document.getElementById("loadedComments").appendChild(div);
-			}
-			document.getElementById("loadinC").style.display = "none";
-			document.getElementById("loadedC").style.display = "";
-			document.getElementById("loadedComments").style.display = "";
-			var button = document.getElementsByTagName("button");
-			for (var c in button) {
-				if (button[c].innerHTML == "load more comments") {
-					button[c].style = "display:none;"
-				}
-			}
-			if (jsond.npToken) {
-				var button = document.createElement("BUTTON");
-				button.onclick = function() {
-					getComments(jsond.npToken, localStorage.getItem("sLoc"));
-				}
-				button.innerHTML = "load more comments"
-				document.getElementById("loadedComments").appendChild(button)
-			}
-		}
-	} else {
-		document.getElementById("loadedC").style.display = 'none';
-		document.getElementById("errorC").style.display = 'none';
-		document.getElementById("loadC").style.display = 'none';
-		document.getElementById("loadinC").style.display = '';
-		var id = getClickedId(window.location.href, '#w#');
-		var fullUrl = "https://youtube.com/watch?v=" + id;
-		const http = new XMLHttpRequest();
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?comments=1&token=" + token + "&url=" + fullUrl;
-		} else if (opt == "b"){
-			var url = "https://vidpolaris.herokuapp.com/?comments=1&token=" + token + "&url=" + fullUrl;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?comments=1&token=" + token + "&url=" + fullUrl;
-		}
-		http.open("GET", url);
-		http.send();
-		http.timeout = 10000;
-		http.ontimeout = () => {
-			if (opt == "a" | !opt) {
-				if (!localStorage.getItem("sLoc") == "b") {
-					getComments("none", "b");
-				} else {
-					document.getElementById("errorC").style.display = '';
-					document.getElementById("loadinC").style.display = 'none';
-					document.getElementById("loadedC").style.display = 'none';
-				}
-			} else if (opt == "b"){
-				if (!localStorage.getItem("sLoc") == "c") {
-					getComments("none", "c");
-				} else {
-					document.getElementById("errorC").style.display = '';
-					document.getElementById("loadinC").style.display = 'none';
-					document.getElementById("loadedC").style.display = 'none';
-				}
-			} else if (opt == "c") {
-				if (!localStorage.getItem("sLoc") == "a") {
-					getComments("none", "a");
-				} else {
-					document.getElementById("errorC").style.display = '';
-					document.getElementById("loadinC").style.display = 'none';
-					document.getElementById("loadedC").style.display = 'none';
-				}
-			}
-		}
-		http.onload=(e)=>{
-			var jsond = JSON.parse(http.responseText);
-			for (var c in jsond.comments) {
-				var div = document.createElement("DIV");
-				div.classList.add("comment");
-				var img = document.createElement("IMG");
-				img.src = jsond.comments[c].authorThumb;
-				img.classList.add("smallPfp");
-				div.appendChild(img);
-				if (jsond.comments[c].authorLink && jsond.comments[c].author) {
-					var cLink = document.createElement("A");
-					cLink.classList.add("channelLink");
-					cLink.href = "#c#" + jsond.comments[c].authorLink.substring(9);
-					div.appendChild(cLink);
-					var h3 = document.createElement("H3");
-					h3.classList.add("cAuthor");
-					h3.innerHTML = jsond.comments[c].author;
-					cLink.appendChild(h3);
-				} else {
-					var h3 = document.createElement("H3");
-					h3.innerHTML = "[Channel unavailable]";
-					div.appendChild(h3);
-				}
-				var cText = document.createElement("P");
-				cText.id = jsond.comments[c].id + "_text";
-				cText.innerHTML = varLinks(jsond.comments[c].text.replace(/\n/g, "<br>"));
-				cText.classList.add("cText");
-				var stats = document.createElement("P");
-				stats.classList.add("stat");
-				if (!jsond.comments[c].numReplies) {
-					var rep = "0";
-				} else {
-					var rep = jsond.comments[c].numReplies;
-				}
-				var tFunction = `translate('` + jsond.comments[c].id + `_text')`
-				stats.innerHTML = "<span class='material-icons ico'>comment</span> " + rep + " replies • <span class='material-icons ico'>thumb_up</span> " + jsond.comments[c].likes.toLocaleString() + " likes • <span onclick=" + tFunction + " style='cursor:pointer'><span class='material-icons ico'>translate</span> translate this comment</span> • <span>posted " + jsond.comments[c].time + "</span>";
-				div.appendChild(cText);
-				div.appendChild(stats);
-				document.getElementById("loadedComments").appendChild(div);
-			}
-			document.getElementById("loadinC").style.display = "none";
-			document.getElementById("loadedC").style.display = "";
-			document.getElementById("loadedComments").style.display = "";
-			var button = document.getElementsByTagName("button");
-			for (var c in button) {
-				if (button[c].innerHTML == "load more comments") {
-					button[c].style = "display:none;"
-				}
-			}
-			if (jsond.npToken) {
-				var button = document.createElement("BUTTON");
-				button.onclick = function() {
-					getComments(jsond.npToken, localStorage.getItem("sLoc"));
-				}
-				button.innerHTML = "load more comments"
-				document.getElementById("loadedComments").appendChild(button)
-			}
-		}
-	}
 }
 
 function toggleAuto() {
