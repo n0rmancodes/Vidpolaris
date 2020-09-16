@@ -23,17 +23,7 @@ Information like the version of the instance, the port it is running on, and wha
 
 ## Trending Tab
 
-This currently runs on Invidious's data, but will be replaced with our own scraping method soon!
-
 ### GET ``/api/trending``
-
-#### Parameters
-
-```
-inst: "snopyta", "13ad", "gcc" (defaults to "snopyta")
-type: "music", "gaming", "news", "movies", none (defaults to none (general))
-locale: ISO 3166 country code (defaults to "US")
-```
 
 #### Example Body
 
@@ -46,12 +36,6 @@ locale: ISO 3166 country code (defaults to "US")
         "author":"MrBeast Gaming",
         "authorId":"UCIPPMRA040LQr5QPyJEbmXA",
         "authorUrl":"/channel/UCIPPMRA040LQr5QPyJEbmXA",
-        "videoThumbnails":[{
-            "quality":"maxres",
-            "url":"https://invidious.snopyta.org/vi/ELS5RLbSukU/maxres.jpg",
-            "width":1280,
-            "height":720
-        }],
         "description":"We played the hardest mod created for Minecraft. Dark Souls is basically for babies after this.\n\n\nShout out to RL Craft for the content! Check it out here: https://www.curseforge.com/minecraft/modp...",
         "descriptionHtml":"We played the hardest mod created for Minecraft. Dark Souls is basically for babies after this.\n\n\nShout out to RL Craft for the content! Check it out here: https://www.curseforge.com/minecraft/modp...",
         "viewCount":1356774,
