@@ -106,6 +106,7 @@ a {
         float:left;
         padding-top:5%;
         padding-bottom:5%;
+        width:calc(100% - 300px)
     }
 
     .pInfo h2, .pInfo h3 {
