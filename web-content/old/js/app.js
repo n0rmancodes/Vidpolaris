@@ -1035,6 +1035,7 @@ function getTrending() {
 		}
 		for (var c in jsond) {
 			if (c > 17) {
+				document.getElementById("searchContainer").style.display = "";
 				document.getElementById("trendingLoader").style.display = 'none';
 				document.getElementById("trending").style.display = '';
 				document.getElementById("mainTrending").style.display = '';
