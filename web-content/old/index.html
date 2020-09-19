@@ -119,8 +119,8 @@
 							<button id="theat_embed" style="display:none;" onclick="theatre('embed')">theater mode</button>
 							<button id="embedPlayer" onclick="embedNoCookie()">embed on youtube player</button>
 							<button id="refreshBtn" onclick="location.reload();" style="display:none;">revert to native player</button>
-							<button onclick="openVideo(localStorage.getItem('sLoc'));">reload video data</button>
-							<button id="redditBtn" onclick="rSearch(localStorage.getItem('sLoc'),'y')">load reddit posts</button>
+							<button onclick="openVideo();">reload video data</button>
+							<button id="redditBtn" onclick="rSearch('y')">load reddit posts</button>
 							<button class="material-icons ico" onclick="share()">share</button>
 							<a href="https://www.youtube.com/reportabuse"><button class="material-icons ico">flag</button></a>
 						</div>
@@ -183,16 +183,6 @@
 				</div>
 				<div id="searchTerm" style="display:none;">
 					<h3 class="noCenter" style="margin-left:17%;float:left;width:45%;"><span class="material-icons ico">search</span> search results for <span id="searchQuery"></span></h3>
-					<button onclick="toggleFilters()"><span class="material-icons ico">filter_alt</span> filters</button>
-					<div id="filters" style="display:none;">
-						<p class="stat">Content to search:</p>
-						<select id="sType" onInput="search(localStorage.getItem('sLoc'))">
-							<option value="all">all content</option>
-							<option value="video">videos</option>
-							<option value="channel">channels</option>
-							<option value="playlist">playlists</option>
-						</select>
-					</div>
 				</div>
 				<div id="resultsContainer" class="centerMe"></div>
 			</div>
@@ -413,7 +403,7 @@
 					</div>
 					<div id="chanButtons" class="centerMe" style="margin-bottom:5px;">
 						<button id="hBtn" onclick="cHome()"><span class="material-icons ico">home</span> home</button>
-						<button id="vidBtn" onclick="openChannelVideos(localStorage.getItem('sLoc'))"><span class="material-icons ico">live_tv</span> videos</button>
+						<button id="vidBtn" onclick="openChannelVideos()"><span class="material-icons ico">live_tv</span> videos</button>
 						<button id="aBtn" onclick="openAbout()"><span class="material-icons ico">person</span> about</button>
 					</div>
 					<div id="dependButtons" class="centerMe"></div>
@@ -424,7 +414,7 @@
 						<span id="pageNumChan" style="display:none;"></span>
 						<div style="text-align:right;">
 							<label>sort by:</label>
-							<select id="sortBy" oninput="openChannelVideos(localStorage.getItem('sLoc'))" style="margin-right:33px;">
+							<select id="sortBy" oninput="openChannelVideos()" style="margin-right:33px;">
 								<option value="newest">date added (newest)</option>
 								<option value="oldest">date added (oldest)</option>
 								<option value="popular">most popular</option>
@@ -433,7 +423,7 @@
 						<div id="allUploads"></div>
 						<div style="margin-bottom:10px;">
 							<div style="width:20%;float:left;margin:0;" id="chanControls">
-								<button onclick="openChannelVideos(localStorage.getItem('sLoc'), sessionStorage.getItem('nxtpg'))" id="nextUpload"><span class="material-icons ico">arrow_forward</span> page forward</button>
+								<button onclick="openChannelVideos(sessionStorage.getItem('nxtpg'))" id="nextUpload"><span class="material-icons ico">arrow_forward</span> page forward</button>
 							</div>
 							<div style="float:left;width:77%;text-align:right;">
 								<p style="display:none;margin:0;"id="pwChannel">[please wait...]</p>

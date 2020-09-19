@@ -2,12 +2,16 @@ document.getElementById("noscript").style.display = "none";
 console.log("script loaded.");
 console.log("==================");
 resize("auto");
-if (localStorage.getItem("homePage") == "inv") {
-	getTrending();
-} else {
-	redditTrending();
-}
 document.getElementById("trendingLoader").style.display = "";
+if (window.location.href.includes("#")) {
+	refresh();
+} else {
+	if (localStorage.getItem("homePage") == "red") {
+		redditTrending();
+	} else {
+		getTrending();
+	}
+}
 
 // settings checkers
 console.log("- removing unnecessary sessionStorage items...");
@@ -531,7 +535,7 @@ document.addEventListener('keydown', function (event) {
 document.getElementById("player").onerror = function(e){
 	sessionStorage.setItem("ewv", "y");
 	if (!sessionStorage.getItem("ewa")) {
-		openVideo(localStorage.getItem("sLoc"), "y");
+		openVideo("y");
 	} else {
 		document.getElementById("loadErr").style.display = "";
 		return;
@@ -541,7 +545,7 @@ document.getElementById("player").onerror = function(e){
 document.getElementById("audioPlayer").onerror = function(e){
 	sessionStorage.setItem("ewa", "y");
 	if (!sessionStorage.getItem("ewv")) {
-		openVideo(localStorage.getItem("sLoc"), "y");
+		openVideo("y");
 	} else {
 		document.getElementById("loadErr").style.display = "";
 		return;
@@ -560,6 +564,10 @@ var observer = new MutationObserver(function(mutations) {
 var target = document.getElementById('loadErr');
 observer.observe(target, { attributes : true, attributeFilter : ['style'] });
 
+console.log("autoplay: " + localStorage.getItem('autoplay'));
+console.log("smartQual: " + localStorage.getItem('smart'));
+console.log("server: " + localStorage.getItem('sLoc'));
+
 // end onload functions
 
 function resize(actType, size) {
@@ -573,72 +581,72 @@ function resize(actType, size) {
 				localStorage.setItem("theme" , "d_v1");
 			}
 			if (w < 1200) {
-				document.getElementById("theme").href = "/old/css/dark/mobile.css";
+				document.getElementById("theme").href = "css/dark/mobile.css";
 				document.getElementById("mScale").value = "m";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 			} else if (w < 1430) {
-				document.getElementById("theme").href = "/old/css/dark/smaller.css";
+				document.getElementById("theme").href = "css/dark/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/dark/style.css";
+				document.getElementById("theme").href = "css/dark/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		} else if (localStorage.getItem("theme") == "w_v1") {
 			if (w < 1200) {
-				document.getElementById("theme").href = "/old/css/white/mobile.css";
+				document.getElementById("theme").href = "css/white/mobile.css";
 				document.getElementById("mScale").value = "m";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 			} else if (w < 1430) {
-				document.getElementById("theme").href = "/old/css/white/smaller.css";
+				document.getElementById("theme").href = "css/white/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/white/style.css";
+				document.getElementById("theme").href = "css/white/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		} else if (localStorage.getItem("theme") == "b_v1") {
 			if (w < 1200) {
-				document.getElementById("theme").href = "/old/css/black/mobile.css";
+				document.getElementById("theme").href = "css/black/mobile.css";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 				document.getElementById("mScale").value = "m";
 			} else if (w < 1430) {
-				document.getElementById("theme").href = "/old/css/black/smaller.css";
+				document.getElementById("theme").href = "css/black/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/black/style.css";
+				document.getElementById("theme").href = "css/black/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		} else if (localStorage.getItem("theme") == "m_v1") {
 			if (w < 1200) {
-				document.getElementById("theme").href = "/old/css/maroon/mobile.css";
+				document.getElementById("theme").href = "css/maroon/mobile.css";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 				document.getElementById("mScale").value = "m";
 			} else if (w < 1430) {
-				document.getElementById("theme").href = "/old/css/maroon/smaller.css";
+				document.getElementById("theme").href = "css/maroon/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/maroon/style.css";
+				document.getElementById("theme").href = "css/maroon/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		} else if (localStorage.getItem("theme") == "v_v1") {
 			if (w < 1200) {
-				document.getElementById("theme").href = "/old/css/velvet/mobile.css";
+				document.getElementById("theme").href = "css/velvet/mobile.css";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 				document.getElementById("mScale").value = "m";
 			} else if (w < 1430) {
-				document.getElementById("theme").href = "/old/css/velvet/smaller.css";
+				document.getElementById("theme").href = "css/velvet/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/velvet/style.css";
+				document.getElementById("theme").href = "css/velvet/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		}
@@ -648,72 +656,72 @@ function resize(actType, size) {
 				localStorage.setItem("theme" , "d_v1");
 			}
 			if (size == "m") {
-				document.getElementById("theme").href = "/old/css/dark/mobile.css";
+				document.getElementById("theme").href = "css/dark/mobile.css";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 				document.getElementById("mScale").value = "m";
 			} else if (size == "s") {
-				document.getElementById("theme").href = "/old/css/dark/smaller.css";
+				document.getElementById("theme").href = "css/dark/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/dark/style.css";
+				document.getElementById("theme").href = "css/dark/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		} else if (localStorage.getItem("theme") == "w_v1") {
 			if (size == "m") {
-				document.getElementById("theme").href = "/old/css/white/mobile.css";
+				document.getElementById("theme").href = "css/white/mobile.css";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 				document.getElementById("mScale").value = "m";
 			} else if (size == "s") {
-				document.getElementById("theme").href = "/old/css/white/smaller.css";
+				document.getElementById("theme").href = "css/white/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/white/style.css";
+				document.getElementById("theme").href = "css/white/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		} else if (localStorage.getItem("theme") == "b_v1") {
 			if (size == "m") {
-				document.getElementById("theme").href = "/old/css/black/mobile.css";
+				document.getElementById("theme").href = "css/black/mobile.css";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 				document.getElementById("mScale").value = "m";
 			} else if (size == "s") {
-				document.getElementById("theme").href = "/old/css/black/smaller.css";
+				document.getElementById("theme").href = "css/black/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/black/style.css";
+				document.getElementById("theme").href = "css/black/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		} else if (localStorage.getItem("theme") == "m_v1") {
 			if (size == "m") {
-				document.getElementById("theme").href = "/old/css/maroon/mobile.css";
+				document.getElementById("theme").href = "css/maroon/mobile.css";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 				document.getElementById("mScale").value = "m";
 			} else if (size == "s") {
-				document.getElementById("theme").href = "/old/css/maroon/smaller.css";
+				document.getElementById("theme").href = "css/maroon/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/maroon/style.css";
+				document.getElementById("theme").href = "css/maroon/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		} else if (localStorage.getItem("theme") == "v_v1") {
 			if (size == "m") {
-				document.getElementById("theme").href = "/old/css/velvet/mobile.css";
+				document.getElementById("theme").href = "css/velvet/mobile.css";
 				if (localStorage.getItem("theater") == "n") {
 					theatre();
 				}
 				document.getElementById("mScale").value = "m";
 			} else if (size == "s") {
-				document.getElementById("theme").href = "/old/css/velvet/smaller.css";
+				document.getElementById("theme").href = "css/velvet/smaller.css";
 				document.getElementById("mScale").value = "s";
 			} else {
-				document.getElementById("theme").href = "/old/css/velvet/style.css";
+				document.getElementById("theme").href = "css/velvet/style.css";
 				document.getElementById("mScale").value = "f";
 			}
 		}
@@ -749,7 +757,7 @@ function search() {
 		var jsond = JSON.parse(http.responseText);
 		document.getElementById("searchQuery").innerHTML = decodeURIComponent(q);
 		document.getElementById("searchTerm").style.display = "";
-		if (!jsond.searchResults) {
+		if (!jsond.items) {
 			document.getElementById("errorPage").style.display = '';
 			document.getElementById("errorTxt").innerHTML = "no results were found."
 			document.getElementById("vidPage").style.display = 'none';
@@ -762,10 +770,10 @@ function search() {
 			return;
 		}
 		document.getElementById("resultsContainer").innerHTML = "";
-		for (var c in jsond.searchResults.items) {
-			if (jsond.searchResults.items[c].type == "video") {
+		for (var c in jsond.items) {
+			if (jsond.items[c].type == "video") {
 				var link = document.createElement("A");
-				link.href = "#w#" + jsond.searchResults.items[c].link.substring(32);
+				link.href = "#w#" + jsond.items[c].link.substring(32);
 				link.id = "re" + c;
 				document.getElementById("resultsContainer").appendChild(link); 
 				var div = document.createElement("DIV");
@@ -773,7 +781,7 @@ function search() {
 				div.id = "re" + c + "Div";
 				document.getElementById("re"+c).appendChild(div);
 				var thumb = document.createElement("IMG");
-				thumb.src = "https://img.youtube.com/vi/" + jsond.searchResults.items[c].link.substring(32) + "/hqdefault.jpg";
+				thumb.src = "https://img.youtube.com/vi/" + jsond.items[c].link.substring(32) + "/hqdefault.jpg";
 				thumb.classList.add("smallThumb");
 				document.getElementById("re"+c+"Div").appendChild(thumb);
 				var div2 = document.createElement("DIV");
@@ -781,36 +789,36 @@ function search() {
 				div2.id = "re" + c + "Info";
 				document.getElementById("re"+c+"Div").appendChild(div2);
 				var title = document.createElement("H2");
-				title.innerHTML = jsond.searchResults.items[c].title;
+				title.innerHTML = jsond.items[c].title;
 				title.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(title);
 				var author = document.createElement("H3");
-				author.innerHTML = '<span class="material-icons ico">person</span> ' + jsond.searchResults.items[c].author.name;
+				author.innerHTML = '<span class="material-icons ico">person</span> ' + jsond.items[c].author.name;
 				author.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(author);
 				var stat1 = document.createElement("H3");
-				if (jsond.searchResults.items[c].views == null | !jsond.searchResults.items[c].views) {
+				if (jsond.items[c].views == null | !jsond.items[c].views) {
 					stat1.innerHTML = '<span class="material-icons ico">remove_red_eye</span> [Unobtainable] views';
 				} else {
-					stat1.innerHTML = '<span class="material-icons ico">remove_red_eye</span> ' + jsond.searchResults.items[c].views.toLocaleString() + ' views';
+					stat1.innerHTML = '<span class="material-icons ico">remove_red_eye</span> ' + jsond.items[c].views.toLocaleString() + ' views';
 				}
 				stat1.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(stat1);
 				var stat2 = document.createElement("H3");
-				stat2.innerHTML = '<span class="material-icons ico">calendar_today</span> posted ' + jsond.searchResults.items[c].uploaded_at;
+				stat2.innerHTML = '<span class="material-icons ico">calendar_today</span> posted ' + jsond.items[c].uploaded_at;
 				stat2.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(stat2);
 				var stat3 = document.createElement("H3");
-				stat3.innerHTML = '<span class="material-icons ico">timer</span> ' + jsond.searchResults.items[c].duration;
+				stat3.innerHTML = '<span class="material-icons ico">timer</span> ' + jsond.items[c].duration;
 				stat3.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(stat3);
 				var desc = document.createElement("P");
-				desc.innerHTML = jsond.searchResults.items[c].description;
+				desc.innerHTML = jsond.items[c].description;
 				desc.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(desc);
-			} else if (jsond.searchResults.items[c].type == "playlist") {
+			} else if (jsond.items[c].type == "playlist") {
 				var link = document.createElement("A");
-				link.href = "#p#" + getClickedId(jsond.searchResults.items[c].link, "?list=");
+				link.href = "#p#" + getClickedId(jsond.items[c].link, "?list=");
 				link.id = "re" + c
 				document.getElementById("resultsContainer").appendChild(link);
 				var div = document.createElement("DIV");
@@ -818,7 +826,7 @@ function search() {
 				div.id = "re" + c + "Div"
 				document.getElementById("re"+c).appendChild(div);
 				var thumb = document.createElement("IMG");
-				thumb.src = jsond.searchResults.items[c].thumbnail;
+				thumb.src = jsond.items[c].thumbnail;
 				thumb.classList.add("smallThumb");
 				document.getElementById("re"+c+"Div").appendChild(thumb);
 				var div2 = document.createElement("DIV");
@@ -826,20 +834,20 @@ function search() {
 				div2.id = "re" + c + "Info";
 				document.getElementById("re"+c+"Div").appendChild(div2);
 				var title = document.createElement("H2");
-				title.innerHTML = jsond.searchResults.items[c].title;
+				title.innerHTML = jsond.items[c].title;
 				title.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(title);
 				var author = document.createElement("H3")
-				author.innerHTML = '<span class="material-icons ico">person</span> ' + jsond.searchResults.items[c].author.name;
+				author.innerHTML = '<span class="material-icons ico">person</span> ' + jsond.items[c].author.name;
 				author.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(author);
 				var playLength = document.createElement("H3");
-				playLength.innerHTML = '<span class="material-icons ico">playlist_play</span> ' + jsond.searchResults.items[c].length;
+				playLength.innerHTML = '<span class="material-icons ico">playlist_play</span> ' + jsond.items[c].length;
 				playLength.classList.add("stat")
 				document.getElementById("re"+c+"Info").appendChild(playLength);
-			} else if (jsond.searchResults.items[c].type == "channel") {
+			} else if (jsond.items[c].type == "channel") {
 				var link = document.createElement("A");
-				link.href = "#c#" + jsond.searchResults.items[c].channel_id;
+				link.href = "#c#" + jsond.items[c].channel_id;
 				link.id = "re" + c
 				document.getElementById("resultsContainer").appendChild(link);
 				var div = document.createElement("DIV");
@@ -847,7 +855,7 @@ function search() {
 				div.id = "re" + c + "Div"
 				document.getElementById("re"+c).appendChild(div);
 				var thumb = document.createElement("IMG");
-				thumb.src = jsond.searchResults.items[c].avatar;
+				thumb.src = jsond.items[c].avatar;
 				thumb.classList.add("smallIcon");
 				document.getElementById("re"+c+"Div").appendChild(thumb);
 				var div2 = document.createElement("DIV");
@@ -855,29 +863,29 @@ function search() {
 				div2.id = "re" + c + "Info";
 				document.getElementById("re"+c+"Div").appendChild(div2);
 				var author = document.createElement("H2");
-				author.innerHTML = jsond.searchResults.items[c].name;
+				author.innerHTML = jsond.items[c].name;
 				author.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(author);
 				var stat1 = document.createElement("H3");
-				stat1.innerHTML = '<span class="material-icons ico">playlist_play</span> ' + jsond.searchResults.items[c].videos.toLocaleString() + ' videos';
+				stat1.innerHTML = '<span class="material-icons ico">playlist_play</span> ' + jsond.items[c].videos.toLocaleString() + ' videos';
 				stat1.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(stat1);
 				var desc = document.createElement("P");
-				desc.innerHTML = jsond.searchResults.items[c].description_short;
+				desc.innerHTML = jsond.items[c].description_short;
 				desc.classList.add("stat");
 				document.getElementById("re"+c+"Info").appendChild(desc);
-			} else if (jsond.searchResults.items[c].type == "shelf-vertical") {
+			} else if (jsond.items[c].type == "shelf-vertical") {
 				var mDiv = document.createElement("DIV");
 				mDiv.classList.add("verticalShelf");
 				mDiv.id = "re" + c + "Div";
 				document.getElementById("resultsContainer").appendChild(mDiv);
 				var shelfTitle = document.createElement("H3");
 				shelfTitle.classList.add("stat");
-				shelfTitle.innerHTML = jsond.searchResults.items[c].title;
+				shelfTitle.innerHTML = jsond.items[c].title;
 				document.getElementById("re"+c+"Div").appendChild(shelfTitle);
-				for (var cc in jsond.searchResults.items[c].items) {
+				for (var cc in jsond.items[c].items) {
 					var link = document.createElement("A");
-					link.href = "#w#" + jsond.searchResults.items[c].items[cc].link.substring(32);
+					link.href = "#w#" + jsond.items[c].items[cc].link.substring(32);
 					link.id = c + "sub" + cc + "Link";
 					document.getElementById("re"+c+"Div").appendChild(link); 
 					var div = document.createElement("DIV");
@@ -885,7 +893,7 @@ function search() {
 					div.id = c + "sub" + cc + "Div";
 					document.getElementById(c+"sub"+cc+"Link").appendChild(div);
 					var thumb = document.createElement("IMG");
-					thumb.src = "https://img.youtube.com/vi/" + jsond.searchResults.items[c].items[cc].link.substring(32) + "/hqdefault.jpg";
+					thumb.src = "https://img.youtube.com/vi/" + jsond.items[c].items[cc].link.substring(32) + "/hqdefault.jpg";
 					thumb.classList.add("smallThumb");
 					document.getElementById(c+"sub"+cc+"Div").appendChild(thumb);
 					var div2 = document.createElement("DIV");
@@ -893,34 +901,36 @@ function search() {
 					div2.id = c + "sub" + cc + "Info";
 					document.getElementById(c+"sub"+cc+"Div").appendChild(div2);
 					var title = document.createElement("H2");
-					title.innerHTML = jsond.searchResults.items[c].items[cc].title;
+					title.innerHTML = jsond.items[c].items[cc].title;
 					title.classList.add("stat");
 					document.getElementById(c+"sub"+cc+"Info").appendChild(title);
 					var author = document.createElement("H3");
-					author.innerHTML = '<span class="material-icons ico">person</span> ' + jsond.searchResults.items[c].items[cc].author.name;
+					author.innerHTML = '<span class="material-icons ico">person</span> ' + jsond.items[c].items[cc].author.name;
 					author.classList.add("stat");
 					document.getElementById(c+"sub"+cc+"Info").appendChild(author);
 					var stat1 = document.createElement("H3");
-					if (jsond.searchResults.items[c].items[cc].views == null | !jsond.searchResults.items[c].items[cc].views) {
+					if (jsond.items[c].items[cc].views == null | !jsond.items[c].items[cc].views) {
 						stat1.innerHTML = '<span class="material-icons ico">remove_red_eye</span> [Unobtainable] views';
 					} else {
-						stat1.innerHTML = '<span class="material-icons ico">remove_red_eye</span> ' + jsond.searchResults.items[c].items[cc].views.toLocaleString() + ' views';
+						stat1.innerHTML = '<span class="material-icons ico">remove_red_eye</span> ' + jsond.items[c].items[cc].views.toLocaleString() + ' views';
 					}
 					stat1.classList.add("stat");
 					document.getElementById(c+"sub"+cc+"Info").appendChild(stat1);
 					var stat2 = document.createElement("H3");
-					stat2.innerHTML = '<span class="material-icons ico">calendar_today</span> posted ' + jsond.searchResults.items[c].items[cc].uploaded_at;
+					stat2.innerHTML = '<span class="material-icons ico">calendar_today</span> posted ' + jsond.items[c].items[cc].uploaded_at;
 					stat2.classList.add("stat");
 					document.getElementById(c+"sub"+cc+"Info").appendChild(stat2);
 					var stat3 = document.createElement("H3");
-					stat3.innerHTML = '<span class="material-icons ico">timer</span> ' + jsond.searchResults.items[c].items[cc].duration;
+					stat3.innerHTML = '<span class="material-icons ico">timer</span> ' + jsond.items[c].items[cc].duration;
 					stat3.classList.add("stat");
 					document.getElementById(c+"sub"+cc+"Info").appendChild(stat3);
 					var desc = document.createElement("P");
-					desc.innerHTML = jsond.searchResults.items[c].items[cc].description;
+					desc.innerHTML = jsond.items[c].items[cc].description;
 					desc.classList.add("stat");
 					document.getElementById(c+"sub"+cc+"Info").appendChild(desc);
 				}
+			} else {
+				
 			}
 		}
 		document.getElementById("seaLoader").style.display = 'none';
@@ -937,7 +947,7 @@ function feelingLucky() {
 	const http = new XMLHttpRequest();
 	if (!document.getElementById("q").value == "") {
 		var q = document.getElementById("q").value;
-		var url = "/api/search?q=" + q;
+		var url = "/api/search?q=" + encodeURIComponent(q);
 		http.open("GET", url);
 		http.send();
 		http.onload=(e)=>{
@@ -946,7 +956,7 @@ function feelingLucky() {
 				home();
 				return;
 			}
-			var wLink = jsond.searchResults.items[0].link;
+			var wLink = jsond.items[0].link;
 			var link2 = wLink.substring(32);
 			window.open("#w#" + link2, "_self");
 		}
@@ -980,15 +990,15 @@ function feelingLucky() {
 			"z"
 		]
 		var qLetter = randomLetter[Math.floor(Math.random()*randomLetter.length)];
-		var surl = "/api/suggest?q=" + qLetter;
-		console.log(surl)
+		console.log(qLetter)
+		var surl = "/api/suggest/?q=" + qLetter;
 		http.open("GET",surl);
 		http.send();
 		http.onload=(e)=>{
 			var json = JSON.parse(http.responseText);
 			var res = json.results;
 			var q = res[Math.floor(Math.random()*res.length)];
-			var url = "/api/search?q=" + q;
+			var url = "/api/search?q=" + encodeURIComponent(q);
 			http.open("GET", url);
 			http.send();
 			http.onload=(e)=>{
@@ -997,11 +1007,11 @@ function feelingLucky() {
 					home();
 					return;
 				}
-				var wLink = jsond.searchResults.items[0].link;
+				var wLink = jsond.items[0].link;
 				var link2 = wLink.substring(32);
-				if (jsond.searchResults.items[0].type == "video") {
+				if (jsond.items[0].type == "video") {
 					window.open("#w#" + link2, "_self");
-				} else if (jsond.searchResults.items[0].type == "channel") {
+				} else if (jsond.items[0].type == "channel") {
 					window.open("#c#" + link2, "_self");
 				} else {
 					notPlayable();
@@ -1013,7 +1023,7 @@ function feelingLucky() {
 
 function getTrending() {
 	const http = new XMLHttpRequest();
-	var url = "/api/trending/"
+	var url = "/api/trending/";
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
@@ -1024,6 +1034,12 @@ function getTrending() {
 			return;
 		}
 		for (var c in jsond) {
+			if (c > 17) {
+				document.getElementById("trendingLoader").style.display = 'none';
+				document.getElementById("trending").style.display = '';
+				document.getElementById("mainTrending").style.display = '';
+				document.getElementById("redditTrending").style.display = 'none';
+			}
 			var link = document.createElement("A");
 			link.href = "#w#" + jsond[c].videoId;
 			link.id = "l" + c;
@@ -1034,7 +1050,7 @@ function getTrending() {
 			document.getElementById("l"+c).appendChild(div);
 			var img = document.createElement("IMG");
 			img.classList.add("largeThumb");
-			img.src = "/api/thumb/" + jsond[c].videoId;
+			img.src = "https://img.youtube.com/vi/" + jsond[c].videoId + "/hqdefault.jpg";
 			document.getElementById("div"+c).appendChild(img);
 			var div2 = document.createElement("DIV");
 			div2.classList.add("td");
@@ -1053,26 +1069,41 @@ function getTrending() {
 			stat2.classList.add("stat");
 			document.getElementById("tdDiv"+c).appendChild(stat2);
 		}
-		document.getElementById("searchContainer").style.display = "";
-		document.getElementById("trending").style.display = "";
-		document.getElementById("trendingLoader").style.display = "none";
 	}
 	http.onerror = function (error) {
 		redditTrending();
 		document.getElementById("fallbacktoRed").style.display = "";
 		return;
 	}
-}
+} 
 
 function redditTrending() {
 	const http = new XMLHttpRequest();
-	var url = "/api/reddit"
+	var url = "/api/reddit/"
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
 		var jsond = JSON.parse(http.responseText);
-		document.getElementById("reddit")
-		for (var c = 0; c > 17; c++) {
+		if (!jsond[0] && !jsond.err) {
+			getTrending();
+			document.getElementById("fallbacktoInv").style.display = "none";
+			return;
+		}
+		if (jsond.err) {
+			getTrending();
+			document.getElementById("fallbacktoInv").style.display = "none";
+			return;
+		}
+		for (var c in jsond) {
+			if (c > 17) {
+				document.getElementById("searchContainer").style.display = "";
+				document.getElementById("redditTrending").style.display = "";
+				document.getElementById("redTrending").style.display = "";
+				document.getElementById("mainTrending").style.display = "none";
+				document.getElementById("trendingLoader").style.display = "none";
+				redditmusicTrending()
+				return;
+			} 
 			var link = document.createElement("A");
 			link.href = "#w#" + jsond[c].id;
 			var div = document.createElement("DIV");
@@ -1080,7 +1111,7 @@ function redditTrending() {
 			link.appendChild(div);
 			var img = document.createElement("IMG");
 			img.classList.add("largeThumb");
-			img.src = "/api/thumb/" + jsond[c].id;
+			img.src = "https://img.youtube.com/vi/" + jsond[c].id + "/hqdefault.jpg";
 			div.appendChild(img);
 			var div2 = document.createElement("DIV");
 			div2.classList.add("td");
@@ -1099,11 +1130,6 @@ function redditTrending() {
 			div2.appendChild(stat2);
 			document.getElementById("redTrending").appendChild(link);
 		}
-		document.getElementById("redditTrending").style.display = "";
-		document.getElementById("redTrending").style.display = "";
-		document.getElementById("mainTrending").style.display = "none";
-		document.getElementById("trendingLoader").style.display = "none";
-		redditmusicTrending();
 	}
 }
 
@@ -1115,12 +1141,12 @@ function redditmusicTrending() {
 	http.onload=(e)=>{
 		var jsond = JSON.parse(http.responseText);
 		if (!jsond[0]) {
-			getTrending();
+			getTrending(localStorage.getItem("invIns"));
 			document.getElementById("fallbacktoInv").style.display = "none";
 			return;
 		}
 		if (jsond.err) {
-			getTrending();
+			getTrending(localStorage.getItem("invIns"));
 			document.getElementById("fallbacktoInv").style.display = "none";
 			return;
 		}
@@ -1137,7 +1163,7 @@ function redditmusicTrending() {
 			link.appendChild(div);
 			var img = document.createElement("IMG");
 			img.classList.add("largeThumb");
-			img.src = "/api/thumb/" + jsond[c].id;
+			img.src = "https://img.youtube.com/vi/" + jsond[c].id + "/hqdefault.jpg";
 			div.appendChild(img);
 			var div2 = document.createElement("DIV");
 			div2.classList.add("td");
@@ -1161,18 +1187,18 @@ function redditmusicTrending() {
 
 function redditdeepTrending() {
 	const http = new XMLHttpRequest();
-	var url = "/api/reddit?sub=DeepIntoYouTube"
+	var url = "/api/reddit/?sub=DeepIntoYouTube"
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
 		var jsond = JSON.parse(http.responseText);
 		if (!jsond[0]) {
-			getTrending();
+			getTrending(localStorage.getItem("invIns"));
 			document.getElementById("fallbacktoInv").style.display = "none";
 			return;
 		}
 		if (jsond.err) {
-			getTrending();
+			getTrending(localStorage.getItem("invIns"));
 			document.getElementById("fallbacktoInv").style.display = "none";
 			return;
 		}
@@ -1188,7 +1214,7 @@ function redditdeepTrending() {
 			link.appendChild(div);
 			var img = document.createElement("IMG");
 			img.classList.add("largeThumb");
-			img.src = "/api/thumb/" + jsond[c].id;
+			img.src = "https://img.youtube.com/vi/" + jsond[c].id + "/hqdefault.jpg";
 			div.appendChild(img);
 			var div2 = document.createElement("DIV");
 			div2.classList.add("td");
@@ -1210,7 +1236,7 @@ function redditdeepTrending() {
 	}
 }
 
-function openVideo(opt,ret) {
+function openVideo(ret) {
 	setTimeout(function () {
 		if (!window.location.href.includes("#w#")) {
 			return;
@@ -1486,7 +1512,7 @@ function openVideo(opt,ret) {
 									var d = document.createElement("DIV");
 									d.classList.add("smallVideo")
 									var img = document.createElement("IMG");
-									img.src = "/api/thumb/" + jsond.info.related_videos[c].id;
+									img.src = "https://img.youtube.com/vi/" + jsond.info.related_videos[c].id + "/hqdefault.jpg";
 									img.classList.add("relatedThumb");
 									var h4 = document.createElement("H4");
 									h4.classList.add("stat");
@@ -1714,23 +1740,18 @@ function openVideo(opt,ret) {
 									}
 									document.getElementById("aqOptions").style.display = "";
 								} else {
-									openVideo(opt, "y");
+									openVideo("y");
 									return;
 								}
 								document.getElementById("qOptions").value = document.getElementById("itag").innerHTML;
 								document.getElementById("title").innerHTML = titl;
+								document.getElementById("searchContainer").style.display = "";
 								document.title = titl +  " | vidpolaris";
 								if (localStorage.getItem("smart") == "y") {
 									if (sessionStorage.getItem("goToFirst")) {
 										sessionStorage.removeItem("goToFirst");
 										document.getElementById("qOptions").value = document.getElementById("qOptions").options[0].value;
-										if (opt == "a" | !opt) {
-											var url = "https://api.vidpolaris.ml/?itag=" + document.getElementById("qOptions").options[0].value + "&url=" + fullUrl;
-										} else if (opt == "b"){
-											var url = "https://vidpolaris.herokuapp.com/?itag=" + document.getElementById("qOptions").options[0].value + "&url=" + fullUrl;
-										} else if (opt == "c") {
-											var url = "https://vidpolaris-europe.herokuapp.com/?itag=" + document.getElementById("qOptions").options[0].value + "&url=" + fullUrl;
-										}
+										var url = "/api/itag?id=" + id + "&itag=" + document.getElementById("qOptions").value;
 										http.open("GET", url)
 										http.send();
 										http.onload=(e)=>{
@@ -1744,10 +1765,8 @@ function openVideo(opt,ret) {
 											document.getElementById("player").load();
 											document.getElementById("audioPlayer").load();
 											setSpeed();
-											rSearch(opt);
-											skipSponsors(opt);
+											rSearch();
 											document.getElementById("player").play();
-											document.getElementById("searchContainer").style.display = "";
 											return;
 										}
 									} else {
@@ -1757,15 +1776,11 @@ function openVideo(opt,ret) {
 										document.getElementById("player").load();
 										document.getElementById("audioPlayer").load();
 										setSpeed();
-										rSearch(opt);
-										skipSponsors(opt);
+										rSearch();
 										document.getElementById("player").play();
-										document.getElementById("searchContainer").style.display = "";
-										document.getElementById("searchContainer").style.display = "";
 									}
 								}
 							} else {
-								document.getElementById("vidViewer").style.display = '';
 								document.getElementById("vidLoader").style.display = 'none';
 								document.getElementById("player").src = wUrl;
 								for (var c in jsond.joined) {
@@ -1788,11 +1803,9 @@ function openVideo(opt,ret) {
 								document.getElementById("aqOptions").style.display = "none";
 								document.title = titl +  " | vidpolaris";
 								document.getElementById("player").play();
-								document.getElementById("searchContainer").style.display = '';
 								sessionStorage.removeItem("currentlyOpening");
 								setSpeed();
-								rSearch(opt);
-								skipSponsors(opt);
+								rSearch();
 							}
 						}
 					}
@@ -1806,26 +1819,9 @@ function openVideo(opt,ret) {
 				}
 				if (localStorage.getItem("smart") == "y") {
 					const http = new XMLHttpRequest();
-					var fullUrl = "https://www.youtube.com/watch?v=" + getClickedId(window.location.href, "#w#");
-					if (!opt | opt == "a") {
-						var url = "https://api.vidpolaris.ml/?url=" + fullUrl;
-					} else if (opt == "b") {
-						var url = "https://vidpolaris.herokuapp.com/?url=" + fullUrl;
-					} else  if (opt == "c") {
-						var url = "https://vidpolaris-europe.herokuapp.com/?url=" + fullUrl;
-					}
+					var url = "/api/info?id=" + getClickedId(window.location.href, "#w#");
 					http.open("GET", url);
 					http.send();
-					http.timeout = 7000;
-					http.ontimeout = () => {
-						if (opt == "a" | !opt) {
-							openVideo("b");
-						} else if (opt == "b"){
-							openVideo("c");
-						} else if (opt == "c") {
-							openVideo("a");
-						}
-					}
 					http.onload=(e)=>{
 						var jsond = JSON.parse(http.responseText);
 						document.getElementById("playerContainer").style.display = "";
@@ -1856,54 +1852,38 @@ function openVideo(opt,ret) {
 						document.getElementById("vidLoader").style.display = "none";
 						document.getElementById("loadErr").style.display = "none";
 						if (document.getElementById("vidLoaderTxt").innerHTML.includes("improper")) {
+							if (localStorage.getItem("loadComm") == "y") {
+								getComments("none");
+							} else {
+								document.getElementById("loadC").style.display = '';
+								document.getElementById("loadedC").style.display = 'none';
+								document.getElementById("loadedComments").style.display = 'none';
+								document.getElementById("loadinC").style.display = 'none';
+								document.getElementById("errorC").style.display = 'none';
+							}
 							setSpeed();
 							if (localStorage.getItem("showReddit") == "y") {
-								rSearch(localStorage.getItem("sLoc"));
+								rSearch();
 							}
 							sessionStorage.removeItem("currentlyOpening");
 							document.title = document.getElementById("title").innerHTML + " | vidpolaris";
 							document.getElementById("audioPlayer").src = "";
 							setSpeed();
-							rSearch(opt);
-							skipSponsors(opt);
+							rSearch();
+							skipSponsors();
 						}
 						sessionStorage.setItem("tried2", "y");
 					}
 					http.timeout = 7000;
-					http.ontimeout = () => {
-						if (opt == "a" | !opt) {
-							openVideo("b");
-						} else if (opt == "b"){
-							openVideo("c");
-						} else if (opt == "c") {
-							openVideo("a");
-						}
-					}
-					http.onerror = function (error) {
-						if (opt == "a" | !opt) {
-							openVideo("b");
-						} else if (opt == "b"){
-							openVideo("c");
-						} else if (opt == "c") {
-							openVideo("a");
-						}
-					}
 				} else {
 					const http = new XMLHttpRequest();
-					var fullUrl = "https://www.youtube.com/watch?v=" + getClickedId(window.location.href, "#w#");
-					if (!opt | opt == "a") {
-						var url = "https://api.vidpolaris.ml/?info=1&url=" + fullUrl;
-					} else if (opt == "b") {
-						var url = "https://vidpolaris.herokuapp.com/?info=1&url=" + fullUrl;
-					} else  if (opt == "c") {
-						var url = "https://vidpolaris-europe.herokuapp.com/?info=1&url=" + fullUrl;
-					}
+					var url = "/api/info?id=" + getClickedId(window.location.href, "#w#");
 					http.open("GET", url);
 					http.send();
 					http.onload=(e)=>{
 						var jsond = JSON.parse(http.responseText);
 						if (!jsond.audio) {
-							openVideo(opt);
+							openVideo();
 							return;
 						}
 						var audioUrl = jsond.audio[0].url;
@@ -1984,8 +1964,7 @@ function openVideo(opt,ret) {
 						document.getElementById("loadErr").style.display = "none";
 						sessionStorage.setItem("tried2", "y");
 						setSpeed();
-						rSearch(opt);
-						skipSponsors(opt);
+						rSearch();
 					}
 				}
 			}
@@ -2015,26 +1994,16 @@ function home() {
 	document.getElementById("playlistPage").style.display = 'none';
 	document.getElementById("mainTrending").innerHTML = "";
 	document.getElementById("redTrending").innerHTML = "";
+	document.getElementById("musicTrending").innerHTML = "";
+	document.getElementById("gamingTrending").innerHTML = "";
 	document.getElementById("embedContainer").innerHTML = "";
 	document.getElementById("trendingLoader").style.display = "";
 	document.getElementById("trending").style.display = "none";
 	document.getElementById("redditTrending").style.display = "none";
 	if (!localStorage.getItem("homePage") | localStorage.getItem("homePage") == "inv") {
-		if (localStorage.getItem("sLoc")) {
-			if (localStorage.getItem("invIns")) {
-				getTrending(localStorage.getItem("sLoc"), localStorage.getItem("invIns"))
-			} else {
-				getTrending(localStorage.getItem("sLoc"));
-			}
-		} else {
-			getTrending()
-		}
+		getTrending();
 	} else {
-		if (localStorage.getItem("sLoc")) {
-			redditTrending(localStorage.getItem("sLoc"));
-		} else {
-			redditTrending();
-		}
+		redditTrending();
 	}
 }
 
@@ -2080,7 +2049,6 @@ function share() {
 }
 
 function refresh() {
-	sessionStorage.removeItem("currentlyRunningT");
 	if (window.location.href.includes("#w#")) {
 		var id = getClickedId(window.location.href, "#w#")
 		if (!id) {
@@ -2088,7 +2056,7 @@ function refresh() {
 			return;
 		} else {
 			if (id.length == 11) {
-				openVideo(localStorage.getItem("sLoc"));
+				openVideo();
 			} else {
 				notPlayable();
 			}
@@ -2097,9 +2065,9 @@ function refresh() {
 		var q = getClickedId(window.location.href, "#s#");
 		if (!document.getElementById("q").value == q) {
 			document.getElementById("q").value = q;
-			search(localStorage.getItem("sLoc"));
+			search();
 		} else {
-			search(localStorage.getItem("sLoc"));
+			search();
 		}
 	} else if (window.location.href.includes("#settings")) {
 		document.getElementById("player").pause();
@@ -2124,15 +2092,11 @@ function refresh() {
 		createBookmark();
 		document.title = "settings | vidpolaris";
 	} else if (window.location.href.includes("#c#")){
-		if (!localStorage.getItem("invIns") | localStorage.getItem("invIns") == "o") {
-			openChannel(localStorage.getItem("sLoc"));
-		} else {
-			openChannel(localStorage.getItem("sLoc"), localStorage.getItem("invIns"));
-		}
+		openChannel();
 	} else if (window.location.href.includes("#adapt#")){
 		adaptBookmark();
 	} else if (window.location.href.includes("#p")){
-		openPlaylist(localStorage.getItem("sLoc"))
+		openPlaylist()
 	} else if (window.location.href.includes("#redir")) {
 		redir()
 	} else {
@@ -2197,7 +2161,7 @@ function createBookmark() {
 	}
 }
 
-function openPlaylist(opt) {
+function openPlaylist() {
 	document.getElementById("playlistPage").style.display = "";
 	document.getElementById("playLoader").style.display = "";
 	document.getElementById("playlistViewer").style.display = "none";
@@ -2209,13 +2173,7 @@ function openPlaylist(opt) {
 	document.title = "[loading...] vidpolaris"
 	const http = new XMLHttpRequest();
 	var id = getClickedId(window.location.href, "#p#");
-	if (!opt | opt == "a") {
-		var url = "https://api.vidpolaris.ml/?playlistId=" + id;
-	} else if (opt == "b") {
-		var url = "https://vidpolaris.herokuapp.com/?playlistId=" + id;
-	} else if (opt == "c") {
-		var url = "https://vidpolaris-europe.herokuapp.com/?playlistId=" + id;
-	}
+	var url = "/api/playlist?id=" + id;
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
@@ -2384,7 +2342,10 @@ function sync() {
 function saveSettings() {
 	localStorage.setItem("smart", document.getElementById("sq").value);
 	localStorage.setItem("theme", document.getElementById("wTheme").value);
+	localStorage.setItem("sLoc", document.getElementById("server").value);
 	localStorage.setItem("suggest", document.getElementById("suggest").value);
+	localStorage.setItem("country", document.getElementById("country").value);
+	localStorage.setItem("loadComm", document.getElementById("autoComm").value);
 	localStorage.setItem("disableCards", document.getElementById("disableCards").value);
 	localStorage.setItem("showReddit", document.getElementById("showReddit").value);
 	localStorage.setItem("homePage", document.getElementById("home").value);
@@ -2395,7 +2356,6 @@ function saveSettings() {
 	localStorage.setItem("skipSponsors", document.getElementById("skipSponsors").value);
 	localStorage.setItem("injectRedir", document.getElementById("injectRedir").value);
 	localStorage.setItem("supportHDR", document.getElementById("hdrSupport").value);
-	localStorage.setItem("pf", document.getElementById("pf").value);
 	if (document.getElementById("aas").value == "n") {
 		localStorage.setItem("mScale", document.getElementById("mScale").value);
 		resize("manual", localStorage.getItem("mScale"));
@@ -2466,7 +2426,7 @@ function toggleLoop() {
 }
 
 
-function changeQ(opt) {
+function changeQ() {
 	if (document.getElementById("itag").innerHTML == document.getElementById("qOptions").value) {
 		return;
 	} else {
@@ -2474,14 +2434,7 @@ function changeQ(opt) {
 		document.getElementById("aqOptions").disabled = true;
 		const http = new XMLHttpRequest();
 		var id = getClickedId(window.location.href, '#w#');
-		var fullUrl = "https://youtube.com/watch?v=" + id;
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?itag=" + document.getElementById("qOptions").value + "&url=" + fullUrl
-		} else if (opt == "b"){
-			var url = "https://vidpolaris.herokuapp.com/?itag=" + document.getElementById("qOptions").value + "&url=" + fullUrl
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?itag=" + document.getElementById("qOptions").value + "&url=" + fullUrl
-		}
+		var url = "/api/itag?id=" + id + "&itag=" + document.getElementById("qOptions").value;
 		http.open("GET", url);
 		http.send();
 		http.onload=(e)=>{
@@ -2497,34 +2450,17 @@ function changeQ(opt) {
 				document.getElementById("aqOptions").disabled = false;
 			}
 		}
-		http.timeout = 3000;
-		http.ontimeout = () => {
-			if (opt == "a" | !opt) {
-				changeQ("b");
-			} else if (opt == "b"){
-				changeQ("c");
-			} else if (opt == "c") {
-				changeQ("a");
-			}
-		}
 	}
 }
 
-function changeAQ(opt) {
+function changeAQ() {
 	document.getElementById("qOptions").disabled = true;
 	document.getElementById("aqOptions").disabled = true;
 	document.getElementById("player").pause();
 	document.getElementById("playerContainer").style.display = "none";
 	const http = new XMLHttpRequest();
 	var id = getClickedId(window.location.href, '#w#');
-	var fullUrl = "https://youtube.com/watch?v=" + id;
-	if (opt == "a" | !opt) {
-		var url = "https://api.vidpolaris.ml/?itag=" + document.getElementById("aqOptions").value + "&url=" + fullUrl
-	} else if (opt == "b"){
-		var url = "https://vidpolaris.herokuapp.com/?itag=" + document.getElementById("aqOptions").value + "&url=" + fullUrl
-	} else if (opt == "c") {
-		var url = "https://vidpolaris-europe.herokuapp.com/?itag=" + document.getElementById("aqOptions").value + "&url=" + fullUrl
-	}
+	var url = "/api/itag?id=" + id + "&itag=" + document.getElementById("qOptions").value;
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
@@ -2541,263 +2477,6 @@ function changeAQ(opt) {
 		}
 	}
 	http.timeout = 3000;
-	http.ontimeout = () => {
-		if (opt == "a" | !opt) {
-			changeAQ("b");
-		} else if (opt == "b"){
-			changeAQ("c");
-		} else if (opt == "c") {
-			changeAQ("a");
-		}
-	}
-}
-
-function translate(elem) {
-	if (!elem) {
-		return;
-	} else {
-		var tex = document.getElementById(elem).innerHTML;
-		document.getElementById(elem).innerHTML = "(translating...)"
-		if (!sessionStorage.getItem("currentlyRunningT") | sessionStorage.getItem("currentlyRunningT") == "n") {
-			sessionStorage.setItem("currentlyRunningT", "y");
-			const http = new XMLHttpRequest();
-			if (localStorage.getItem("sLoc") == "a" | !localStorage.getItem("sLoc")) {
-				var url = "https://api.vidpolaris.ml/?to=en&translate=" + encodeURIComponent(tex);
-			} else if (localStorage.getItem("sLoc") == "b"){
-				var url = "https://vidpolaris.herokuapp.com/?to=en&translate=" + encodeURIComponent(tex);
-			} else if (localStorage.getItem("sLoc") == "c") {
-				var url = "https://vidpolaris-europe.herokuapp.com/?to=en&translate=" + encodeURIComponent(tex);
-			}
-			http.open("GET", url);
-			http.send();
-			http.onload=(e)=>{
-				var jsond = JSON.parse(http.responseText);
-				var tTex = jsond.res.text;
-				var f = jsond.res.from.language.iso;
-				if (f == "af") {
-					var fTex = "afrikaans";
-				} else if (f == "sq") {
-					var fTex = "albanian";
-				} else if (f == "am") {
-					var fTex = "amharic";
-				} else if (f == "ar") {
-					var fTex = "arabic";
-				} else if (f == "hy") {
-					var fTex = "armenian";
-				} else if (f == "az") {
-					var fTex = "azerbaijani";
-				} else if (f == "eu") {
-					var fTex = "basque";
-				} else if (f == "be") {
-					var fTex = "belarusian";
-				} else if (f == "bn") {
-					var fTex = "bengali";
-				} else if (f == "bs") {
-					var fTex = "bosnian";
-				} else if (f == "bg") {
-					var fTex = "bulgarian";
-				} else if (f == "ca") {
-					var fTex = "catalan";
-				} else if (f == "ceb") {
-					var fTex = "cebuano";
-				} else if (f == "ny") {
-					var fTex = "chichewa";
-				} else if (f == "zh-CN") {
-					var fTex = "chinese (simplified)";
-				} else if (f == "zh-TW") {
-					var fTex = "chinese (traditional)";
-				} else if (f == "co") {
-					var fTex = "corsican";
-				} else if (f == "hr") {
-					var fTex = "croatian";
-				} else if (f == "cz") {
-					var fTex = "czech";
-				} else if (f == "da") {
-					var fTex = "danish";
-				} else if (f == "nl") {
-					var fTex = "dutch";
-				} else if (f == "en") {
-					var fTex = "english";
-				} else if (f == "eo") {
-					var fTex = "esperanto";
-				} else if (f == "et") {
-					var fTex = "estonian";
-				} else if (f == "tl") {
-					var fTex = "filipino";
-				} else if (f == "fi") {
-					var fTex = "finnish";
-				} else if (f == "fr") {
-					var fTex = "french";
-				} else if (f == "fy") {
-					var fTex = "frisian";
-				} else if (f == "gl") {
-					var fTex = "galician";
-				} else if (f == "ka") {
-					var fTex = "georgian";
-				} else if (f == "de") {
-					var fTex = "german";
-				} else if (f == "el") {
-					var fTex = "greek"
-				} else if (f == "gu") {
-					var fTex = "gujarati";
-				} else if (f == "ht") {
-					var fTex = "haitian creole";
-				} else if (f == "ha") {
-					var fTex = "hausa";
-				} else if (f == "haw") {
-					var fTex = "hawaiian";
-				} else if (f == "iw") {
-					var fTex = "hebrew";
-				} else if (f == "hi") {
-					var fTex = "hindi";
-				} else if (f == "hmn") {
-					var fTex = "hmong";
-				} else if (f == "hu") {
-					var fTex = "hungarian";
-				} else if (f == "is") {
-					var fTex = "icelandic";
-				} else if (f == "ig") {
-					var fTex = "igbo";
-				} else if (f == "id") {
-					var fTex = "indonesian";
-				} else if (f == "ga") {
-					var fTex = "irish";
-				} else if (f == "it") {
-					var fTex = "italian";
-				} else if (f == "ja") {
-					var fTex = "japanese";
-				} else if (f == "jw") {
-					var fTex = "javanese";
-				} else if (f == "kn") {
-					var fTex = "kannada";
-				} else if (f == "kk") {
-					var fTex = "kazakh";
-				} else if (f == "km") {
-					var fTex = "khmer";
-				} else if (f == "ko") {
-					var fTex = "korean";
-				} else if (f == "ku") {
-					var fTex = "kurdish (kurmanji)";
-				} else if (f == "ky") {
-					var fTex = "kyrgyz";
-				} else if (f == "lo") {
-					var fTex = "lao";
-				} else if (f == "la") {
-					var fTex = "latin";
-				} else if (f == "lv") {
-					var fTex = "latvian";
-				} else if (f == "lt") {
-					var fTex = "lithuanian";
-				} else if (f == "lb") {
-					var fTex = "luxembourgish";
-				} else if (f == "mk") {
-					var fTex = "macedonian";
-				} else if (f == "mg") {
-					var fTex = "malagasy";
-				} else if (f == "ms") {
-					var fTex = "malay";
-				} else if (f == "ml") {
-					var fTex = "malayalam";
-				} else if (f == "mt") {
-					var fTex = "maltese";
-				} else if (f == "mi") {
-					var fTex = "maori";
-				} else if (f == "mr") {
-					var fTex = "marathi";
-				} else if (f == "mn") {
-					var fTex = "mongolain";
-				} else if (f == "my") {
-					var fTex = "myanmar (burmese)";
-				} else if (f == "ne") {
-					var fTex = "nepali";
-				} else if (f == "no") {
-					var fTex = "norwegian";
-				} else if (f == "ps") {
-					var fTex = "pashto";
-				} else if (f == "fa") {
-					var fTex = "persian";
-				} else if (f == "pl") {
-					var fTex = "polish";
-				} else if (f == "pt") {
-					var fTex = "portuguese";
-				} else if (f == "pa") {
-					var fTex = "punjabi";
-				} else if (f == "ro") {
-					var fTex = "romanian";
-				} else if (f == "ru") {
-					var fTex = "russian";
-				} else if (f == "sm") {
-					var fTex = "samoan";
-				} else if (f == "gd") {
-					var fTex = "scots gaelic";
-				} else if (f == "sr") {
-					var fTex = "serbian";
-				} else if (f == "st") {
-					var fTex = "sesotho";
-				} else if (f == "sn") {
-					var fTex = "shona";
-				} else if (f == "sd") {
-					var fTex = "sindhi";
-				} else if (f == "si") {
-					var fTex = "sinhala";
-				} else if (f == "sk") {
-					var fTex = "slovak";
-				} else if (f == "sl") {
-					var fTex = "solvenian";
-				} else if (f == "so") {
-					var fTex = "somali";
-				} else if (f == "es") {
-					var fTex = "spanish";
-				} else if (f == "su") {
-					var fTex = "sundanese";
-				} else if (f == "sw") {
-					var fTex = "swahili";
-				} else if (f == "sv") {
-					var fTex = "swedish";
-				} else if (f == "tg") {
-					var fTex = "tajik";
-				} else if (f == "ta") {
-					var fTex = "tamil";
-				} else if (f == "te") {
-					var fTex = "telugu";
-				} else if (f == "th") {
-					var fTex = "thai";
-				} else if (f == "tr") {
-					var fTex = "turkish";
-				} else if (f == "uk") {
-					var fTex = "ukrainian";
-				} else if (f == "ur") {
-					var fTex = "urdu";
-				} else if (f == "uz") {
-					var fTex = "uzbek";
-				} else if (f == "vi") {
-					var fTex = "vietnamese";
-				} else if (f == "cy") {
-					var fTex = "welsh";
-				} else if (f == "xh") {
-					var fTex = "xhosa";
-				} else if (f == "yi") {
-					var fTex = "yiddish";
-				} else if (f == "yo") {
-					var fTex = "yoruba";
-				} else if (f == "zu") {
-					var fTex = "zulu";
-				} else {
-					var fTex = jsond.res.from.language.iso + " (if you see this, report it to <a href='https://twitter.com/normanisnotrad' class='channelLink'>my twitter</a>)";
-				}
- 				document.getElementById(elem).innerHTML = tTex + " (translated from " + fTex + ")";
-				sessionStorage.setItem("currentlyRunningT", "n");
-			}
-			http.timeout = 5000;
-			http.ontimeout = () => {
-				sessionStorage.setItem("currentlyRunningT", "n");
-				document.getElementById(elem).innerHTML = tex + " (error translating)"
-			}
-		} else {
-			console.log("please wait for the other translation to finish loading...");
-			return;
-		}
-	}
 }
 
 function theatre(mode) {
@@ -2892,7 +2571,7 @@ function playlistErr() {
 	document.title = "[!] vidpolaris";
 }
 
-function openChannel(opt,inst) {
+function openChannel() {
 	document.title = "[loading...] vidpolaris";
 	document.getElementById("player").pause();
 	document.getElementById("resultsContainer").style.display = 'none';
@@ -2915,36 +2594,7 @@ function openChannel(opt,inst) {
 	}
 	const http = new XMLHttpRequest();
 	var id = getClickedId(window.location.href, '#c#');
-	if (id.includes("/videos")) {
-		window.open("#c#" + id.replace("/videos", ""), "_self")
-	} else if (id.includes("/channels")) {
-		window.open("#c#" + id.replace("/channels", ""), "_self")
-	} else if (id.includes("/playlists")) {
-		window.open("#c#" + id.replace("/playlists", ""), "_self")
-	} else if (id.includes("/community")) {
-		window.open("#c#" + id.replace("/community", ""), "_self")
-	} else if (id.includes("/about")) {
-		window.open("#c#" + id.replace("/about", ""), "_self")
-	} else if (id.includes("/featured")) {
-		window.open("#c#" + id.replace("/featured", ""), "_self")
-	}
-	if (!inst | inst == "o") {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?channelId=" + id;
-		} else if (opt == "b"){
-			var url = "https://vidpolaris.herokuapp.com/?channelId=" + id;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?channelId=" + id;
-		}
-	} else {
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?channelId=" + id;
-		} else if (opt == "b"){
-			var url = "https://vidpolaris.herokuapp.com/?channelId=" + id;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?channelId=" + id;
-		}
-	}
+	var url = "/api/channel/?id=" + id;
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
@@ -3171,16 +2821,6 @@ function openChannel(opt,inst) {
 			}
 		}
 	}
-	http.timeout = 7000;
-	http.ontimeout = () => {
-		if (opt == "a" | !opt) {
-			openChannel("b");
-		} else if (opt == "b"){
-			openChannel("c");
-		} else if (opt == "c") {
-			openChannel("a");
-		}
-	}
 }
 
 function openAbout() {
@@ -3191,7 +2831,7 @@ function openAbout() {
 	document.getElementById("recentUploads").style.display = "none";
 }
 
-function openChannelVideos(opt,pg) {
+function openChannelVideos(pg) {
 	document.getElementById("recentUploads").style.display = 'none';
 	document.getElementById("allUploadsPage").style.display = '';
 	document.getElementById("newUps").style.display = "none";
@@ -3209,25 +2849,7 @@ function openChannelVideos(opt,pg) {
 		document.getElementById("pageNumChan").innerHTML = pageNum_b;
 	}
 	var id = getClickedId(window.location.href, '#c#');
-	if (opt == "a" | !opt) {
-		if (pg == "i" | !pg) {
-			var url = "https://api.vidpolaris.ml/?channelVideos=" + id + "&sortBy=" + document.getElementById("sortBy").value;
-		} else {
-			var url = "https://api.vidpolaris.ml/?channelVideos=" + id + "&sortBy=" + document.getElementById("sortBy").value + "&page="+ pageNum;
-		}
-	} else if (opt == "b"){
-		if (pg == "i" | !pg) {
-			var url = "https://vidpolaris.herokuapp.com/?channelVideos=" + id + "&sortBy=" + document.getElementById("sortBy").value;
-		} else {
-			var url = "https://vidpolaris.herokuapp.com/?channelVideos=" + id + "&sortBy=" + document.getElementById("sortBy").value + "&page="+ pageNum;
-		}
-	} else if (opt == "c") {
-		if (pg == "i" | !pg) {
-			var url = "https://vidpolaris-europe.herokuapp.com/?channelVideos=" + id + "&sortBy=" + document.getElementById("sortBy").value;
-		} else {
-			var url = "https://vidpolaris-europe.herokuapp.com/?channelVideos=" + id + "&sortBy=" + document.getElementById("sortBy").value + "&page="+ pageNum;
-		}
-	}
+	var url = "/api/channel/videos?id=" + id;
 	http.open("GET", url);
 	http.send();
 	http.onload=(e)=>{
@@ -3375,19 +2997,13 @@ function setSpeed() {
 	localStorage.setItem("pbSpeed", document.getElementById("speed").value);
 }
 
-function suggest(opt) {
+function suggest() {
 	if (document.getElementById("q").value == "" | localStorage.getItem("suggest") == "n") {
 		document.getElementById("suggest").innerHTML = "";
 		return;
 	}
 	var q = document.getElementById("q").value
-	if (opt == "a" | !opt) {
-		var url = "https://api.vidpolaris.ml/?suggest=" + q;
-	} else if (opt == "b"){
-		var url = "https://vidpolaris.herokuapp.com/?suggest=" + q;
-	} else if (opt == "c") {
-		var url = "https://vidpolaris-europe.herokuapp.com/?suggest=" + q;
-	}
+	var url = "/api/suggest/?q=" + q;
 	const http = new XMLHttpRequest();
 	http.open("GET", url);
 	http.send();
@@ -3501,18 +3117,12 @@ function preset(d) {
 	}
 }
 
-function rSearch(opt, f) {
+function rSearch(f) {
 	document.getElementById("redditBtn").style.display = "none";
 	document.getElementById("rPosts").innerHTML = "";
 	if (f == "y" | localStorage.getItem("showReddit") == "y") {
 		var id = getClickedId(window.location.href, "#w#");
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?redditSearch=" + id;
-		} else if (opt == "b"){
-			var url = "https://vidpolaris.herokuapp.com/?redditSearch=" + id;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?redditSearch=" + id;
-		}
+		var url = "/api/reddit/search?id=" + id
 		const http = new XMLHttpRequest();
 		http.open("GET", url);
 		http.send();
@@ -3616,18 +3226,12 @@ function varLinks(text) {
 	}
 }
 
-function skipSponsors(opt) {
+function skipSponsors() {
 	if (localStorage.getItem("skipSponsors") == "y") {
 		document.getElementById("redditBtn").style.display = "none";
 		document.getElementById("rPosts").innerHTML = "";
 		var id = getClickedId(window.location.href, "#w#");
-		if (opt == "a" | !opt) {
-			var url = "https://api.vidpolaris.ml/?sponsors=" + id;
-		} else if (opt == "b") {
-			var url = "https://vidpolaris.herokuapp.com/?sponsors=" + id;
-		} else if (opt == "c") {
-			var url = "https://vidpolaris-europe.herokuapp.com/?sponsors=" + id;
-		}
+		var url = "/api/sponsors/?id="
 		const http = new XMLHttpRequest();
 		http.open("GET", url);
 		http.send();
