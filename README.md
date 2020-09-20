@@ -17,6 +17,8 @@ An alternative client for YouTube made with NodeJS meant for privacy and simplic
 ## Documentation 
 For installation and requirement documentation, [click here](./docs/startup/README.md)!
 
+To learn how to add your instance to the instances list, [click here](./docs/instances/README.md)
+
 For API documentation, [click here](./docs/api/README.md)!
 
 ## Special Thanks
