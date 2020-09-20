@@ -28,8 +28,8 @@
     "yt-channel-info": "^1.1.1",
     "yt-trending-scraper": "^1.0.3",
     "ytdl-core": "^3.2.2",
-    "ytpl": "^0.3.0",
-    "ytsr": "^0.1.21"
+    "ytpl": "^1.0.1",
+    "ytsr": "^1.0.1"
   },
   "devDependencies": {},
   "directories": {
