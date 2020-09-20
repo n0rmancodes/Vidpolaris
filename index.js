@@ -25,7 +25,7 @@ const version_type = "ALPHA"
 const config = JSON.parse(fs.readFileSync("./config.json"));
 const port = process.env.PORT || config.port;
 const hostUrl = config.hostUrl;
-http.createServer(runServer).listen(config.port);
+http.createServer(runServer).listen(port);
 console.log("listening on port " + port + " | version " + version + " [" + version_type + "]");
 console.log("====================================================");
 async function runServer(request, res) {
