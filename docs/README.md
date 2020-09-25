@@ -13,3 +13,7 @@ one on your own computer.
 
 This is a guide to start your own instance of VidPolaris. Depending on what you're hosting it on, 
 this may take from 10 minutes to an hour.
+
+# [How to add your own instance](./instances/README.md)
+
+This is how to add your own instance to the official VidPolaris list.
