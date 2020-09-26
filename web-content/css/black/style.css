@@ -24,7 +24,7 @@ input, button{
 	color:white;
 }
 
-.vidChip, .horiVidChip, .largeHoriChip {
+.vidChip, .horiVidChip, .largeHoriChip, .comment {
 	background:#1a1a1a;
 	color:#c8c8c8;
 }

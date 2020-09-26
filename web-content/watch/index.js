@@ -398,14 +398,14 @@ function load() {
 					document.getElementById("authSub").innerHTML = "No subscribers";
 				}
 				if (json.info.videoDetails.likes && json.info.videoDetails.dislikes) {
-					document.getElementById("ri").style.display = "";
+					document.getElementById("ldBit").style.display = "";
 					document.getElementById("l").innerHTML = json.info.videoDetails.likes.toLocaleString();
 					document.getElementById("dl").innerHTML = json.info.videoDetails.dislikes.toLocaleString();
 					var tot = json.info.videoDetails.likes + json.info.videoDetails.dislikes;
 					var rat = (json.info.videoDetails.likes / tot) * 100;
 					document.getElementById("rBar").style = "width:" + rat + "%";
 				} else {
-					document.getElementById("ri").style.display = "none";
+					document.getElementById("ldBit").style.display = "none";
 				}
 				document.title = json.info.videoDetails.title + " | VidPolaris";
 				document.getElementById("main").style.display = "";
@@ -463,9 +463,14 @@ function loaded() {
 		if (localStorage.getItem("actg") && localStorage.getItem("atcg") == "enabled") {
 			autoCorrect();
 		}
-		if (!localStorage.getItem("pv") | localStorage.getItem("pv") == "enabled") {
-			document.getElementById("player").play();
-		}
+	}
+	if (!localStorage.getItem("pv") | localStorage.getItem("pv") == "enabled") {
+		document.getElementById("player").play();
+	}
+	if (!localStorage.getItem("autoCom") | localStorage.getItem("autoCom") == "y") {
+		getComm();
+	} else {
+		document.getElementById("commStatus").innerHTML = "<a href='#' onclick='loadComm()'>Load the comments</a>"
 	}
 }
 
@@ -545,4 +550,32 @@ function parseDate(string) {
 function autoplay(val) {
 	val = val.toString();
 	localStorage.setItem("ap", val);
+}
+
+function getComm() {
+	document.getElementById("commStatus").innerHTML = "Loading comments...";
+	document.getElementById("commentContainer").innerHTML = "";
+	var xhr = new XMLHttpRequest();
+	var id = window.location.search.split("?v=")[1];
+	xhr.open("GET", "/api/comments?id=" + id);
+	xhr.send();
+	xhr.onload = function () {
+		var json = JSON.parse(xhr.responseText);
+		document.getElementById("commStatus").innerHTML = "Loaded " + json.length + " comments.";
+		for (var c in json) {
+			if (json[c].text == undefined) {continue;}
+			var div = document.createElement("DIV");
+			div.classList.add("comment");
+			var img = document.createElement("IMG");
+			img.src = json[c].authorThumb
+			div.appendChild(img);
+			var name = document.createElement("H2");
+			name.innerHTML = json[c].author;
+			div.appendChild(name);
+			var t = document.createElement("P");
+			t.innerHTML = json[c].text;
+			div.appendChild(t);
+			document.getElementById("commentContainer").appendChild(div);
+		}
+	}
 }

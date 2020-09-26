@@ -224,6 +224,32 @@ input:checked + .slider:before {
 	margin-right:7.5px;
 }
 
+.comment { 
+	width:98%;
+	height:auto;
+}
+
+.comment img {
+	width:50px;
+	height:50px;
+	padding-left:10px;
+	padding-top:10px;
+	float:left;
+}
+
+.comment h2 {
+	float:left;
+	padding-top:10px;
+	padding-left:10px;
+	width:92%;
+}
+
+.comment p {
+	padding-left:10px;
+	float:left;
+	width:92%;
+}
+
 @media (max-width:1000px) {
 	body {
 		text-align:center;

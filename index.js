@@ -8,7 +8,8 @@ let filter;
 const ytpl = require("ytpl");
 const ytsg = require("youtube-suggest");
 const redddit = require("redddit");
-const ytch = require('yt-channel-info');
+const ytch = require("yt-channel-info");
+const ytco = require("yt-comment-scraper")
 const cheerio = require("cheerio");
 const got = require("got");
 const deez = require("deezer-public-api");
@@ -761,6 +762,27 @@ async function runServer(request, res) {
 				});
 				res.end(d);
 			}
+		} else if (path == "/api/comments" | path == "/api/comments/") {
+			if (!param.id) {
+				var d = JSON.stringify({
+					"err": "requiresMoreData"
+				})
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(d);
+				return;
+			} 
+			ytco.scrape_next_page_youtube_comments(param.id).then( function (data) {
+				var data = JSON.stringify(data);
+				res.writeHead(200, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "application/json"
+				});
+				res.end(data);
+				ytco.cleanupStatics();
+			})
 		} else {
 			var d = JSON.stringify({
 				"err": "invalidEndpoint",
