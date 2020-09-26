@@ -189,26 +189,15 @@ async function runServer(request, res) {
 						limit: param.limit
 					}
 				}
-				ytpl(i, opt, function(err,result) {
-					if (err) {
-						var errTxt = err.message;
-						var d = JSON.stringify({
-							"err": errTxt
-						})
-						res.writeHead(404, {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json"
-						});
-						res.end(d);
-					} else {
-						var d = JSON.stringify(result);
-						res.writeHead(200, {
-							"Access-Control-Allow-Origin": "*",
-							"Content-Type": "application/json"
-						});
-						res.end(d);
-					}
-				})
+				ytpl('PL3TepcpBpM1UC5j_KVAUDZwx7ZxUSJ-y3', opt).then(playlist => {
+					res.writeHead(200, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(JSON.stringify(playlist));
+				}).catch(err => {
+					console.error(err);
+				}); 
 			}
 		} else if (path == "/api/search" | path == "/api/search/") {
 			var q = param.q;
