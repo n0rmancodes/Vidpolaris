@@ -189,7 +189,7 @@ async function runServer(request, res) {
 						limit: param.limit
 					}
 				}
-				ytpl('PL3TepcpBpM1UC5j_KVAUDZwx7ZxUSJ-y3', opt).then(playlist => {
+				ytpl(i, opt).then(playlist => {
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
