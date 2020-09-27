@@ -226,7 +226,6 @@ input:checked + .slider:before {
 
 .comment { 
 	width:98%;
-	height:auto;
 }
 
 .comment img {
