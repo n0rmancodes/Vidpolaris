@@ -139,7 +139,6 @@ async function runServer(request, res) {
 					let v = ytdl.filterFormats(info.formats, 'videoonly');
 					let a = ytdl.filterFormats(info.formats, 'audioonly');
 					let j = ytdl.filterFormats(info.formats, 'audioandvideo');
-					var i = info.info;
 					var d = JSON.stringify({
 						"video": v,
 						"audio": a,
