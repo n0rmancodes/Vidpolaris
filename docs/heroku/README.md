@@ -57,4 +57,4 @@ If you see something similar to below, congrats! It worked!
 
 You can now click "View" and your instance should be up and running!
 
-[Example of Heroku version](https://vidpolaris-rw.herokuapp.com/)
+[Example of Heroku version](https://vidpolaris.herokuapp.com/)
