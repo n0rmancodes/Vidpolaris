@@ -12,8 +12,14 @@
 	<body>
 		<div class="hdr">
 			<a href="/"><h1>VidPolaris</h1></a>
+			<div class="kt">
+				<input id="q" autocomplete="off" placeholder="Search.">
+				<button class="material-icons">search</button>
+				<a href="/settings"><button class="material-icons">settings</button></a>
+			</div>
 		</div>
 		<div class="body">
+			<div style="width:100%;height:10px;"></div>
 			<div class="option">
 				<label>Prefernce:</label>
 				<select id="pf" onInput="save('pf', this.value)">
