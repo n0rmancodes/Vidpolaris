@@ -226,6 +226,8 @@ input:checked + .slider:before {
 
 .comment { 
 	width:98%;
+	min-height:75px;
+	overflow:auto;
 }
 
 .comment img {
@@ -241,12 +243,15 @@ input:checked + .slider:before {
 	padding-top:10px;
 	padding-left:10px;
 	width:92%;
+	overflow:auto;
 }
 
 .comment p {
 	padding-left:10px;
 	float:left;
 	width:92%;
+	overflow:auto;
+	padding-bottom:1%;
 }
 
 @media (max-width:1000px) {
@@ -380,11 +385,12 @@ input:checked + .slider:before {
 
 	.horiVidChip {
 		width:99%;
-		height:225px;
+		min-height:225px;
+		overflow:auto;
 		margin:5px;
 		text-align:left;
 	}
-	
+
 	.horiVidChip div {
 		float:left;
 		width:40%;
@@ -629,6 +635,7 @@ input:checked + .slider:before {
 	
 	.horiVidChip * {
 		margin:0;
+		text-decoration:none;
 	}
 	
 	.moreDetails {
