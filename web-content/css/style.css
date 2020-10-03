@@ -468,8 +468,21 @@ input:checked + .slider:before {
 		padding-left:5%;
 	}
 
-	#commentContainer, #cs {
-		display:none;
+	.ssbLeft {
+		margin-left:4%;
+	}
+
+	.ssbRight {
+		padding-top:20px;
+	}
+
+	#relatedFeed .horiVidChip {
+		width:94%;
+		margin-left:2.1%;
+	}
+
+	.ignore100, .ignore100 * {
+		width:auto;
 	}
 }
 @media (min-width:1001px) {
