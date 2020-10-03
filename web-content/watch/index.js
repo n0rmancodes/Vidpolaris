@@ -467,10 +467,10 @@ function loaded() {
 	if (!localStorage.getItem("pv") | localStorage.getItem("pv") == "enabled") {
 		document.getElementById("player").play();
 	}
-	if (!localStorage.getItem("autoCom") | localStorage.getItem("autoCom") == "y") {
+	if (localStorage.getItem("autoCom") == "y") {
 		getComm();
 	} else {
-		document.getElementById("commStatus").innerHTML = "<a href='#' onclick='loadComm()'>Load the comments</a>"
+		document.getElementById("commStatus").innerHTML = "<a onclick='getComm()'>Load the comments</a>"
 	}
 }
 
