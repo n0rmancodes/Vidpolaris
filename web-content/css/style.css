@@ -254,6 +254,11 @@ input:checked + .slider:before {
 	padding-bottom:1%;
 }
 
+#cs {
+	margin-top:10px;
+	margin-bottom:25px;
+}
+
 @media (max-width:1000px) {
 	body {
 		text-align:center;
