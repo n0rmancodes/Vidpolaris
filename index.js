@@ -219,6 +219,15 @@ async function runServer(request, res) {
 						"Content-Type": "application/json"
 					});
 					res.end(d);
+				}).catch(function(e) {
+					var d = JSON.stringify({
+						"err":e.message
+					});
+					res.writeHead(500, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(d);
 				})
 			}
 		} else if (path == "/api/itag" | path == "/api/itag/") {

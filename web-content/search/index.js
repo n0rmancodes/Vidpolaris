@@ -13,7 +13,9 @@ function load() {
 			var json = JSON.parse(xhr.responseText);
 			document.getElementById("query").innerHTML = decodeURI(q);
 			if (json.err) {
-				
+				document.getElementById("loader").style.display = "none";
+				document.getElementById("err").style.display = "";
+				document.getElementById("errTxt").innerHTML = json.err;
 			} else {
 				for (var c in json.items) {
 					var link = document.createElement("A");
