@@ -31,6 +31,8 @@ In no particular order, here are all of my thanks for keeping this project runni
 
 ## To Be Added
 - Playlist support
+- Fallback for search sources.
+- Multiple comment sources (add Reddit and other sources)
 - Custom theme writer.
 - Better configuration for server owners.
 - Write a version of the site to require no client side Javascript.
