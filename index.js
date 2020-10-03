@@ -212,23 +212,45 @@ async function runServer(request, res) {
 				});
 				res.end(d);
 			} else {
-				await ytsr(q).then(function(searchResults) {
-					var d = JSON.stringify(searchResults);
-					res.writeHead(200, {
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "application/json"
-					});
-					res.end(d);
-				}).catch(function(e) {
-					var d = JSON.stringify({
-						"err":e.message
-					});
-					res.writeHead(500, {
-						"Access-Control-Allow-Origin": "*",
-						"Content-Type": "application/json"
-					});
-					res.end(d);
-				})
+				if (!param.src | param.src == "youtube") {
+					await ytsr(q).then(function(searchResults) {
+						var d = JSON.stringify(searchResults);
+						res.writeHead(200, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						});
+						res.end(d);
+					}).catch(function(e) {
+						var d = JSON.stringify({
+							"err":e.message
+						});
+						res.writeHead(500, {
+							"Access-Control-Allow-Origin": "*",
+							"Content-Type": "application/json"
+						});
+						res.end(d);
+					})
+				} else if (param.src == "reddit") {
+					redddit.search("url:youtu.be/ " + q, function(err, resp) {
+						if (err) {
+							var d = JSON.stringify({
+								"err": err
+							});
+							res.writeHead(500, {
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "application/json"
+							});
+							res.end(d);
+						} else {
+							var d = JSON.stringify(resp);
+							res.writeHead(200, {
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "application/json"
+							});
+							res.end(d);
+						}
+					})
+				}
 			}
 		} else if (path == "/api/itag" | path == "/api/itag/") {
 			if (param.id) {
