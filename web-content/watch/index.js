@@ -567,7 +567,7 @@ function getComm() {
 			var div = document.createElement("DIV");
 			div.classList.add("comment");
 			var img = document.createElement("IMG");
-			img.src = json[c].authorThumb
+			img.src = "/api/proxy?url=" + btoa(json[c].authorThumb)
 			div.appendChild(img);
 			var name = document.createElement("H2");
 			name.innerHTML = json[c].author;
