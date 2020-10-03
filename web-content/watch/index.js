@@ -561,6 +561,10 @@ function getComm() {
 	xhr.send();
 	xhr.onload = function () {
 		var json = JSON.parse(xhr.responseText);
+		if (json.err) {
+			document.getElementById("commStatus").innerHTML = "Error: " + json.err;
+			return;
+		}
 		document.getElementById("commStatus").innerHTML = "Loaded " + json.length + " comments.";
 		for (var c in json) {
 			if (json[c].text == undefined) {continue;}
