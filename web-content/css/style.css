@@ -461,6 +461,10 @@ input:checked + .slider:before {
 	.option {
 		padding-left:5%;
 	}
+
+	#commentContainer, #cs {
+		display:none;
+	}
 }
 @media (min-width:1001px) {
 	.hdr {
