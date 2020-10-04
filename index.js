@@ -190,14 +190,18 @@ async function runServer(request, res) {
 						limit: param.limit
 					}
 				}
-				ytpl(i, opt).then(playlist => {
+				ytpl(i, opt).then(function(playlist) {
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					});
 					res.end(JSON.stringify(playlist));
-				}).catch(err => {
-					console.error(err);
+				}).catch(function (err) {
+					res.writeHead(500, {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json"
+					});
+					res.end(JSON.stringify(err));
 				}); 
 			}
 		} else if (path == "/api/search" | path == "/api/search/") {
