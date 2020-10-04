@@ -391,7 +391,7 @@ function load() {
 					document.getElementById("fullDesc").innerHTML = desc;
 				}
 				document.getElementById("auth").innerHTML = json.info.videoDetails.author.name;
-				document.getElementById("authLink").href = "c?" + json.info.videoDetails.author.external_channel_url.substring(32,56)
+				document.getElementById("authLink").href = "/channel?" + json.info.videoDetails.author.external_channel_url.substring(32,56)
 				if (json.info.videoDetails.author.subscriber_count) {
 					document.getElementById("authSub").innerHTML = json.info.videoDetails.author.subscriber_count.toLocaleString() + " subscribers";
 				} else {

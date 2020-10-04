@@ -249,7 +249,7 @@ input:checked + .slider:before {
 .comment p {
 	padding-left:10px;
 	float:left;
-	width:92%;
+	max-width:92%;
 	overflow:auto;
 	padding-bottom:1%;
 }

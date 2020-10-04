@@ -22,7 +22,7 @@ function load() {
 					var chip = document.createElement("DIV");
 					document.getElementById("searchResults").appendChild(chip);
 					if (json.items[c].type == "video") {
-						link.href = "watch?v=" + json.items[c].link.substring(32);
+						link.href = "/watch?v=" + json.items[c].link.substring(32);
 						chip.classList.add("largeHoriChip");
 						var img = document.createElement("IMG");
 						img.classList.add("bImg");
@@ -56,7 +56,7 @@ function load() {
 						link.appendChild(chip);
 						document.getElementById("searchResults").appendChild(link);
 					} else if (json.items[c].type == "channel") {
-						link.href = "c?" + json.items[c].channel_id;
+						link.href = "/channel/?" + json.items[c].channel_id;
 						chip.classList.add("largeHoriChip");
 						var img = document.createElement("IMG");
 						img.classList.add("bImg");
@@ -82,7 +82,7 @@ function load() {
 						link.appendChild(chip);
 						document.getElementById("searchResults").appendChild(link);
 					} else if (json.items[c].type == "playlist") {
-						link.href = "p?" + json.items[c].link.substring(38);
+						link.href = "/playlist?list=" + json.items[c].link.substring(38);
 						chip.classList.add("largeHoriChip");
 						var img = document.createElement("IMG");
 						img.classList.add("bImg");
