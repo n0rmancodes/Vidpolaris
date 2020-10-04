@@ -21,7 +21,7 @@
   "homepage": "https://github.com/n0rmancodes/vidpolaris-rw#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "deezer-public-api": "^1.0.3",
+    "deezer-public-api": "^1.0.4",
     "got": "^11.7.0",
     "redddit": "^1.0.2",
     "youtube-suggest": "^1.1.0",
