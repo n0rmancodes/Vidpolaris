@@ -386,9 +386,6 @@ function load() {
 				} else if (json.info.videoDetails.shortDescription) {
 					var desc = varLinks(json.info.videoDetails.shortDescription.replace(/\n/g, "<br>"));
 					document.getElementById("fullDesc").innerHTML = desc;
-				} else {
-					var desc = "[No description]"
-					document.getElementById("fullDesc").innerHTML = desc;
 				}
 				document.getElementById("auth").innerHTML = json.info.videoDetails.author.name;
 				document.getElementById("authLink").href = "/channel?" + json.info.videoDetails.author.external_channel_url.substring(32,56)
