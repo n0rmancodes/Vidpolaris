@@ -26,9 +26,9 @@
     "redddit": "^1.0.2",
     "youtube-suggest": "^1.1.0",
     "yt-channel-info": "^1.1.4",
-    "yt-comment-scraper": "^1.3.6",
-    "yt-trending-scraper": "^1.0.3",
-    "ytdl-core": "^3.3.0",
+    "yt-comment-scraper": "^1.3.7",
+    "yt-trending-scraper": "^1.0.4",
+    "ytdl-core": "^3.4.0",
     "ytpl": "^1.0.1",
     "ytsr": "^1.0.4"
   },
