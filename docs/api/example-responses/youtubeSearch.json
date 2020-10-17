@@ -1,0 +1,21 @@
+{
+    "query":"creative exercise siivagunner",
+    "items":[
+        {
+            "type":"video",
+            "live":false,
+            "title":"Creative Exercise - Mario Paint",
+            "link":"https://www.youtube.com/watch?v=ymbw2R3uIqc",
+            "thumbnail":"https://i.ytimg.com/vi/ymbw2R3uIqc/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLBxJZ0Vk2TEe9qPo5ccuw-i7rtEsA",         
+            "author":{
+                "name":"SiIvaGunner",
+                "ref":"https://www.youtube.com/channel/UC9ecwl3FTG66jIKA9JRDtmg",
+                "verified":false
+            },
+            "description":"Music: Creative Exercise Composer: Kazumi Totaka Playlist: ...",
+            "views":2122280,
+            "duration":"2:02",
+            "uploaded_at":"4 years ago"
+        }
+    ]
+}

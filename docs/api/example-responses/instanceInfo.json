@@ -1,0 +1,6 @@
+{
+    "err": "invalidEnpoint",
+    "version": "0.2",
+    "port": 3001,
+    "type": "all"
+}

@@ -1,0 +1,41 @@
+[
+    {
+        "id":986939372,
+        "title":"Savage Love (Laxed - Siren Beat)",
+        "title_short":"Savage Love (Laxed - Siren Beat)",
+        "title_version":"",
+        "link":"https://www.deezer.com/track/986939372",
+        "duration":171,
+        "rank":997408,
+        "explicit_lyrics":true,
+        "explicit_content_lyrics":0,
+        "explicit_content_cover":0,
+        "preview":"https://cdns-preview-f.dzcdn.net/stream/c-fad919850f67c847921eee0647c068ea-3.mp3",
+        "position":1,
+        "artist":{
+            "id":92319522,
+            "name":"Jawsh 685",
+            "link":"https://www.deezer.com/artist/92319522",
+            "picture":"https://api.deezer.com/artist/92319522/image",
+            "picture_small":"https://cdns-images.dzcdn.net/images/artist/ae220905519d1bb84cddd953abbc08da/56x56-000000-80-0-0.jpg",
+            "picture_medium":"https://cdns-images.dzcdn.net/images/artist/ae220905519d1bb84cddd953abbc08da/250x250-000000-80-0-0.jpg",
+            "picture_big":"https://cdns-images.dzcdn.net/images/artist/ae220905519d1bb84cddd953abbc08da/500x500-000000-80-0-0.jpg",
+            "picture_xl":"https://cdns-images.dzcdn.net/images/artist/ae220905519d1bb84cddd953abbc08da/1000x1000-000000-80-0-0.jpg",
+            "radio":true,
+            "tracklist":"https://api.deezer.com/artist/92319522/top?limit=50",
+            "type":"artist"
+        },
+        "album":{
+            "id":153680822,
+            "title":"Savage Love (Laxed - Siren Beat)",
+            "cover":"https://api.deezer.com/album/153680822/image",
+            "cover_small":"https://cdns-images.dzcdn.net/images/cover/ae220905519d1bb84cddd953abbc08da/56x56-000000-80-0-0.jpg",
+            "cover_medium":"https://cdns-images.dzcdn.net/images/cover/ae220905519d1bb84cddd953abbc08da/250x250-000000-80-0-0.jpg",
+            "cover_big":"https://cdns-images.dzcdn.net/images/cover/ae220905519d1bb84cddd953abbc08da/500x500-000000-80-0-0.jpg",
+            "cover_xl":"https://cdns-images.dzcdn.net/images/cover/ae220905519d1bb84cddd953abbc08da/1000x1000-000000-80-0-0.jpg",
+            "tracklist":"https://api.deezer.com/album/153680822/tracks",
+            "type":"album"
+        },
+        "type":"track"
+    }
+]
