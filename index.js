@@ -235,7 +235,7 @@ async function runServer(request, res) {
 						res.end(d);
 					})
 				} else if (param.src == "reddit") {
-					redddit.search("url:youtu.be/ " + q, function(err, resp) {
+					redddit.search("url:youtu.be/ " + q, function(err, json) {
 						if (err) {
 							var d = JSON.stringify({
 								"err": err
@@ -246,7 +246,21 @@ async function runServer(request, res) {
 							});
 							res.end(d);
 						} else {
-							var d = JSON.stringify(resp);
+							let embed = [];
+							for (var c in json) {
+								if (json[c].data && json[c].data.media && json[c].data.media.oembed && ytdl.validateURL(json[c].data.url)) {
+									var d = {
+										"author": json[c].data.media.oembed.author_name || null,
+										"authorUrl" : json[c].data.media.oembed.author_url,
+										"title": json[c].data.media.oembed.title,
+										"upvoteCount": json[c].data.ups,
+										"subreddit": json[c].data.subreddit_name_prefixed,
+										"id": ytdl.getURLVideoID(json[c].data.url)
+									}
+									embed.push(d)
+								}
+							}
+							var d = JSON.stringify(embed);
 							res.writeHead(200, {
 								"Access-Control-Allow-Origin": "*",
 								"Content-Type": "application/json"
@@ -730,7 +744,9 @@ async function runServer(request, res) {
 						"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0"
 					}
 				}).on("error", function(e) {
-					res.end();
+					var i = fs.readFileSync("./web-content/undefined.jpg");
+					res.end(i);
+					return;
 				}).on("close", function() {
 					res.end();
 				})

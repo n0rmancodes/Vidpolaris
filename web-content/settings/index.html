@@ -80,9 +80,16 @@
 			</div>
 			<div class="option">
 				<label>Automatically get comments when a video loads:</label>
-				<select id="pv" onInput="save('autoCom', this.value)">
+				<select id="com" onInput="save('autoCom', this.value)">
 					<option value="disabled">Disabled</option>
 					<option value="enabled">Enabled</option>
+				</select>
+			</div>
+			<div class="option">
+				<label>Search Type:</label>
+				<select id="search" onInput="save('search', this.value)">
+					<option value="yt">YouTube Search</option>
+					<option value="reddit">Reddit Search</option>
 				</select>
 			</div>
 			<button onClick="apply()">Apply</button>

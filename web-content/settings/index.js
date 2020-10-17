@@ -22,6 +22,14 @@ if (localStorage.getItem("vp9")) {
 	document.getElementById("vp9").value = localStorage.getItem("vp9");
 }
 
+if (localStorage.getItem("search")) {
+	document.getElementById("search").value = localStorage.getItem("search");
+}
+
+if (localStorage.getItem("autoComm")) {
+	document.getElementById("com").value = localStorage.getItem("autoComm");
+}
+
 function save(setting, val) {
 	localStorage.setItem(setting, val);
 }

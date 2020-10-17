@@ -237,7 +237,7 @@ function load() {
 								}
 								if (isOver == false) {
 									if (localStorage.getItem("vp9") == "enabled") {
-										if (json.video[c].videoCodec == "vp9") {
+										if (json.video[c].videoCodec.includes("vp9")) {
 											console.log("ignored because codec is vp9");
 										} else {
 											var opt = document.createElement("OPTION");
@@ -259,6 +259,7 @@ function load() {
 						document.getElementById("player").src = getItag(document.getElementById("v").options[0].value);
 						document.getElementById("aPlayer").src = getItag(document.getElementById("a").options[0].value);
 					} else {
+						console.log("- downgraded due to no valid qualities being available");
 						document.getElementById("sqSB").style.display = "none";
 						document.getElementById("qSB").style.display = "";
 						for (var c in json.joined) {
@@ -290,7 +291,7 @@ function load() {
 								}
 								if (isOver == false) {
 									if (localStorage.getItem("vp9") == "enabled") {
-										if (json.joined[c].videoCodec == "vp9") {
+										if (json.joined[c].videoCodec.includes("vp9")) {
 											console.log("ignored because codec is vp9");
 										} else {
 											var opt = document.createElement("OPTION");
