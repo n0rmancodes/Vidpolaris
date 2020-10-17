@@ -1,5 +1,9 @@
 # Documentation
 
+# [FAQs](./help/README.md)
+For questions a person would ask about VidPolaris, like why things are the way they are and such, 
+read up here.
+
 # [API](./api/README.md)
 
 Documentation to the API in VidPolaris. Human written.

@@ -15,6 +15,8 @@ An alternative client for YouTube made with NodeJS meant for privacy and simplic
 - Heroku compatible ([See tutorial](./docs/heroku/README.md))
 
 ## Documentation 
+For FAQs, [click here](./docs/help/README.md)!
+
 For installation and requirement documentation, [click here](./docs/startup/README.md)!
 
 To learn how to add your instance to the instances list, [click here](./docs/instances/README.md)
@@ -30,8 +32,7 @@ In no particular order, here are all of my thanks for keeping this project runni
 - The awesome package writers who, without them, this project wouldn't even be alive right now.
 
 ## To Be Added
-- Playlist support
-- Fallback for search sources.
+- Playlist support.
 - Multiple comment sources (add Reddit and other sources)
 - Custom theme writer.
 - Better configuration for server owners.
