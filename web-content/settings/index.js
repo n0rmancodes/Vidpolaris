@@ -30,6 +30,10 @@ if (localStorage.getItem("autoComm")) {
 	document.getElementById("com").value = localStorage.getItem("autoComm");
 }
 
+if (localStorage.getItem("plyr")) {
+	document.getElementById("playerSettings").value = localStorage.getItem("plyr");
+}
+
 function save(setting, val) {
 	localStorage.setItem(setting, val);
 }
