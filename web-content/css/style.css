@@ -203,7 +203,7 @@ input:checked + .slider:before {
 }
 
 .splitSnackBar div {
-	width:49.5%;
+	width:48.5%;
 }
 
 .splitSnackBar .ssbLeft, .splitSnackBar .ssbRight {
@@ -339,12 +339,22 @@ input:checked + .slider:before {
 		text-decoration:none;
 	}
 	
-	video {
+	#player, iframe {
 		width:100%;
 		background:black;
 		max-height:545px;
 	}
 	
+	iframe {
+		width:100%;
+		border:none;
+		height:545px;
+	}
+
+	.splitSnackBar div {
+		width:43.5%;
+	}
+
 	.details {
 		text-align:left;
 		padding-left:2%;
@@ -579,10 +589,15 @@ input:checked + .slider:before {
 		margin-bottom:0;
 	}
 	
-	video {
+	video, iframe {
 		width:100%;
 		background:black;
 		max-height:630px;
+	}
+	
+	iframe {
+		height:630px;
+		border:none;
 	}
 	
 	.authorInfo, .ratioInfo {
