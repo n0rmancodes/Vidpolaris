@@ -10,7 +10,6 @@ Information like the version of the instance, the port it is running on, and wha
 
 #### [Example Body](./example-responses/instanceInfo.json)
 
-[Example](https://vidpolaris.tube/api/)
 
 ## Trending Tab
 Get the currently trending YouTube videos.
@@ -19,7 +18,6 @@ Get the currently trending YouTube videos.
 
 #### [Example Body](./example-responses/trendingYt.json)
 
-[Example](https://vidpolaris.tube/api/trending)
 
 The example gets regular trending videos.
 
@@ -35,7 +33,6 @@ sub: subreddit to look at
 
 #### [Example Body](./example-response/trendingReddit.json)
 
-[Example](https://vidpolaris.tube/api/reddit?sub=DeepIntoYouTube)
 
 This examples get the top videos in /r/DeepIntoYouTube.
 
@@ -54,8 +51,6 @@ src: "youtube", "reddit", blank
 #### [Example Body (YouTube)](./example-responses/youtubeSearch.json) 
 #### [Example Body (Reddit)](./example-responses/redditSearch.json)
 
-[Example](https://vidpolaris.tube/api/search?q=4k%20test%20copyright%20free)
-
 
 ## Search for Reddit posts about a YouTube video
 
@@ -73,8 +68,6 @@ You must use one parameter or the other **not both**.
 
 ### [Example Body](./example-responses/redditPostSearch.json)
 
-[Example](https://vidpolaris.tube/api/reddit/search?id=sTV61xqilso)
-
 ## Deezer Charts
 Get the most popular songs on Deezer.
 
@@ -82,7 +75,6 @@ Get the most popular songs on Deezer.
 
 #### [Example Body](./example-responses/deezerCharts.json)
 
-[Example](https://vidpolaris.tube/api/deezer/charts)
 
 ## Deezer Search
 This searches a query on Deezer, for use with the audio mode on VidPolaris
@@ -97,7 +89,6 @@ type: "artist", "album", "song"
 
 #### [Example Body](./example-responses/deezerSearch.json)
 
-[Example](https://vidpolaris.tube/api/deezer/search?type=song&q=test) 
 
 ## Deezer Album/Artist/Song
 
@@ -108,13 +99,6 @@ type: "artist", "album", "song"
 type: "album", "artist", "song",
 id: Deezer id
 ```
-
-#### Example Body
-```
-WIP
-```
-
-[Example](https://vidpolaris.tube/api/deezer?type=song&id=12345678) 
 
 ## Video Infomation
 This gets video infomation and formats from any given ID and/or YouTube url. Retrived by [``node-ytdl-core``](https://github.com/fent/node-ytdl-core).
@@ -131,10 +115,6 @@ url: YouTube video URL
 
 #### [Example Body](./example-responses/ytInfo.json)
 
-[Example](https://vidpolaris.tube/api/info?id=sTV61xqilso)
-
-This example gets formats and metadata of [the legendary SiIvagunner rip of Creative Exercise](https://www.youtube.com/watch?v=ymbw2R3uIqc).
-
 
 ## Specific Format for YouTube video
 Gets a specific format/quality of a YouTube video.
@@ -150,7 +130,3 @@ itag: YouTube video ITAG.
 * = One or the other, **not both**.
 
 #### [Example Body](./example-responses/ytItag.json) 
-
-[Example](https://vidpolaris.tube/api/itag?id=sTV61xqilso&itag=133)
-
-Getting itag 133 on a random video I found browsing Reddit.
