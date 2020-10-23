@@ -52,11 +52,10 @@ src: "youtube", "reddit", blank
 ```
 
 #### [Example Body (YouTube)](./example-responses/youtubeSearch.json) 
-#### [Example Body (Reddit)](./example-responses/redditSearch)
+#### [Example Body (Reddit)](./example-responses/redditSearch.json)
 
-[Example](https://vidpolaris.tube/api/search?q=creative%20exercise%20siivagunner)
+[Example](https://vidpolaris.tube/api/search?q=4k%20test%20copyright%20free)
 
-This searches YouTube for Creative Excerise by SiIvagunner.
 
 ## Search for Reddit posts about a YouTube video
 
@@ -74,7 +73,7 @@ You must use one parameter or the other **not both**.
 
 ### [Example Body](./example-responses/redditPostSearch.json)
 
-[Example](https://vidpolaris.tube/api/reddit/search?id=ymbw2R3uIqc)
+[Example](https://vidpolaris.tube/api/reddit/search?id=sTV61xqilso)
 
 ## Deezer Charts
 Get the most popular songs on Deezer.
@@ -132,7 +131,7 @@ url: YouTube video URL
 
 #### [Example Body](./example-responses/ytInfo.json)
 
-[Example](https://vidpolaris.tube/api/info?id=ymbw2R3uIqc)
+[Example](https://vidpolaris.tube/api/info?id=sTV61xqilso)
 
 This example gets formats and metadata of [the legendary SiIvagunner rip of Creative Exercise](https://www.youtube.com/watch?v=ymbw2R3uIqc).
 
@@ -152,6 +151,6 @@ itag: YouTube video ITAG.
 
 #### [Example Body](./example-responses/ytItag.json) 
 
-[Example](https://vidpolaris.tube/api/itag?id=0XgdWnsT0yc&itag=133)
+[Example](https://vidpolaris.tube/api/itag?id=sTV61xqilso&itag=133)
 
 Getting itag 133 on a random video I found browsing Reddit.
