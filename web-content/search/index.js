@@ -171,7 +171,12 @@ function redditSearch() {
 			upv_ico.classList.add("material-icons");
 			upv_ico.innerHTML = "arrow_upward";
 			upv.appendChild(upv_ico);
-			upv.innerHTML = upv.innerHTML + " " + json[c].upvoteCount.toLocaleString() + " upvotes on " + json[c].subreddit;
+			if (json[c].upvoteCount) {
+				var up = json[c].upvoteCount;
+			} else {
+				var up = 0;
+			}
+			upv.innerHTML = upv.innerHTML + " " + up.toLocaleString() + " upvotes on " + json[c].subreddit;
 			d.appendChild(upv);
 			chip.appendChild(img);
 			chip.appendChild(d);
