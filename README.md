@@ -38,3 +38,4 @@ In no particular order, here are all of my thanks for keeping this project runni
 - Better configuration for server owners.
 - Write a version of the site to require no client side Javascript.
 - Figure out how to proxy videos to make 100% Google-free experience.
+- Automatic updating/update alerts.
