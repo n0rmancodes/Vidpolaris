@@ -375,11 +375,6 @@ function load() {
 					}
 					document.getElementById("player").poster = "/api/thumb/" + id;
 				} else {
-					if (localStorage.getItem("pv") | !localStorage.getItem("pv") == "enabled") {
-						document.getElementById("ytPlayer").src = "https://www.youtube-nocookie.com/embed/" + id;
-					} else {
-						document.getElementById("ytPlayer").src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=true";
-					}
 					document.getElementById("playerContainer").style.display = "none";
 					document.getElementById("ytEmbedContainer").style.display = "";
 					document.getElementById("qSB").style.display = "none";
