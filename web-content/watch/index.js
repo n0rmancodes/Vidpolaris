@@ -185,11 +185,16 @@ function theater(t) {
 }
 
 function load() {
-	var id = window.location.search.split("?v=")[1];
+	var id = window.location.search.split("v=")[1];
 	if (id) {
 		document.getElementById("deet").innerHTML = "requesting server...";
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "/api/info?id="+id);
+		if (localStorage.getItem("instanceURL")) {
+			var u = localStorage.getItem("instanceURL") + "/api/info?id=" + id;
+		} else {
+			var u = "/api/info?id=" + id;
+		}
+		xhr.open("GET", u);
 		xhr.send();
 		xhr.onload = function () {
 			var json = JSON.parse(xhr.responseText);
@@ -375,6 +380,11 @@ function load() {
 					}
 					document.getElementById("player").poster = "/api/thumb/" + id;
 				} else {
+					if (localStorage.getItem("pv") | !localStorage.getItem("pv") == "enabled") {
+						document.getElementById("ytPlayer").src = "https://www.youtube-nocookie.com/embed/" + id;
+					} else {
+						document.getElementById("ytPlayer").src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=true";
+					}
 					document.getElementById("playerContainer").style.display = "none";
 					document.getElementById("ytEmbedContainer").style.display = "";
 					document.getElementById("qSB").style.display = "none";
@@ -563,7 +573,12 @@ function getComm() {
 	document.getElementById("commentContainer").innerHTML = "";
 	var xhr = new XMLHttpRequest();
 	var id = window.location.search.split("?v=")[1];
-	xhr.open("GET", "/api/comments?id=" + id);
+	if (localStorage.getItem("instanceURL")) {
+		var u = localStorage.getItem("instanceURL") + "/api/comments?id=" + id;
+	} else {
+		var u = "/api/comments?id=" + id;
+	}
+	xhr.open("GET", u);
 	xhr.send();
 	xhr.onload = function () {
 		var json = JSON.parse(xhr.responseText);

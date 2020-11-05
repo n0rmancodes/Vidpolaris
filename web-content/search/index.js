@@ -18,7 +18,12 @@ function load() {
 function ytSearch() {
 	var xhr = new XMLHttpRequest();
 	var q = window.location.search.split("?q=")[1];
-	xhr.open("GET","/api/search?q="+q);
+	if (localStorage.getItem("instanceURL")) {
+		var u = localStorage.getItem("instanceURL") + "/api/search?q=" + q;
+	} else {
+		var u = "/api/search?q=" + q;
+	}
+	xhr.open("GET", u);
 	xhr.send();
 	xhr.onload = function () {
 		var json = JSON.parse(xhr.responseText);
@@ -140,7 +145,12 @@ function ytSearch() {
 function redditSearch() {
 	var xhr = new XMLHttpRequest();
 	var q = window.location.search.split("?q=")[1];
-	xhr.open("GET", "/api/search?src=reddit&q=" + q);
+	if (localStorage.getItem("instanceURL")) {
+		var u = localStorage.getItem("instanceURL") + "/api/search?q=" + q + "&src=reddit";
+	} else {
+		var u = "/api/search?q=" + q + "&src=reddit";
+	}
+	xhr.open("GET", u);
 	xhr.send();
 	xhr.onload = function () {
 		var json = removeDuplicates(JSON.parse(xhr.responseText), "id");

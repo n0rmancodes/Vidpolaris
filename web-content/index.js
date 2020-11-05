@@ -9,7 +9,12 @@ function getTrending() {
 	document.getElementById("reddit").style.display = "none";
 	document.getElementById("deet").innerHTML = "requesting server...";
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "/api/trending/");
+	if (localStorage.getItem("instanceURL")) {
+		var u = localStorage.getItem("instanceURL") + "/api/trending/";
+	} else {
+		var u = "/api/trending/";
+	}
+	xhr.open("GET", u);
 	xhr.send();
 	xhr.onload = function () {
 		var json = JSON.parse(xhr.responseText);
@@ -57,7 +62,12 @@ function redditTrending() {
 	document.getElementById("reddit").style.display = "";
 	document.getElementById("deet").innerHTML = "requesting server...";
 	var xhr = new XMLHttpRequest();
-	xhr.open("GET", "/api/reddit/");
+	if (localStorage.getItem("instanceURL")) {
+		var u = localStorage.getItem("instanceURL") + "/api/reddit/";
+	} else {
+		var u = "/api/reddit/";
+	}
+	xhr.open("GET", u);
 	xhr.send();
 	xhr.onload = function () {
 		var json = JSON.parse(xhr.responseText);

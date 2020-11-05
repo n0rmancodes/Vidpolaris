@@ -34,6 +34,10 @@ if (localStorage.getItem("plyr")) {
 	document.getElementById("playerSettings").value = localStorage.getItem("plyr");
 }
 
+if (localStorage.getItem("instanceURL")) {
+	document.getElementById("instanceList").value = localStorage.getItem("instanceURL");
+}
+
 function save(setting, val) {
 	localStorage.setItem(setting, val);
 }

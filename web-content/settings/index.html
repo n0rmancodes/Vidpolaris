@@ -99,6 +99,15 @@
 					<option value="ytembed">YouTube Embed</option>
 				</select>
 			</div>
+			<div class="option">
+				<label>Instance API URL:</label>
+				<input id="instanceList" style="width:275px;" placeholder="Leave this blank if you wanna use the local API." list="instList" onInput="save('instanceURL', this.value)">
+				<datalist id="instList">
+					<option>https://vidpolaris.tube</option>
+					<option>https://ca.vidpolaris.tube</option>
+					<option>http://ph.vidpolaris.tube</option>
+				</datalist>
+			</div>
 			<button onClick="apply()">Apply</button>
 		</div>
 		<script src="/js/globalBody.js" type="text/javascript"></script>
