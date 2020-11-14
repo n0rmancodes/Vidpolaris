@@ -855,6 +855,18 @@ async function runServer(request, res) {
 			})
 			res.end(d);
 		}
+	} else if (path.substring(0,7) == "/embed/") {
+		fs.readFile("./embed/index.html", function(err, resp) {
+			if (err) {
+				res.end(err.code)
+			} else {
+				res.writeHead(404, {
+					"Access-Control-Allow-Origin": "*",
+					"Content-Type": "text/html"
+				})
+				res.end(resp)
+			}
+		})
 	} else {
 		// web content
 		fs.readFile("./web-content" + path, function(err,resp) {

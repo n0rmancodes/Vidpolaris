@@ -185,7 +185,7 @@ function theater(t) {
 }
 
 function load() {
-	var id = window.location.search.split("v=")[1];
+	var id = window.location.search.split("v=")[1].split("&")[0];
 	if (id) {
 		document.getElementById("deet").innerHTML = "requesting server...";
 		var xhr = new XMLHttpRequest();
