@@ -18,6 +18,10 @@ function getTrending() {
 	xhr.send();
 	xhr.onload = function () {
 		var json = JSON.parse(xhr.responseText);
+		if (json.err) {
+			redditTrending();
+			
+		}
 		for (var c in json) {
 			var link = document.createElement("A");
 			link.href = "watch?v=" + json[c].videoId;
