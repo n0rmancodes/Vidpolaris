@@ -134,7 +134,7 @@ function ytSearch() {
 			}
 			document.getElementById("main").style.display = "";
 			document.getElementById("loader").style.display = "none";
-			if (localStorage.getItem("search") !== "yt") {
+			if (localStorage.getItem("search") && localStorage.getItem("search") !== "yt") {
 				document.getElementById("fbSource").innerHTML = "YouTube";
 				document.getElementById("fallbackNotice").style.display = "";
 			}
@@ -154,7 +154,6 @@ function redditSearch() {
 	xhr.send();
 	xhr.onload = function () {
 		var json = removeDuplicates(JSON.parse(xhr.responseText), "id");
-		console.log(json)
 		for (var c in json) {
 			var a = document.createElement("A");
 			a.href = "/watch?v=" + json[c].id;
