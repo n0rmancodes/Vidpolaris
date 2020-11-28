@@ -402,8 +402,17 @@ function load() {
 						document.getElementById("authSub").innerHTML = "[Unable to retrieve]";
 					}
 				} else {
-					document.getElementById("authSub").innerHTML = "[Unable to retrieve]";
-					document.getElementById("authIco").src = "/img/default.jpg";
+					if (json.info.videoDetails.author.thumbnails) {
+						document.getElementById("authIco").src = "/api/proxy?url=" + btoa(json.info.videoDetails.author.thumbnails[json.info.videoDetails.author.thumbnails.length - 1].url)
+					} else {
+						document.getElementById("authIco").src = "/img/default.jpg";
+					}
+
+					if (json.info.videoDetails.author.subscriber_count) {
+						document.getElementById("authSub").innerHTML = json.info.videoDetails.author.subscriber_count.toLocaleString() + " subscribers";
+					} else {
+						document.getElementById("authSub").innerHTML = "[Unable to retrieve]";
+					}
 				}
 				document.getElementById("viewCount").innerHTML = parseInt(json.info.videoDetails.viewCount).toLocaleString() + " views";
 				document.getElementById("pText").innerHTML = parseDate(json.info.videoDetails.publishDate);
