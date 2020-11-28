@@ -389,9 +389,20 @@ function load() {
 					document.getElementById("qSB").style.display = "none";
 				}
 				document.getElementById("title").innerHTML = json.info.videoDetails.title;
-				if (json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.channelThumbnail.thumbnails[0]) {
-					document.getElementById("authIco").src = "/api/proxy?url=" + btoa(json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.channelThumbnail.thumbnails[0].url);
+				if (json.info.player_response.embedPreview) {
+					if (json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.channelThumbnail.thumbnails[0]) {
+						document.getElementById("authIco").src = "/api/proxy?url=" + btoa(json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.channelThumbnail.thumbnails[0].url);
+					} else {
+						document.getElementById("authIco").src = "/img/default.jpg";
+					}
+
+					if (json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.expandedRenderer.embeddedPlayerOverlayVideoDetailsExpandedRenderer.subtitle.runs[0]) {
+						document.getElementById("authSub").innerHTML = json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.expandedRenderer.embeddedPlayerOverlayVideoDetailsExpandedRenderer.subtitle.runs[0].text;
+					} else {
+						document.getElementById("authSub").innerHTML = "[Unable to retrieve]";
+					}
 				} else {
+					document.getElementById("authSub").innerHTML = "[Unable to retrieve]";
 					document.getElementById("authIco").src = "/img/default.jpg";
 				}
 				document.getElementById("viewCount").innerHTML = parseInt(json.info.videoDetails.viewCount).toLocaleString() + " views";
@@ -407,11 +418,7 @@ function load() {
 				}
 				document.getElementById("auth").innerHTML = json.info.videoDetails.ownerChannelName;
 				document.getElementById("authLink").href = "/channel?" + json.info.videoDetails.channelId;
-				if (json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.expandedRenderer.embeddedPlayerOverlayVideoDetailsExpandedRenderer.subtitle.runs[0]) {
-					document.getElementById("authSub").innerHTML = json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.expandedRenderer.embeddedPlayerOverlayVideoDetailsExpandedRenderer.subtitle.runs[0].text;
-				} else {
-					document.getElementById("authSub").innerHTML = "No subscribers";
-				}
+				
 				if (json.info.videoDetails.likes && json.info.videoDetails.dislikes) {
 					document.getElementById("ldBit").style.display = "";
 					document.getElementById("l").innerHTML = json.info.videoDetails.likes.toLocaleString();
