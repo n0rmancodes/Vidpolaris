@@ -201,7 +201,9 @@ async function runServer(request, res) {
 						"Access-Control-Allow-Origin": "*",
 						"Content-Type": "application/json"
 					});
-					res.end(JSON.stringify(err));
+					res.end(JSON.stringify({
+						"err": err.message
+					}));
 				}); 
 			}
 		} else if (path == "/api/search" | path == "/api/search/") {
