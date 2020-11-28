@@ -359,7 +359,6 @@ function load() {
 										var isOver = false;
 									}
 								}
-								console.log(isOver)
 								if (isOver == false) {
 									var opt = document.createElement("OPTION");
 									opt.innerHTML = json.joined[c].qualityLabel + " [" + json.joined[c].codecs + "]";
@@ -390,8 +389,8 @@ function load() {
 					document.getElementById("qSB").style.display = "none";
 				}
 				document.getElementById("title").innerHTML = json.info.videoDetails.title;
-				if (json.info.videoDetails.author.avatar) {
-					document.getElementById("authIco").src = json.info.videoDetails.author.avatar;
+				if (json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.channelThumbnail.thumbnails[0]) {
+					document.getElementById("authIco").src = "/api/proxy?url=" + btoa(json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.channelThumbnail.thumbnails[0].url);
 				} else {
 					document.getElementById("authIco").src = "/img/default.jpg";
 				}
@@ -406,10 +405,10 @@ function load() {
 					document.getElementById("fullDesc").innerHTML = desc;
 					checkText("#fullDesc");
 				}
-				document.getElementById("auth").innerHTML = json.info.videoDetails.author.name;
-				document.getElementById("authLink").href = "/channel?" + json.info.videoDetails.author.external_channel_url.substring(32,56)
-				if (json.info.videoDetails.author.subscriber_count) {
-					document.getElementById("authSub").innerHTML = json.info.videoDetails.author.subscriber_count.toLocaleString() + " subscribers";
+				document.getElementById("auth").innerHTML = json.info.videoDetails.ownerChannelName;
+				document.getElementById("authLink").href = "/channel?" + json.info.videoDetails.channelId;
+				if (json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.expandedRenderer.embeddedPlayerOverlayVideoDetailsExpandedRenderer.subtitle.runs[0]) {
+					document.getElementById("authSub").innerHTML = json.info.player_response.embedPreview.thumbnailPreviewRenderer.videoDetails.embeddedPlayerOverlayVideoDetailsRenderer.expandedRenderer.embeddedPlayerOverlayVideoDetailsExpandedRenderer.subtitle.runs[0].text;
 				} else {
 					document.getElementById("authSub").innerHTML = "No subscribers";
 				}
