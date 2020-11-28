@@ -458,6 +458,7 @@ function load() {
 					aut_ico.innerHTML = "person";
 					aut_ico.classList.add("material-icons");
 					aut.appendChild(aut_ico);
+					console.log(json.info.related_videos[c].author);
 					aut.innerHTML = aut.innerHTML + " " + json.info.related_videos[c].author;
 					div.appendChild(aut);
 					var viw = document.createElement("H4");

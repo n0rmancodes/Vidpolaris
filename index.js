@@ -555,6 +555,8 @@ async function runServer(request, res) {
 					res.end();
 				}).on("close", function() {
 					res.end();
+				}).on("error", function(err) {
+					res.end();
 				}).pipe(res);
 			} else {
 				var d = JSON.stringify({
