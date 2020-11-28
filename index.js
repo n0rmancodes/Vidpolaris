@@ -183,7 +183,7 @@ async function runServer(request, res) {
 				}
 				if (param.limit) {
 					var opt = {
-						limit: 0
+						limit: Infinity
 					}
 				} else {
 					var opt = {
