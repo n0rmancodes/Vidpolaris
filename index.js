@@ -551,13 +551,15 @@ async function runServer(request, res) {
 		} else if (path == "/api/proxy" | path == "/api/proxy/") {
 			if (param.url) {
 				var d = Buffer.from(param.url, "base64").toString();
-				got.stream(d).on("error", function() {
-					res.end();
-				}).on("close", function() {
-					res.end();
-				}).on("error", function(err) {
-					res.end();
-				}).pipe(res);
+				try {
+					got.stream(d).on("error", function() {
+						res.end();
+					}).on("close", function() {
+						res.end();
+					}).pipe(res);
+				} catch (error) {
+					res.end(error);
+				}
 			} else {
 				var d = JSON.stringify({
 					"err": "noUrl"
