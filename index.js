@@ -558,7 +558,7 @@ async function runServer(request, res) {
 						res.end();
 					}).pipe(res);
 				} catch (error) {
-					res.end(error);
+					res.end(error.message);
 				}
 			} else {
 				var d = JSON.stringify({

@@ -80,7 +80,11 @@ function ytSearch() {
 					chip.classList.add("largeHoriChip");
 					var img = document.createElement("IMG");
 					img.classList.add("bImg");
-					img.src = "/api/proxy?url=" + btoa(json.items[c].avatar.split("=s")[0]);
+					if (json.items[c].avatar.substring(0,1) !== "/") {
+						img.src = "/api/proxy?url=" + btoa(json.items[c].avatar.split("?")[0]);
+					} else {
+						img.src = "/api/proxy?url=" + btoa("https:" + json.items[c].avatar.split("?")[0]);
+					}
 					img.classList.add("square");
 					chip.appendChild(img);
 					var d = document.createElement("DIV");
@@ -106,7 +110,11 @@ function ytSearch() {
 					chip.classList.add("largeHoriChip");
 					var img = document.createElement("IMG");
 					img.classList.add("bImg");
-					img.src = "/api/proxy?url=" + btoa(json.items[c].thumbnail.split("?")[0]);
+					if (json.items[c].thumbnail.substring(0,1) !== "/") {
+						img.src = "/api/proxy?url=" + btoa(json.items[c].thumbnail.split("?")[0]);
+					} else {
+						img.src = "/api/proxy?url=https:" + btoa(json.items[c].thumbnail.split("?")[0]);
+					}
 					chip.appendChild(img);
 					var d = document.createElement("DIV");
 					d.classList.add("inner");
