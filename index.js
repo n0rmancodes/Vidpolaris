@@ -697,7 +697,7 @@ async function runServer(request, res) {
 					got("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?v=")[1]).then(function(response) {
 						var body = JSON.parse(response.body);
 						var body = JSON.stringify({
-							"author_url": body.author_url,
+							"author_url": "https://vidpolaris.tube" + body.author_url.split("/channel/")[1],
 							"provider_name": "VidPolaris",
 							"provider_url": hostUrl,
 							"version": version,
