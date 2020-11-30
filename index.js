@@ -689,7 +689,7 @@ async function runServer(request, res) {
 		} else if (path == "/api/oembed" | path == "/api/oembed/") {
 			if (param.url && param.url.includes("?")) {
 				if (param.url.split("?")[0] == "/watch" | param.url.split("?")[0] == "watch") {
-					if (hostUrl == "https://beta.vidpolaris.tube/") {
+					if (hostUrl == "https://vidpolaris.tube/") {
 						var hUrl = "http://vidpolaris.tube:9027/";
 					} else {
 						var hUrl = hostUrl;
@@ -698,11 +698,11 @@ async function runServer(request, res) {
 						var body = JSON.parse(response.body);
 						var body = JSON.stringify({
 							"author_url": body.author_url,
-							"provider_name": "VidPolaris Beta",
+							"provider_name": "VidPolaris",
 							"provider_url": hostUrl,
 							"version": version,
 							"type": "video",
-							"html": '<iframe width=\"480\" height=\"270\" src=\"' + hostUrl + 'old/embed/#w#' + param.url.split("?")[1] +  '\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>',
+							"html": '<iframe width=\"480\" height=\"270\" src=\"' + hostUrl + '/embed/' + param.url.split("?")[1] +  '\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>',
 							"url": hostUrl + param.url.substring(1),
 							"author_name": body.author_name,
 							"thumbnail_url": hUrl + "api/thumb/" + param.url.split("?")[1],
