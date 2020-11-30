@@ -16,5 +16,23 @@
 		"port":80,
 		"type":"all",
 		"maintainedBy":"electohaxz"
+	},
+	{
+		"url":"https://vidpolaris-rw.herokuapp.com",
+		"location":"US East (Virginia)",
+		"official":true,
+		"https":true,
+		"port":80,
+		"type":"all",
+		"maintainedBy":"heroku"
+	},
+	{
+		"url":"https://vpeu.herokuapp.com",
+		"location":"Ireland",
+		"official":true,
+		"https":true,
+		"port":80,
+		"type":"all",
+		"maintainedBy":"heroku"
 	}
 ]
