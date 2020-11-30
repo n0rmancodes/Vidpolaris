@@ -436,6 +436,7 @@ input:checked + .slider:before {
 		margin-bottom:5px;
 		margin-left:2.5%;
 		margin-right:2.5%;
+		text-align:left;
 	}
 	
 	.largeHoriChip .bImg, .largeHoriChip .inner {
@@ -724,12 +725,9 @@ input:checked + .slider:before {
 	}
 	
 	.largeHoriChip {
-		width:95%;
+		width:100%;
 		min-height:300px;
-		margin-top:5px;
-		margin-bottom:5px;
-		margin-left:2.5%;
-		margin-right:2.5%;
+		margin:5px;
 	}
 	
 	.largeHoriChip .bImg {
