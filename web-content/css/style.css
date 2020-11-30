@@ -499,6 +499,7 @@ input:checked + .slider:before {
 	.ignore100, .ignore100 * {
 		width:auto;
 	}
+
 }
 @media (min-width:1001px) {
 	.hdr {
@@ -736,5 +737,56 @@ input:checked + .slider:before {
 	.channelDiv img {
 		height:53%;
 		width:10%;
+	}
+
+	#pInfoBlock {
+		width:34.5%;
+		height:100%;
+		float:left;
+	}
+
+	#pInfoBlock div * {
+		margin:0;
+	}
+
+	#pInfoBlock h2 {
+		padding-bottom:0.5%;
+	}
+
+	#pInfoBlock img {
+		width:640px;
+		height:360px;
+		object-fit:cover;
+	}
+
+	#playlistItems {
+		float:left;
+		width:65%;
+	}
+
+	.smallHoriChip {
+		width:100%;
+		min-height:148px;
+		width:auto;
+		margin-bottom:1%;
+	}
+
+	.smallHoriChip img {
+		object-fit:cover;
+		height:125px;
+		width:215px;
+		padding-top:1%;
+		padding-left:1%;
+		float:left;
+	}
+
+	.smallHoriChip .inner {
+		float:left;
+		padding-left:1%;
+		padding-top:1%;
+	}
+
+	.smallHoriChip .inner * {
+		margin:0;
 	}
 }

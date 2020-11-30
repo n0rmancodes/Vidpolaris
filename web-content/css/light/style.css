@@ -18,7 +18,7 @@ a:hover, #authLink:hover {
 	color:black;
 }
 
-.vidChip, .horiVidChip, .largeHoriChip, .comment {
+.vidChip, .horiVidChip, .largeHoriChip, .comment, .smallHoriChip {
 	background:#eaeaea;
 	color:black;
 }
