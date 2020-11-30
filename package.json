@@ -28,7 +28,7 @@
     "yt-channel-info": "^1.1.4",
     "yt-comment-scraper": "^1.3.9",
     "yt-trending-scraper": "^1.0.4",
-    "ytdl-core": "^4.1.0",
+    "ytdl-core": "^4.1.1",
     "ytpl": "git://github.com/TimeForANinja/node-ytpl.git#wip-api-adjustments",
     "ytsr": "git://github.com/TimeForANinja/node-ytsr.git#wip-api-adjustments"
   },
