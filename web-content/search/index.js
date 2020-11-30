@@ -133,7 +133,7 @@ function ytSearch() {
 					len_ico.classList.add("material-icons");
 					len_ico.innerHTML = "ondemand_video";
 					len.appendChild(len_ico);
-					len.innerHTML = len.innerHTML + " " + json.items[c].length;
+					len.innerHTML = len.innerHTML + " " + json.items[c].length + " videos";
 					d.appendChild(len);
 					chip.appendChild(d);
 					link.appendChild(chip);
