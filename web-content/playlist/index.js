@@ -21,6 +21,7 @@ function load() {
             } else {
                 document.getElementById("main").style.display = "";
                 document.getElementById("plTitle").innerHTML = json.title;
+                document.title = json.title + " | VidPolaris";
                 document.getElementById("thumb").src = "/api/thumb/" + json.items[0].id;
                 document.getElementById("plLength").innerHTML = json.estimated_items.toLocaleString();
                 document.getElementById("plViews").innerHTML = json.views.toLocaleString();
