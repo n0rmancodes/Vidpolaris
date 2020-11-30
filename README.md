@@ -32,7 +32,7 @@ In no particular order, here are all of my thanks for keeping this project runni
 - The awesome package writers who, without them, this project wouldn't even be alive right now.
 
 ## To Be Added
-- Playlist support.
+- Playlist support. *(semi-completed as of November 30, 2020)*
 - Multiple comment sources (add Reddit and other sources)
 - Custom theme writer.
 - Better configuration for server owners.
