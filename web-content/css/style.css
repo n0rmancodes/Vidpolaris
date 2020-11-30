@@ -500,6 +500,51 @@ input:checked + .slider:before {
 		width:auto;
 	}
 
+	#pInfoBlock {
+		text-align:left;
+		height:140px;
+	}
+
+	#pInfoBlock #thumb {
+		float:left;
+		object-fit:cover;
+		width:20%;
+		height:127px;
+		padding-left:0.5%;
+		padding-right:1%;
+	}
+
+	#pInfoBlock div * {
+		margin:0;
+	}
+
+	.smallHoriChip {
+		width:99%;
+		margin-left:0.5%;
+		min-height:148px;
+		text-align:left;
+		margin-bottom:1%;
+	}
+
+	.smallHoriChip img {
+		object-fit:cover;
+		height:125px;
+		width:215px;
+		padding-top:1%;
+		padding-left:1%;
+		float:left;
+	}
+
+	.smallHoriChip .inner {
+		float:left;
+		padding-left:1%;
+		padding-top:1%;
+		max-width:70%;
+	}
+
+	.smallHoriChip .inner * {
+		margin:0;
+	}
 }
 @media (min-width:1001px) {
 	.hdr {
@@ -743,6 +788,7 @@ input:checked + .slider:before {
 		width:34.5%;
 		height:100%;
 		float:left;
+		z-index:999;
 	}
 
 	#pInfoBlock div * {
@@ -751,12 +797,6 @@ input:checked + .slider:before {
 
 	#pInfoBlock h2 {
 		padding-bottom:0.5%;
-	}
-
-	#pInfoBlock img {
-		width:640px;
-		height:360px;
-		object-fit:cover;
 	}
 
 	#playlistItems {
@@ -774,7 +814,7 @@ input:checked + .slider:before {
 	.smallHoriChip img {
 		object-fit:cover;
 		height:125px;
-		width:215px;
+		width:30%;
 		padding-top:1%;
 		padding-left:1%;
 		float:left;
@@ -784,9 +824,16 @@ input:checked + .slider:before {
 		float:left;
 		padding-left:1%;
 		padding-top:1%;
+		max-width:65%;
+		width:auto;
 	}
 
 	.smallHoriChip .inner * {
 		margin:0;
+	}
+
+	.thumbContainer img {
+		width:97%;
+		height:100%;
 	}
 }
