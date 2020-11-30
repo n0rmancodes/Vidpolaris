@@ -113,7 +113,7 @@ function ytSearch() {
 					if (json.items[c].thumbnail.substring(0,1) !== "/") {
 						img.src = "/api/proxy?url=" + btoa(json.items[c].thumbnail.split("?")[0]);
 					} else {
-						img.src = "/api/proxy?url=https:" + btoa(json.items[c].thumbnail.split("?")[0]);
+						img.src = "/api/proxy?url=" + btoa(json.items[c].thumbnail.split("?")[0]);
 					}
 					chip.appendChild(img);
 					var d = document.createElement("DIV");
