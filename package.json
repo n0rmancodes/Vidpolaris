@@ -22,15 +22,15 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "deezer-public-api": "^1.0.4",
-    "got": "^11.8.0",
+    "got": "^11.8.1",
     "redddit": "^1.1.0",
     "youtube-suggest": "^1.1.0",
     "yt-channel-info": "^1.1.4",
     "yt-comment-scraper": "^1.3.10",
     "yt-trending-scraper": "^1.0.4",
-    "ytdl-core": "^4.1.1",
-    "ytpl": "git://github.com/TimeForANinja/node-ytpl.git#wip-api-adjustments",
-    "ytsr": "git://github.com/TimeForANinja/node-ytsr.git#wip-api-adjustments"
+    "ytdl-core": "^4.1.6",
+    "ytpl": "^2.0.3",
+    "ytsr": "^2.0.2"
   },
   "devDependencies": {},
   "directories": {
