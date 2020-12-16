@@ -60,7 +60,7 @@ function checkText(elem) {
 					lnks[c].href = "/watch?v=" + path;
 				} else if (domain.split(".")[0] == "youtube" | domain.split(".")[0] == "www" && domain.split(".")[1] == "youtube") {
 					var path = lnks[c].href.toString().split("://")[1].split("/").slice(1);
-					if (path[0].substring(0, 8) == "watch?v=") {
+					if (path[0].substring(0, 8) == "watch?v=" | path[0].substring(0, 14) == "playlist?list=") {
 						lnks[c].href = path[0];
 					} else if (path[0] == "channel" | path[0] == "user" | path[0] == "c") {
 						lnks[c].href = "/channel/?" + path[1];
