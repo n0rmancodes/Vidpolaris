@@ -42,11 +42,11 @@ function ytSearch() {
 				var chip = document.createElement("DIV");
 				document.getElementById("searchResults").appendChild(chip);
 				if (json.items[c].type == "video") {
-					link.href = "/watch?v=" + json.items[c].link.substring(32);
+					link.href = "/watch?v=" + json.items[c].id;
 					chip.classList.add("largeHoriChip");	
 					var img = document.createElement("IMG");
 					img.classList.add("bImg");
-					img.src = "/api/thumb/" + json.items[c].link.substring(32);
+					img.src = "/api/thumb/" + json.items[c].id;
 					chip.appendChild(img);
 					var d = document.createElement("DIV");
 					d.classList.add("inner");
@@ -80,10 +80,10 @@ function ytSearch() {
 					chip.classList.add("largeHoriChip");
 					var img = document.createElement("IMG");
 					img.classList.add("bImg");
-					if (json.items[c].avatar.substring(0,1) !== "/") {
-						img.src = "/api/proxy?url=" + btoa(json.items[c].avatar.split("?")[0]);
+					if (json.items[c].avatars[0]) {
+						img.src = "/api/proxy/?url=" + btoa(json.items[c].avatars[0].url.split("=")[0]);
 					} else {
-						img.src = "/api/proxy?url=" + btoa("https:" + json.items[c].avatar.split("?")[0]);
+						img.src = "/undefined.jpg";
 					}
 					img.classList.add("square");
 					chip.appendChild(img);
@@ -100,20 +100,20 @@ function ytSearch() {
 					vidC.innerHTML = vidC.innerHTML + " " + json.items[c].videos.toLocaleString() + " videos";
 					d.appendChild(vidC);
 					var des = document.createElement("P");
-					des.innerHTML = json.items[c].description_short;
+					des.innerHTML = json.items[c].descriptionShort;
 					d.appendChild(des);
 					chip.appendChild(d);
 					link.appendChild(chip);
 					document.getElementById("searchResults").appendChild(link);
 				} else if (json.items[c].type == "playlist") {
-					link.href = "/playlist?list=" + json.items[c].link.substring(38);
+					link.href = "/playlist?list=" + json.items[c].url.substring(38);
 					chip.classList.add("largeHoriChip");
 					var img = document.createElement("IMG");
 					img.classList.add("bImg");
-					if (json.items[c].thumbnail.substring(0,1) !== "/") {
-						img.src = "/api/proxy?url=" + btoa(json.items[c].thumbnail.split("?")[0]);
+					if (json.items[c].firstVideo.bestThumbnail) {
+						img.src = "/api/proxy/?url=" + btoa(json.items[c].firstVideo.bestThumbnail.url);
 					} else {
-						img.src = "/api/proxy?url=" + btoa(json.items[c].thumbnail.split("?")[0]);
+						img.src = "/undefined.jpg";
 					}
 					chip.appendChild(img);
 					var d = document.createElement("DIV");
@@ -126,7 +126,7 @@ function ytSearch() {
 					aut_ico.classList.add("material-icons");
 					aut_ico.innerHTML = "person";
 					aut.appendChild(aut_ico);
-					aut.innerHTML = aut.innerHTML + " " + json.items[c].author.name;
+					aut.innerHTML = aut.innerHTML + " " + json.items[c].owner.name;
 					d.appendChild(aut);
 					var len = document.createElement("H3");
 					var len_ico = document.createElement("SPAN");
