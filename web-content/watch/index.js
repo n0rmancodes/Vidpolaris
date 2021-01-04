@@ -417,7 +417,7 @@ function load() {
 				document.getElementById("viewCount").innerHTML = parseInt(json.info.videoDetails.viewCount).toLocaleString() + " views";
 				document.getElementById("pText").innerHTML = parseDate(json.info.videoDetails.publishDate);
 				if (json.info.videoDetails.description) {
-					var desc = varLinks(json.info.videoDetails.description.simpleText.replace(/\n/g, "<br>"));
+					var desc = varLinks(json.info.videoDetails.description.replace(/\n/g, "<br>"));
 					document.getElementById("fullDesc").innerHTML = desc;
 					checkText("#fullDesc");
 				} else if (json.info.videoDetails.shortDescription) {
