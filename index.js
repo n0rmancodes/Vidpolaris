@@ -9,8 +9,7 @@ const ytpl = require("ytpl");
 const ytsg = require("youtube-suggest");
 const redddit = require("redddit");
 const ytch = require("yt-channel-info");
-const CommentScraper = require("yt-comment-scraper");
-const ytco = new CommentScraper();
+const ytco = require("yt-comment-scraper");
 const cheerio = require("cheerio");
 const got = require("got");
 const deez = require("deezer-public-api");
@@ -831,7 +830,10 @@ async function runServer(request, res) {
 				res.end(d);
 				return;
 			} 
-			ytco.scrape_next_page_youtube_comments(param.id).then(function(d) {
+			var payload = {
+				videoId: param.id
+			}
+			ytco.getComments(payload).then(function(d) {
 				var d = JSON.stringify(d);
 				res.writeHead(200, {
 					"Access-Control-Allow-Origin": "*",
