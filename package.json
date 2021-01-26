@@ -28,7 +28,7 @@
     "yt-channel-info": "^1.2.0",
     "yt-comment-scraper": "^2.0.0",
     "yt-trending-scraper": "^1.1.0",
-    "ytdl-core": "^4.4.4",
+    "ytdl-core": "^4.4.5",
     "ytpl": "^2.0.4",
     "ytsr": "^3.2.3"
   },
