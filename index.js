@@ -439,7 +439,7 @@ async function runServer(request, res) {
 				if (param.type == "song") {
 					deezer.track(param.id).then(function(response) {
 						 ytsr(response.title + " " + response.artist.name + " official audio").then(function(searchResults) {
-							ytdl(searchResults.items[1].link).on("info",function(info) {
+							ytdl(searchResults.items[1].url).on("info",function(info) {
 								var i = [];
 								for (var c in info.formats) {
 									if (info.formats[c].audioQuality && !info.formats[c].isHLS && !info.formats[c].isDashMPD) {
