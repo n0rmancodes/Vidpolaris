@@ -28,6 +28,7 @@ In no particular order, here are all of my thanks for keeping this project runni
 
 - [Electrohaxz](http://electrohaxz.tk) for making this project possible. Without him, this project would be nowhere.
 - [njchaltry](https://github.com/njchaltry) is another inspiration to keep this project going.
+- [hazycora](https://hazycora.com) for proposing a better search system for music.
 - Family and friends for encouraging me to continue this project.
 - The awesome package writers who, without them, this project wouldn't even be alive right now.
 
