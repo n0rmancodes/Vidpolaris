@@ -76,7 +76,7 @@ function ytSearch() {
 					link.appendChild(chip);
 					document.getElementById("searchResults").appendChild(link);
 				} else if (json.items[c].type == "channel") {
-					link.href = "/channel/?" + json.items[c].channelId;
+					link.href = "/channel/?" + json.items[c].channelID;
 					chip.classList.add("largeHoriChip");
 					var img = document.createElement("IMG");
 					img.classList.add("bImg");
