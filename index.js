@@ -60,7 +60,7 @@ async function runServer(request, res) {
 					var json = resp;
 					for (var c in json) {
 						if (!json[c].data.url | !json[c].data.url.includes("youtu")) {
-							
+
 						} else {
 							if (json[c].data.media) {
 								if (ytdl.validateURL(json[c].data.url)) {
@@ -138,10 +138,18 @@ async function runServer(request, res) {
 				info.on('info', function(info) {
 					let v = ytdl.filterFormats(info.formats, 'videoonly');
 					let a = ytdl.filterFormats(info.formats, 'audioonly');
+					let s = {err: "No subtitles"}
+					if (info
+				    .player_response.captions != undefined) {
+								s = info
+							    .player_response.captions
+							    .playerCaptionsTracklistRenderer.captionTracks
+					}
 					let j = ytdl.filterFormats(info.formats, 'audioandvideo');
 					var d = JSON.stringify({
 						"video": v,
 						"audio": a,
+						"subtitles": s,
 						"joined": j,
 						info
 					})
@@ -203,7 +211,7 @@ async function runServer(request, res) {
 					res.end(JSON.stringify({
 						"err": err.message
 					}));
-				}); 
+				});
 			}
 		} else if (path == "/api/search" | path == "/api/search/") {
 			var q = param.q;
@@ -446,7 +454,7 @@ async function runServer(request, res) {
 								var i = [];
 								for (var c in info.formats) {
 									if (info.formats[c].audioQuality && !info.formats[c].isHLS && !info.formats[c].isDashMPD) {
-										var o = info.formats[c]; 
+										var o = info.formats[c];
 										i.push(o);
 									}
 								}
@@ -575,7 +583,7 @@ async function runServer(request, res) {
 		} else if (path == "/api/channel" | path == "/api/channel/") {
 			if (param.id) {
 				ytch.getChannelInfo(param.id).then((response) => {
-					// i cant stop partyin partying 
+					// i cant stop partyin partying
 					var d = JSON.stringify(response);
 					res.writeHead(200, {
 						"Access-Control-Allow-Origin": "*",
@@ -832,7 +840,7 @@ async function runServer(request, res) {
 				});
 				res.end(d);
 				return;
-			} 
+			}
 			var payload = {
 				videoId: param.id
 			}
