@@ -1,4 +1,5 @@
 load();
+
 if (localStorage.getItem("theaterNew") == "y") {theater("update")}
 if (localStorage.getItem("sq") == "enabled") {
 	document.getElementById("player").addEventListener("play", function() {
@@ -6,7 +7,7 @@ if (localStorage.getItem("sq") == "enabled") {
 			document.getElementById("aPlayer").play();
 		}
 	})
-	
+
 	document.getElementById("player").addEventListener("playing", function() {
 		if (!document.getElementById("aPlayer").src == "") {
 			document.getElementById("aPlayer").play();
@@ -199,6 +200,21 @@ function load() {
 		xhr.onload = function () {
 			var json = JSON.parse(xhr.responseText);
 			if (!json.err) {
+				if(Array.isArray(json.subtitles)) {
+					json.subtitles.forEach(function(item, i) {
+						let subtitle = document.createElement('track');
+						subtitle.setAttribute("kind", "captions");
+						subtitle.setAttribute("srclang", json.subtitles[i].languageCode);
+						let proxyURL = "api/proxy/?url="+btoa(json.subtitles[i].baseUrl+"&fmt=vtt")
+						subtitle.setAttribute("src", proxyURL);
+						subtitle.setAttribute("label", json.subtitles[i].name.simpleText);
+						document.getElementById("player").appendChild(subtitle);
+					});
+				}
+
+
+
+
 				sessionStorage.setItem("info", xhr.responseText.toString());
 				document.getElementById("loader").style.display = "none";
 				if (!localStorage.getItem("plyr") | localStorage.getItem("plyr") == "html5") {
@@ -364,7 +380,7 @@ function load() {
 									opt.innerHTML = json.joined[c].qualityLabel + " [" + json.joined[c].codecs + "]";
 									opt.value = json.joined[c].itag;
 									document.getElementById("va").appendChild(opt);
-								} 
+								}
 							}
 						}
 						if (!document.getElementById("va").options[0]) {
@@ -427,7 +443,7 @@ function load() {
 				}
 				document.getElementById("auth").innerHTML = json.info.videoDetails.ownerChannelName;
 				document.getElementById("authLink").href = "/channel?" + json.info.videoDetails.channelId;
-				
+
 				if (json.info.videoDetails.likes && json.info.videoDetails.dislikes) {
 					document.getElementById("ldBit").style.display = "";
 					document.getElementById("l").innerHTML = json.info.videoDetails.likes.toLocaleString();
@@ -485,7 +501,7 @@ function load() {
 				document.getElementById("err").style.display = "";
 				document.getElementById("errTxt").innerHTML = json.err;
 			}
-		} 
+		}
 	}
 }
 
@@ -558,7 +574,7 @@ function parseDate(string) {
 		var year = string.split("-")[0];
 		var month = parseInt(string.split("-")[1]);
 		var day = parseInt(string.split("-")[2]);
-		if (month == 1) { var m = "January"; } 
+		if (month == 1) { var m = "January"; }
 		else if (month == 2) { var m = "February"; }
 		else if (month == 3) { var m = "March"; }
 		else if (month == 4) { var m = "April"; }
