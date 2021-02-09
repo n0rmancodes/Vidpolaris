@@ -466,7 +466,25 @@ async function runServer(request, res) {
 									"deezer": response,
 									"ytdl": i
 								}));
+							}).catch((err) =>{
+								var d = JSON.stringify({
+									"err":err.message
+								});
+								res.writeHead(404, {
+									"Access-Control-Allow-Origin": "*",
+									"Content-Type": "application/json"
+								})
+								res.end(d);
 							})
+						}).catch((err) =>{
+							var d = JSON.stringify({
+								"err":err.message
+							});
+							res.writeHead(404, {
+								"Access-Control-Allow-Origin": "*",
+								"Content-Type": "application/json"
+							})
+							res.end(d);
 						})
 					}).catch((err) =>{
 						var d = JSON.stringify({
