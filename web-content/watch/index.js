@@ -526,19 +526,45 @@ async function loaded() {
 }
 
 function getItag(itag, type) {
-	var id = window.location.search.split("v=")[1];
-	if (!type) {
-		return "/api/stream?id=" + id + "&itag=" + itag;
-	} else if (type == "v") {
-		document.getElementById("player").src = "/api/stream?id=" + id + "&itag=" + itag;
-		if (document.getElementById("aPlayer").src !== "") {
-			document.getElementById("player").currentTime = document.getElementById("aPlayer").currentTime;
+	if (sessionStorage.getItem("info")) {
+		if (document.getElementById("main").style.display == "" && type) {
+			sessionStorage.setItem("prog", document.getElementById("player").currentTime);
+			if (document.getElementById("aPlayer").src) {
+				document.getElementById("aPlayer").pause();
+			}
 			document.getElementById("player").pause();
 		}
-	} else if (type == "a") {
-		document.getElementById("aPlayer").src = "/api/stream?id=" + id + "&itag=" + itag;
-		document.getElementById("aPlayer").currentTime = document.getElementById("aPlayer").currentTime;
-		document.getElementById("player").pause();
+		var json = JSON.parse(sessionStorage.getItem("info"));
+		var formats = json.info.formats;
+		for (var c in formats) {
+			if (formats[c].itag == parseInt(itag)) {
+				if (type == "v") {
+					document.getElementById("player").src = formats[c].url;
+					if (sessionStorage.getItem("prog")) {
+						document.getElementById("player").currentTime = parseInt(sessionStorage.getItem("prog"));
+						if (document.getElementById("aPlayer").src) {
+							document.getElementById("aPlayer").currentTime = parseInt(sessionStorage.getItem("prog"));
+						}
+						if (parseInt(sessionStorage.getItem("prog")) > 1) {
+							document.getElementById("player").play();
+						}
+						sessionStorage.removeItem("prog");
+					}
+				} else if (type == "a") {
+					document.getElementById("aPlayer").src = formats[c].url;
+					if (sessionStorage.getItem("prog")) {
+						document.getElementById("aPlayer").currentTime = parseInt(sessionStorage.getItem("prog"));
+						document.getElementById("player").currentTime = parseInt(sessionStorage.getItem("prog"));
+						if (parseInt(sessionStorage.getItem("prog")) > 1) {
+							document.getElementById("player").play();
+						}
+						sessionStorage.removeItem("prog");
+					}
+				} else {
+					return formats[c].url;
+				}
+			}
+		}
 	}
 }
 

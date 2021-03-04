@@ -434,23 +434,6 @@ async function runServer(request, res) {
 				}
 			return;
 
-			case "stream":
-				if (!param.itag || !param.id) {
-					res.end();
-				} else {
-					var itag = param.itag;
-					ytdl(param.id).on("info", async function(info) {
-						if (info.formats) {
-							let d = ytdl.chooseFormat(info.formats,{ quality: itag });
-							res.writeHead(200, {"Content-Type": d.mimeType.split(";")[0], "Content-Length": parseInt(d.contentLength)})
-							await ytdl(param.id, { quality: itag, highWaterMark: 1<<25 }).pipe(res);
-						} else {
-							res.end();
-						}
-					})
-				}
-			return; 
-
 			case "channel":
 				if (!pathClean[2]) {
 					if (param.id) {
