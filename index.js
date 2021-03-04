@@ -442,8 +442,8 @@ async function runServer(request, res) {
 					ytdl(param.id).on("info", async function(info) {
 						if (info.formats) {
 							let d = ytdl.chooseFormat(info.formats,{ quality: itag });
-							res.writeHead(200, {"Content-Type": d.mimeType.split(";")[0], "Content-Length":parseInt(d.contentLength)})
-							await ytdl(param.id, { quality: itag }).pipe(res);
+							res.writeHead(200, {"Content-Type": d.mimeType.split(";")[0], "Content-Length": parseInt(d.contentLength)})
+							await ytdl(param.id, { quality: itag, highWaterMark: 1<<25 }).pipe(res);
 						} else {
 							res.end();
 						}
