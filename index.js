@@ -538,51 +538,6 @@ async function runServer(request, res) {
 				}
 			return;
 
-			case "oembed":
-				if (param.url && param.url.includes("?")) {
-					if (param.url.split("?")[0] == "/watch" | param.url.split("?")[0] == "watch") {
-						if (hostUrl == "https://vidpolaris.tube/") {
-							var hUrl = "http://vidpolaris.tube:9027/";
-						} else {
-							var hUrl = hostUrl;
-						}
-						got("https://www.youtube.com/oembed/?url=https://youtu.be/" + param.url.split("?v=")[1]).then(function(response) {
-							var body = JSON.parse(response.body);
-							var body = JSON.stringify({
-								"author_url": "https://vidpolaris.tube" + body.author_url.split("/channel/")[1],
-								"provider_name": "VidPolaris",
-								"provider_url": hostUrl,
-								"version": version,
-								"type": "video",
-								"html": '<iframe width=\"480\" height=\"270\" src=\"' + hostUrl + '/embed/' + param.url.split("?")[1] +  '\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>',
-								"url": hostUrl + param.url.substring(1),
-								"author_name": body.author_name,
-								"thumbnail_url": hUrl + "api/thumb/" + param.url.split("?")[1],
-								"title": body.title,
-								"width": 480,
-								"height": 270,
-								"thumbnail_width":480,
-								"thumbnail_height":270
-							})
-							res.writeHead(200, {
-								"Access-Control-Allow-Origin": "*",
-								"Content-Type": "application/json"
-							});
-							res.end(body)
-						}).catch(function(e) {
-							var d = JSON.stringify({
-								"err": e.message
-							})
-							res.writeHead(404, {
-								"Access-Control-Allow-Origin": "*",
-								"Content-Type": "application/json"
-							});
-							res.end(d);
-						})
-					}
-				}
-			return;
-
 			case "thumb":
 				if (!path.split("/api/thumb")[1]) {
 					var d = fs.createReadStream("./web-content/undefined.jpg");
