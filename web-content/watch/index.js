@@ -505,14 +505,18 @@ function load() {
 	}
 }
 
-function loaded() {
+async function loaded() {
 	if (localStorage.getItem("sq") && localStorage.getItem("sq") == "enabled") {
 		if (localStorage.getItem("actg") && localStorage.getItem("atcg") == "enabled") {
 			autoCorrect();
 		}
 	}
-	if (!localStorage.getItem("pv") && localStorage.getItem("plyr") !== "yt" | localStorage.getItem("pv") == "enabled" && localStorage.getItem("plyr") !== "yt") {
-		document.getElementById("player").play();
+	if (localStorage.getItem("pv") == "enabled" && localStorage.getItem("plyr") !== "yt") {
+		try {
+			document.getElementById("player").play();
+		} catch (error) {
+
+		}
 	}
 	if (localStorage.getItem("autoCom") == "y") {
 		getComm();
@@ -522,45 +526,19 @@ function loaded() {
 }
 
 function getItag(itag, type) {
-	if (sessionStorage.getItem("info")) {
-		if (document.getElementById("main").style.display == "" && type) {
-			sessionStorage.setItem("prog", document.getElementById("player").currentTime);
-			if (document.getElementById("aPlayer").src) {
-				document.getElementById("aPlayer").pause();
-			}
+	var id = window.location.search.split("v=")[1];
+	if (!type) {
+		return "/api/stream?id=" + id + "&itag=" + itag;
+	} else if (type == "v") {
+		document.getElementById("player").src = "/api/stream?id=" + id + "&itag=" + itag;
+		if (document.getElementById("aPlayer").src !== "") {
+			document.getElementById("player").currentTime = document.getElementById("aPlayer").currentTime;
 			document.getElementById("player").pause();
 		}
-		var json = JSON.parse(sessionStorage.getItem("info"));
-		var formats = json.info.formats;
-		for (var c in formats) {
-			if (formats[c].itag == parseInt(itag)) {
-				if (type == "v") {
-					document.getElementById("player").src = formats[c].url;
-					if (sessionStorage.getItem("prog")) {
-						document.getElementById("player").currentTime = parseInt(sessionStorage.getItem("prog"));
-						if (document.getElementById("aPlayer").src) {
-							document.getElementById("aPlayer").currentTime = parseInt(sessionStorage.getItem("prog"));
-						}
-						if (parseInt(sessionStorage.getItem("prog")) > 1) {
-							document.getElementById("player").play();
-						}
-						sessionStorage.removeItem("prog");
-					}
-				} else if (type == "a") {
-					document.getElementById("aPlayer").src = formats[c].url;
-					if (sessionStorage.getItem("prog")) {
-						document.getElementById("aPlayer").currentTime = parseInt(sessionStorage.getItem("prog"));
-						document.getElementById("player").currentTime = parseInt(sessionStorage.getItem("prog"));
-						if (parseInt(sessionStorage.getItem("prog")) > 1) {
-							document.getElementById("player").play();
-						}
-						sessionStorage.removeItem("prog");
-					}
-				} else {
-					return formats[c].url;
-				}
-			}
-		}
+	} else if (type == "a") {
+		document.getElementById("aPlayer").src = "/api/stream?id=" + id + "&itag=" + itag;
+		document.getElementById("aPlayer").currentTime = document.getElementById("aPlayer").currentTime;
+		document.getElementById("player").pause();
 	}
 }
 
@@ -599,15 +577,22 @@ function autoplay(val) {
 	localStorage.setItem("ap", val);
 }
 
-function getComm() {
+function getComm(continuation) {
 	document.getElementById("commStatus").innerHTML = "Loading comments...";
-	document.getElementById("commentContainer").innerHTML = "";
 	var xhr = new XMLHttpRequest();
-	var id = window.location.search.split("?v=")[1];
-	if (localStorage.getItem("instanceURL")) {
-		var u = localStorage.getItem("instanceURL") + "/api/comments?id=" + id;
+	var id = window.location.search.split("v=")[1];
+	if (continuation) {
+		if (localStorage.getItem("instanceURL")) {
+			var u = localStorage.getItem("instanceURL") + "/api/comments?id=" + id + "&continuation=" + continuation;
+		} else {
+			var u = "/api/comments?id=" + id;
+		}
 	} else {
-		var u = "/api/comments?id=" + id;
+		if (localStorage.getItem("instanceURL")) {
+			var u = localStorage.getItem("instanceURL") + "/api/comments?id=" + id + "&continuation=" + continuation;
+		} else {
+			var u = "/api/comments?id=" + id;
+		}
 	}
 	xhr.open("GET", u);
 	xhr.send();
@@ -617,20 +602,27 @@ function getComm() {
 			document.getElementById("commStatus").innerHTML = "Error: " + json.err;
 			return;
 		}
-		document.getElementById("commStatus").innerHTML = "Loaded " + json.length + " comments.";
-		for (var c in json) {
-			if (json[c].text == undefined) {continue;}
+		if (json.continuation) {
+			document.getElementById("commStatus").innerHTML = "Loaded " + json.comments.length + " comments. <a onclick='getComm(`" + json.continuation + "`)'>Load more.</a>";
+		} else {
+			document.getElementById("commStatus").innerHTML = "Loaded " + json.comments.length + " comments.";
+		}
+		for (var c in json.comments) {
+			if (json.comments[c].text == undefined) {continue;}
 			var div = document.createElement("DIV");
 			div.classList.add("comment");
 			var img = document.createElement("IMG");
-			img.src = "/api/proxy?url=" + btoa(json[c].authorThumb)
+			img.src = "/api/proxy?url=" + btoa(json.comments[c].authorThumb[json.comments[c].authorThumb.length - 1].url)
 			div.appendChild(img);
 			var name = document.createElement("H2");
-			name.innerHTML = json[c].author;
+			name.innerHTML = json.comments[c].author;
 			div.appendChild(name);
 			var t = document.createElement("P");
-			t.innerHTML = json[c].text;
+			t.innerHTML = json.comments[c].text;
 			div.appendChild(t);
+			var btm = document.createElement("H4");
+			btm.innerHTML = json.comments[c].likes.toLocaleString() + " likes - " + json.comments[c].numReplies.toLocaleString() + " replies";
+			div.appendChild(btm);
 			document.getElementById("commentContainer").appendChild(div);
 		}
 	}

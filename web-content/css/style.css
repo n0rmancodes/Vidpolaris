@@ -246,10 +246,18 @@ input:checked + .slider:before {
 	overflow:auto;
 }
 
+.comment h4 {
+	margin-left:70px;
+	margin-top:-5px;
+	margin-bottom:7px;
+	width:92%;
+	float:left;
+}
+
 .comment p {
 	padding-left:10px;
 	float:left;
-	max-width:92%;
+	width:92%;
 	overflow:auto;
 	padding-bottom:1%;
 }

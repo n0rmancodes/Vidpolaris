@@ -434,6 +434,23 @@ async function runServer(request, res) {
 				}
 			return;
 
+			case "stream":
+				if (!param.itag || !param.id) {
+					res.end();
+				} else {
+					var itag = param.itag;
+					ytdl(param.id).on("info", async function(info) {
+						if (info.formats) {
+							let d = ytdl.chooseFormat(info.formats,{ quality: itag });
+							res.writeHead(200, {"Content-Type": d.mimeType.split(";")[0], "Content-Length":parseInt(d.contentLength)})
+							await ytdl(param.id, { quality: itag }).pipe(res);
+						} else {
+							res.end();
+						}
+					})
+				}
+			return; 
+
 			case "channel":
 				if (!pathClean[2]) {
 					if (param.id) {
@@ -643,9 +660,17 @@ async function runServer(request, res) {
 					res.end(d);
 					return;
 				}
-				var payload = {
-					videoId: param.id
+				if (param.continuation) {
+					var payload = {
+						videoId: param.id,
+						continuation: param.continuation
+					};
+				} else {
+					var payload = {
+						videoId: param.id
+					};
 				}
+				
 				ytco.getComments(payload).then(function(d) {
 					var d = JSON.stringify(d);
 					res.writeHead(200, {

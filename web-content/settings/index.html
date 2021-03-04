@@ -35,6 +35,10 @@
 					<option value="disabled">Disabled</option>
 					<option value="enabled">Enabled</option>
 				</select>
+				<p id="chromeWarn" style="display:none;">The feature above doesn't work well on Chrome, it works best on Firefox.</p>
+				<script>
+					if (navigator.userAgent.indexOf("Chrome") != -1) {document.getElementById("chromeWarn").style.display = "";}
+				</script>
 			</div>
 			<div class="option">
 				<label>Homepage Data:</label>
