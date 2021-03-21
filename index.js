@@ -20,7 +20,7 @@ const fs = require("fs");
 console.log("starting server...");
 const version = "0.3";
 const version_type = "ALPHA"
-const config = JSON.parse(fs.readFileSync("./config.json"));
+const config = JSON.parse(fs.readFileSync(__dirname + "/config.json"));
 const port = process.env.PORT || config.port;
 const hostUrl = config.hostUrl;
 http.createServer(runServer).listen(port);
@@ -537,7 +537,7 @@ async function runServer(request, res) {
 
 			case "thumb":
 				if (!path.split("/api/thumb")[1]) {
-					var d = fs.createReadStream("./web-content/undefined.jpg");
+					var d = fs.createReadStream(__dirname + "/web-content/undefined.jpg");
 					d.pipe(res);
 					return;
 				}
@@ -556,7 +556,7 @@ async function runServer(request, res) {
 							"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0"
 						}
 					}).on("error", function(e) {
-						var i = fs.readFileSync("./web-content/undefined.jpg");
+						var i = fs.readFileSync(__dirname + "/web-content/undefined.jpg");
 						res.end(i);
 						return;
 					}).on("close", function() {
@@ -566,7 +566,7 @@ async function runServer(request, res) {
 						res.end();
 					});
 				} else {
-					var d = fs.createReadStream("./web-content/undefined.jpg");
+					var d = fs.createReadStream(__dirname + "/web-content/undefined.jpg");
 					d.pipe(res);
 					return;
 				}
@@ -704,7 +704,7 @@ async function runServer(request, res) {
 		fs.readFile(__dirname + "/web-content" + path, function(err,resp) {
 			if (err) {
 				if (err.code == "ENOENT") {
-					fs.readFile("./errors/404.html", function(err,resp){
+					fs.readFile(__dirname + "/errors/404.html", function(err,resp){
 						if (err) {
 							res.end(err.code)
 						} else {
@@ -719,7 +719,7 @@ async function runServer(request, res) {
 					fs.readFile(__dirname + "/web-content" + path + "/index.html", function(err,resp) {
 						if (err) {
 							if (err.code == "ENOENT") {
-								fs.readFile("./errors/404.html", function(err,resp){
+								fs.readFile(__dirname + "/errors/404.html", function(err,resp){
 									if (err) {
 										res.end(err.code)
 									} else {
