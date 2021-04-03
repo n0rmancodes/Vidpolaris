@@ -222,6 +222,7 @@ async function runServer(request, res) {
 							"Content-Type": "application/json"
 						});
 						res.end(d);
+						return;
 					});
 					info.on("error", function(e) {
 						var json = JSON.stringify ({
@@ -232,6 +233,7 @@ async function runServer(request, res) {
 							"Access-Control-Allow-Origin": "*"
 						});
 						res.end(json);
+						return;
 					});
 				}
 			return;
