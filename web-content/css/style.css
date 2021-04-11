@@ -464,7 +464,7 @@ input:checked + .slider:before {
 	
 	.largeHoriChip .bImg {
 		object-fit:cover;
-		height:270px;
+		height:240px;
 		padding-top:3%;
 		padding-bottom:3%;
 		padding-left:1%;
