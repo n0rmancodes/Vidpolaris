@@ -23,7 +23,7 @@
     "got": "^11.8.2",
     "redddit": "^1.1.0",
     "youtube-suggest": "^1.1.1",
-    "yt-channel-info": "^2.0.0",
+    "yt-channel-info": "^2.1.0",
     "yt-comment-scraper": "^4.0.0",
     "yt-trending-scraper": "^1.1.2",
     "ytdl-core": "^4.5.0",
